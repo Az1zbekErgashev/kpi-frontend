@@ -40,6 +40,8 @@ export const StyledNavbar = styled.div`
   .searchContainer {
     position: relative;
     width: 300px;
+    margin-left: 250px;
+    color: var(--white);
   }
 
   .searchInput {

@@ -19,7 +19,11 @@ const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => 
   onCancel,
 });
 
-export function Navbar() {
+interface props {
+  title: string;
+}
+
+export function Navbar({ title }: props) {
   const { t } = useTranslation();
   const [coniformModal, setConiformModal] = useState<any>(null);
   const navigate = useNavigate();
@@ -58,7 +62,7 @@ export function Navbar() {
   return (
     <StyledNavbar>
       <div className={`navbar `}>
-        <div className="searchContainer"></div>
+        <div className="searchContainer">{t(title)}</div>
 
         <div className="navActions">
           <div className="dropdown">
