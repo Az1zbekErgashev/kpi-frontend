@@ -1,6 +1,6 @@
 interface adminNavigate {
   key: string;
-  path: string;
+  path?: string;
   icon: string;
   children?: { key: string; path: string; icon?: string }[];
 }
@@ -9,7 +9,6 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
   { key: 'dashboard', path: '/', icon: 'dashboard' },
   {
     key: 'setting',
-    path: '/setting',
     icon: 'setting',
     children: [
       { key: 'users', path: '/setting/users', icon: 'people' },

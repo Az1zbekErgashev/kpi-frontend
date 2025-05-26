@@ -1,5 +1,5 @@
 import DefaultLayout from 'layouts/DefaultLayout';
-import { HomePage, Login } from 'pages';
+import { HomePage, Login, User } from 'pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
 
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { path: '/', element: <HomePage /> },
-      // { path: '/users', element: <AdminUsers /> },
+      { path: '/setting/users', element: <User /> },
       // { path: '/requests', element: <Request /> },
       // { path: '/deleted-requests', element: <DeletedRequests /> },
       // { path: '/translations', element: <Translations /> },
