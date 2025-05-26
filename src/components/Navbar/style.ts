@@ -3,7 +3,14 @@ import styled from 'styled-components';
 export const StyledNavbar = styled.div`
   .navbar {
     height: 70px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+    background: linear-gradient(
+      145deg,
+      rgba(58, 123, 213, 0.95) 0%,
+      rgba(45, 108, 198, 0.98) 25%,
+      rgba(32, 93, 183, 0.96) 50%,
+      rgba(58, 123, 213, 0.98) 75%,
+      rgba(70, 138, 228, 0.95) 100%
+    );
     backdrop-filter: blur(15px);
     display: flex;
     align-items: center;
@@ -17,9 +24,6 @@ export const StyledNavbar = styled.div`
     z-index: 99;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-
-    &.collapsed {
-    }
   }
 
   .navbar::before {
@@ -139,11 +143,12 @@ export const StyledNavbar = styled.div`
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%);
     border: 1px solid rgba(255, 255, 255, 0.8);
     cursor: pointer;
-    padding: 8px 12px;
+    padding: 2px 12px;
     border-radius: 8px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+    font-size: 14px;
   }
 
   .dropdownToggle:hover {
@@ -321,5 +326,11 @@ export const StyledNavbar = styled.div`
     .currentLanguage {
       display: none;
     }
+  }
+
+  .select-item-language {
+    display: flex;
+    align-items: center;
+    gap: 15px;
   }
 `;

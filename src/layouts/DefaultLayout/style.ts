@@ -9,9 +9,4 @@ export const StyledDefaultLayout = styled.div`
     background-color: #f5f7fa;
     padding-top: 20px;
   }
-
-  .collapsed {
-    margin-left: 70px;
-    width: 100%;
-  }
 `;

@@ -7,16 +7,12 @@ import { Navbar, Sitebar } from 'components';
 const { Content } = Layout;
 
 const DefaultLayout = () => {
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const handleChangeCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
   return (
     <StyledDefaultLayout>
-      <Sitebar handleChangeCollapse={handleChangeCollapse} isCollapsed={isCollapsed} />
+      <Sitebar />
       <Navbar />
       <Layout className="layout">
-        <Content className={`${isCollapsed ? 'collapsed' : ''} content container`}>
+        <Content className={`content container`}>
           <>
             <Outlet />
           </>

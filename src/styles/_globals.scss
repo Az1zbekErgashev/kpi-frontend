@@ -92,7 +92,6 @@ a {
   flex-wrap: nowrap !important;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: 52px !important;
 }
 
 .ant-form-item-explain-error {
@@ -250,10 +249,6 @@ tbody {
   .ant-form-item-control-input {
     margin-top: 2px !important;
   }
-
-  .ant-select-selector {
-    height: 50px !important;
-  }
 }
 
 .ant-select-selection-overflow::-webkit-scrollbar {
@@ -270,28 +265,20 @@ tbody {
   background: none;
 }
 
-.ant-select-selection-overflow-item {
-  padding: 0 5px;
-}
-.ant-select-selection-item {
-  font-family: var(--default-font) !important;
-  color: var(--blue-700) !important;
-  font-weight: 400 !important;
-  font-size: 1rem !important;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  height: 35px !important;
-  border-radius: 15px;
-}
 .ant-select-selection-placeholder {
   font-family: var(--default-font) !important;
   color: var(--blue-700) !important;
   font-weight: 400 !important;
 }
+.ant-modal {
+  margin: 0 auto !important;
 
-.ant-select-clear,
-.ant-select-arrow {
-  top: 40% !important;
+  .ant-modal-content {
+    padding: 20px 30px;
+  }
+}
+.ant-modal-body {
+  .title {
+    margin-top: 20px !important;
+  }
 }
