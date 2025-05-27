@@ -1,5 +1,6 @@
 import DefaultLayout from 'layouts/DefaultLayout';
-import { HomePage, Login, User } from 'pages';
+import { HomePage, Login, Translations, User } from 'pages';
+import { Translation } from 'react-i18next';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
 
@@ -28,6 +29,16 @@ export const router = createBrowserRouter([
       <ProtectedUserRoute>
         <DefaultLayout title="users_setting">
           <User />
+        </DefaultLayout>
+      </ProtectedUserRoute>
+    ),
+  },
+  {
+    path: '/setting/translations',
+    element: (
+      <ProtectedUserRoute>
+        <DefaultLayout title="translation_setting">
+          <Translations />
         </DefaultLayout>
       </ProtectedUserRoute>
     ),
