@@ -21,7 +21,7 @@ export function LoginForm() {
     },
     onSuccess(response) {
       navigate('/', { unstable_viewTransition: true });
-      set(response.data, 86400);
+      set(response.data.token, 86400);
       setUser(response.data.user);
     },
     onError() {
