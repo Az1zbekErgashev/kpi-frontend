@@ -13,7 +13,7 @@ export function useUsers() {
 
   const { appendData: createUser } = useQueryApiClient({
     request: {
-      url: `/api/comment/create/comment`,
+      url: `/api/user/create`,
       method: 'POST',
     },
     onSuccess() {
@@ -23,7 +23,7 @@ export function useUsers() {
 
   const { refetch: deleteUser } = useQueryApiClient({
     request: {
-      url: `/api/comment/delete/comment?id=${userId}`,
+      url: `/api/user/${userId}`,
       method: 'DELETE',
     },
     onSuccess() {
@@ -33,7 +33,7 @@ export function useUsers() {
 
   const { appendData: updateUser } = useQueryApiClient({
     request: {
-      url: `/api/comment/update/comment`,
+      url: `/api/user/update`,
       method: 'PUT',
     },
     onSuccess() {
@@ -47,6 +47,18 @@ export function useUsers() {
       method: 'GET',
       data: queryParams,
       disableOnMount: true,
+    },
+  });
+
+  const { data: roomData } = useQueryApiClient({
+    request: {
+      url: '/api/room/list',
+    },
+  });
+
+  const { data: teamData } = useQueryApiClient({
+    request: {
+      url: '/api/team/list',
     },
   });
 
@@ -71,5 +83,7 @@ export function useUsers() {
     refetchUsers,
     setQueryParams,
     users,
+    roomData,
+    teamData,
   };
 }

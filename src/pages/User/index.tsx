@@ -3,7 +3,7 @@ import { useUsers } from 'hooks/useUser';
 import React, { useState } from 'react';
 
 export function User() {
-  const { users, setQueryParams } = useUsers();
+  const hookUser = useUsers();
   const [actionModalConfig, setActionModalConfig] = useState<{
     open: boolean;
     user?: any;
@@ -12,7 +12,7 @@ export function User() {
   }>({ open: false, type: 'ADD', title: '' });
 
   const handleValueChange = (value: any) => {
-    setQueryParams((prev: any) => ({
+    hookUser.setQueryParams((prev: any) => ({
       ...prev,
       ...value,
     }));
@@ -25,8 +25,8 @@ export function User() {
   return (
     <div>
       <UsersFilter setActionModalConfig={setActionModalConfig} handleValueChange={handleValueChange} />
-      <UsersList setActionModalConfig={setActionModalConfig} users={users?.data?.items} />
-      <UserAction handleClose={handleClose} {...actionModalConfig} />
+      <UsersList setActionModalConfig={setActionModalConfig} users={hookUser.users?.data?.items} />
+      <UserAction {...hookUser} handleClose={handleClose} {...actionModalConfig} />
     </div>
   );
 }

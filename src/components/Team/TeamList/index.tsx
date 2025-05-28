@@ -71,7 +71,7 @@ export function TeamList({ setActionModalConfig, teams }: props) {
               style={{ color: 'white' }}
               placement="bottom"
               trigger={['hover']}
-              title={t('update_user')}
+              title={t('update_user_tooltip')}
             >
               <button
                 onClick={() => setActionModalConfig({ open: true, title: 'edit_team', type: 'EDIT', team: record })}
@@ -85,7 +85,7 @@ export function TeamList({ setActionModalConfig, teams }: props) {
               style={{ color: 'white' }}
               placement="bottom"
               trigger={['hover']}
-              title={t('delete_team')}
+              title={t('delete_team_tooltip')}
             >
               <button className="delete">
                 <SvgSelector id="trash" />

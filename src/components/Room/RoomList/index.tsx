@@ -76,7 +76,7 @@ export function RoomList({ rooms, setActionModalConfig }: props) {
               style={{ color: 'white' }}
               placement="bottom"
               trigger={['hover']}
-              title={t('update_room')}
+              title={t('update_room_tooltip')}
             >
               <button
                 onClick={() => setActionModalConfig({ open: true, title: 'edit_room', type: 'EDIT', room: record })}
@@ -90,7 +90,7 @@ export function RoomList({ rooms, setActionModalConfig }: props) {
               style={{ color: 'white' }}
               placement="bottom"
               trigger={['hover']}
-              title={t('delete_room')}
+              title={t('delete_room_tooltip')}
             >
               <button className="delete">
                 <SvgSelector id="trash" />

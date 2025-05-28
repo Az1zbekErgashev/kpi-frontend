@@ -9,7 +9,6 @@ export const StyledUserAction = styled.div`
 
     .flex {
       display: flex;
-      align-items: center;
       gap: 10px;
 
       .ant-form-item {
