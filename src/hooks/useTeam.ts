@@ -2,48 +2,48 @@ import { useEffect, useState } from 'react';
 import useQueryApiClient from 'utils/useQueryApiClient';
 
 interface initialQuery {
-  text?: string;
+  name?: string;
   IsDeleted?: string | number;
   pageIndex: number;
   pageSize: number;
 }
-export function useUsers() {
+export function useTeams() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
-  const [userId, setUserId] = useState<number | null>(null);
+  const [teamId, setTeamId] = useState<number | null>(null);
 
-  const { appendData: createUser } = useQueryApiClient({
+  const { appendData: createTeam } = useQueryApiClient({
     request: {
-      url: `/api/comment/create/comment`,
+      url: `/api/team/create`,
       method: 'POST',
     },
     onSuccess() {
-      refetchUsers();
+      refetchTeams();
     },
   });
 
-  const { refetch: deleteUser } = useQueryApiClient({
+  const { refetch: deleteTeam } = useQueryApiClient({
     request: {
-      url: `/api/comment/delete/comment?id=${userId}`,
+      url: `/api/team/${teamId}`,
       method: 'DELETE',
     },
     onSuccess() {
-      refetchUsers();
+      refetchTeams();
     },
   });
 
-  const { appendData: updateUser } = useQueryApiClient({
+  const { appendData: updateTeam } = useQueryApiClient({
     request: {
-      url: `/api/comment/update/comment`,
+      url: `/api/team/update`,
       method: 'PUT',
     },
     onSuccess() {
-      refetchUsers();
+      refetchTeams();
     },
   });
 
-  const { data: users, refetch: refetchUsers } = useQueryApiClient({
+  const { data: teams, refetch: refetchTeams } = useQueryApiClient({
     request: {
-      url: `/api/user/filter`,
+      url: `/api/team/filter`,
       method: 'GET',
       data: queryParams,
       disableOnMount: true,
@@ -51,25 +51,25 @@ export function useUsers() {
   });
 
   const handleDelete = (userId: number | null) => {
-    setUserId(userId);
+    setTeamId(userId);
   };
 
   useEffect(() => {
-    refetchUsers();
+    refetchTeams();
   }, [queryParams]);
 
   useEffect(() => {
-    if (userId) deleteUser();
+    if (teamId) deleteTeam();
 
-    setUserId(null);
-  }, [userId]);
+    setTeamId(null);
+  }, [teamId]);
 
   return {
-    createUser,
+    createTeam,
     handleDelete,
-    updateUser,
-    refetchUsers,
+    updateTeam,
+    refetchTeams,
     setQueryParams,
-    users,
+    teams,
   };
 }

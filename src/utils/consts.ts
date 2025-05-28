@@ -12,6 +12,8 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
     icon: 'setting',
     children: [
       { key: 'users', path: '/setting/users', icon: 'people' },
+      { key: 'teams', path: '/setting/teams', icon: 'teams' },
+      { key: 'rooms', path: '/setting/rooms', icon: 'rooms' },
       { key: 'translatins', path: '/setting/translations', icon: 'translations' },
     ],
   },

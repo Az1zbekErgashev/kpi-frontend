@@ -1,5 +1,5 @@
 import DefaultLayout from 'layouts/DefaultLayout';
-import { HomePage, Login, User } from 'pages';
+import { HomePage, Login, Room, Team, User } from 'pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
 
@@ -28,6 +28,26 @@ export const router = createBrowserRouter([
       <ProtectedUserRoute>
         <DefaultLayout title="users_setting">
           <User />
+        </DefaultLayout>
+      </ProtectedUserRoute>
+    ),
+  },
+  {
+    path: '/setting/rooms',
+    element: (
+      <ProtectedUserRoute>
+        <DefaultLayout title="rooms_setting">
+          <Room />
+        </DefaultLayout>
+      </ProtectedUserRoute>
+    ),
+  },
+  {
+    path: '/setting/teams',
+    element: (
+      <ProtectedUserRoute>
+        <DefaultLayout title="teams_setting">
+          <Team />
         </DefaultLayout>
       </ProtectedUserRoute>
     ),

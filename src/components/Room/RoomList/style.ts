@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledUsersList = styled.div`
+export const StyledRoomList = styled.div`
   .status {
     display: flex;
     justify-content: center;

@@ -9,16 +9,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 export function Sitebar() {
   const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [activeItem, setActiveItem] = useState<any>(window.location.pathname);
   const location = useLocation();
   const currentPath = location.pathname;
   const handleItemClick = (index: number, path?: string) => {
     const item = ADMIN_NAVIGATE[index];
-    if (item.children) {
+    if (item?.children) {
       setOpenIndex(openIndex === index ? null : index);
-      setActiveItem(path);
-    } else {
-      setActiveItem(path);
     }
   };
 
@@ -109,10 +105,7 @@ export function Sitebar() {
                                 duration: 0.3,
                               }}
                             >
-                              <div
-                                className={`submenu-link ${currentPath === child.path ? 'active' : ''}`}
-                                onClick={() => setActiveItem(child.path)}
-                              >
+                              <div className={`submenu-link ${currentPath === child.path ? 'active' : ''}`}>
                                 <div className="submenu-dot"></div>
                                 {child.path ? (
                                   <NavLink to={child.path} className="nav-text">

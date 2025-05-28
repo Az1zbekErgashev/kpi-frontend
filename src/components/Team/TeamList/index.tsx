@@ -1,64 +1,43 @@
 import React from 'react';
-import { StyledUsersList } from './style';
-import { ColumnsType } from 'antd/es/table';
-import { useTranslation } from 'react-i18next';
+import { StyledTeamList } from './style';
 import { Table } from 'ui';
-import dayjs from 'dayjs';
-import SvgSelector from 'assets/icons/SvgSelector';
+import { useTranslation } from 'react-i18next';
+import { ColumnsType } from 'antd/es/table';
 import Tooltip from 'antd/lib/tooltip';
+import SvgSelector from 'assets/icons/SvgSelector';
+import dayjs from 'dayjs';
+import { useTeams } from 'hooks/useTeam';
+
 interface props {
-  users: {
-    id: number;
-    createdAt: string;
-    userName: string;
-    fullName: string;
-    role: string;
-    teamId: number;
-    team: string;
-  }[];
   setActionModalConfig: React.Dispatch<
     React.SetStateAction<{
       open: boolean;
       type: 'ADD' | 'EDIT' | 'VIEW';
-      user?: any;
+      team?: any;
       title: string;
     }>
   >;
+  teams: any;
 }
-export function UsersList({ users, setActionModalConfig }: props) {
-  const { t } = useTranslation();
 
+export function TeamList({ setActionModalConfig, teams }: props) {
+  const { t } = useTranslation();
   const columns: ColumnsType = [
     {
-      title: t('user_name'),
-      dataIndex: 'userName',
-      key: 'userName',
+      title: t('team_name'),
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: t('full_name'),
-      dataIndex: 'fullName',
-      key: 'fullName',
-    },
-    {
-      title: t('registration_date'),
+      title: t('created_at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (date, _) => dayjs(date).format('YYYY.MM.DD'),
+      render: (createdAt, _) => dayjs(createdAt).format('YYYY.MM.DD'),
     },
     {
-      title: t('role'),
-      dataIndex: 'role',
-      key: 'role',
-    },
-    {
-      title: t('team'),
-      dataIndex: 'team',
-      key: 'team',
-    },
-    {
-      title: t('room'),
-      dataIndex: 'room',
-      key: 'room',
+      title: t('employees_count'),
+      dataIndex: 'emplyeesCount',
+      key: 'emplyeesCount',
     },
     {
       title: t('status'),
@@ -95,7 +74,7 @@ export function UsersList({ users, setActionModalConfig }: props) {
               title={t('update_user')}
             >
               <button
-                onClick={() => setActionModalConfig({ open: true, title: 'edit_user', type: 'EDIT', user: record })}
+                onClick={() => setActionModalConfig({ open: true, title: 'edit_team', type: 'EDIT', team: record })}
                 className="update"
               >
                 <SvgSelector id="edit" />
@@ -106,7 +85,7 @@ export function UsersList({ users, setActionModalConfig }: props) {
               style={{ color: 'white' }}
               placement="bottom"
               trigger={['hover']}
-              title={t('update_user')}
+              title={t('delete_team')}
             >
               <button className="delete">
                 <SvgSelector id="trash" />
@@ -118,9 +97,11 @@ export function UsersList({ users, setActionModalConfig }: props) {
     },
   ];
 
+  console.log(teams?.data);
+
   return (
-    <StyledUsersList>
-      <Table columns={columns} dataSource={users || []} />
-    </StyledUsersList>
+    <StyledTeamList>
+      <Table rowKey="id" columns={columns} dataSource={teams || []} />
+    </StyledTeamList>
   );
 }

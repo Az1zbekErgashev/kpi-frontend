@@ -282,3 +282,55 @@ tbody {
     margin-top: 20px !important;
   }
 }
+.ant-btn-primary {
+  background: var(--primary-blue);
+
+  &:focus,
+  &:hover {
+    background: #3f7fdad8 !important;
+  }
+}
+
+.action-btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: 10px;
+  width: 100%;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    svg {
+      width: 17px;
+      height: 17px;
+      color: white;
+    }
+  }
+
+  .delete {
+    background: #f34d4d;
+  }
+  .update {
+    background: #3c7052;
+  }
+}
+
+.footer-btn {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.ant-select-selection-item,
+.ant-input {
+  font-size: 14px !important;
+}
