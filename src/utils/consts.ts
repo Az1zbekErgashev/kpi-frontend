@@ -14,7 +14,7 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
       { key: 'users', path: '/setting/users', icon: 'people' },
       { key: 'teams', path: '/setting/teams', icon: 'teams' },
       { key: 'rooms', path: '/setting/rooms', icon: 'rooms' },
-      { key: 'translatins', path: '/setting/translations', icon: 'translations' },
+      { key: 'translations', path: '/setting/translations', icon: 'translations' },
     ],
   },
 ];

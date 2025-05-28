@@ -1,5 +1,5 @@
 import DefaultLayout from 'layouts/DefaultLayout';
-import { HomePage, Login, Room, Team, User } from 'pages';
+import { HomePage, Login, Room, Team, Translations, User } from 'pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
 
@@ -48,6 +48,16 @@ export const router = createBrowserRouter([
       <ProtectedUserRoute>
         <DefaultLayout title="teams_setting">
           <Team />
+        </DefaultLayout>
+      </ProtectedUserRoute>
+    ),
+  },
+  {
+    path: '/setting/translations',
+    element: (
+      <ProtectedUserRoute>
+        <DefaultLayout title="translations_setting">
+          <Translations />
         </DefaultLayout>
       </ProtectedUserRoute>
     ),
