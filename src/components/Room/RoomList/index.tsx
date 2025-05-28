@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { ColumnsType } from 'antd/es/table';
 import SvgSelector from 'assets/icons/SvgSelector';
-import { Table } from 'ui';
+import { Button, Table } from 'ui';
 
 interface props {
   rooms: {
@@ -78,12 +78,10 @@ export function RoomList({ rooms, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('update_room_tooltip')}
             >
-              <button
+              <Button
+                icon={<SvgSelector id="edit" />}
                 onClick={() => setActionModalConfig({ open: true, title: 'edit_room', type: 'EDIT', room: record })}
-                className="update"
-              >
-                <SvgSelector id="edit" />
-              </button>
+              />
             </Tooltip>
             <Tooltip
               color="#151a2d"
@@ -92,9 +90,7 @@ export function RoomList({ rooms, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('delete_room_tooltip')}
             >
-              <button className="delete">
-                <SvgSelector id="trash" />
-              </button>
+              <Button danger icon={<SvgSelector id="trash" />} />
             </Tooltip>
           </div>
         </div>

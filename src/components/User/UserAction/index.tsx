@@ -45,7 +45,7 @@ export function UserAction({
   };
 
   return (
-    <Modal width={500} open={open} title={title} onCancel={handleClose} footer={[]}>
+    <Modal width={550} open={open} title={title} onCancel={handleClose} footer={[]}>
       <StyledUserAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <div className="flex">

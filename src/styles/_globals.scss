@@ -302,26 +302,6 @@ tbody {
   justify-self: center;
   gap: 10px;
   width: 100%;
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 10px;
-    svg {
-      width: 17px;
-      height: 17px;
-      color: white;
-    }
-  }
-
-  .delete {
-    background: #f34d4d;
-  }
-  .update {
-    background: #3c7052;
-  }
 }
 
 .footer-btn {
@@ -333,4 +313,21 @@ tbody {
 .ant-select-selection-item,
 .ant-input {
   font-size: 14px !important;
+}
+
+.ant-modal-content {
+  position: relative;
+}
+.ant-modal-title {
+  margin-bottom: 30px !important;
+  &::before {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 100%;
+    background: var(--text-light);
+    right: 0;
+    left: 0;
+    top: 55px;
+  }
 }

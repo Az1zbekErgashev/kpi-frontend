@@ -32,7 +32,7 @@ export function RoomAction({ handleClose, open, title, type, room, createRoom, u
   };
 
   return (
-    <Modal width={300} footer={[]} onCancel={handleClose} open={open} title={t(title)}>
+    <Modal afterOpenChange={true} width={500} footer={[]} onCancel={handleClose} open={open} title={t(title)}>
       <StyledRoomAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <Input

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledUsersList } from './style';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
-import { Table } from 'ui';
+import { Button, Table } from 'ui';
 import dayjs from 'dayjs';
 import SvgSelector from 'assets/icons/SvgSelector';
 import Tooltip from 'antd/lib/tooltip';
@@ -94,12 +94,10 @@ export function UsersList({ users, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('update_user')}
             >
-              <button
+              <Button
+                icon={<SvgSelector id="edit" />}
                 onClick={() => setActionModalConfig({ open: true, title: 'edit_user', type: 'EDIT', user: record })}
-                className="update"
-              >
-                <SvgSelector id="edit" />
-              </button>
+              />
             </Tooltip>
             <Tooltip
               color="#151a2d"
@@ -108,9 +106,7 @@ export function UsersList({ users, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('update_user')}
             >
-              <button className="delete">
-                <SvgSelector id="trash" />
-              </button>
+              <Button danger icon={<SvgSelector id="trash" />} />
             </Tooltip>
           </div>
         </div>

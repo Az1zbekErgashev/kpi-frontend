@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyledTeamList } from './style';
-import { Table } from 'ui';
+import { Button, Table } from 'ui';
 import { useTranslation } from 'react-i18next';
 import { ColumnsType } from 'antd/es/table';
 import Tooltip from 'antd/lib/tooltip';
 import SvgSelector from 'assets/icons/SvgSelector';
 import dayjs from 'dayjs';
-import { useTeams } from 'hooks/useTeam';
+import { TFunction } from 'i18next';
 
 interface props {
   setActionModalConfig: React.Dispatch<
@@ -18,9 +18,10 @@ interface props {
     }>
   >;
   teams: any;
+  handleOpenConfirmModal: (t: TFunction, type: 'DELETE' | 'RECOVER', id: number) => void;
 }
 
-export function TeamList({ setActionModalConfig, teams }: props) {
+export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
   const columns: ColumnsType = [
     {
@@ -73,12 +74,10 @@ export function TeamList({ setActionModalConfig, teams }: props) {
               trigger={['hover']}
               title={t('update_user_tooltip')}
             >
-              <button
+              <Button
+                icon={<SvgSelector id="edit" />}
                 onClick={() => setActionModalConfig({ open: true, title: 'edit_team', type: 'EDIT', team: record })}
-                className="update"
-              >
-                <SvgSelector id="edit" />
-              </button>
+              />
             </Tooltip>
             <Tooltip
               color="#151a2d"
@@ -87,9 +86,11 @@ export function TeamList({ setActionModalConfig, teams }: props) {
               trigger={['hover']}
               title={t('delete_team_tooltip')}
             >
-              <button className="delete">
-                <SvgSelector id="trash" />
-              </button>
+              <Button
+                danger
+                onClick={() => handleOpenConfirmModal(t, 'DELETE', record.id)}
+                icon={<SvgSelector id="trash" />}
+              />
             </Tooltip>
           </div>
         </div>

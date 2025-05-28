@@ -1,5 +1,4 @@
 import { Modal as AntdModal } from 'antd';
-import { StyledModal } from './style';
 import { useEffect } from 'react';
 
 export interface ModalProps {
@@ -21,6 +20,7 @@ export interface ModalProps {
   centered?: boolean;
   closable?: boolean;
   className?: string;
+  afterOpenChange?: boolean;
 }
 
 export const Modal = ({
@@ -65,9 +65,15 @@ export const Modal = ({
       forceRender={forceRender}
       getContainer={getContainer}
       destroyOnClose={destroyOnClose}
-      centered={centered}
+      centered={true}
       closable={closable}
       className={className}
+      animation={true}
+      mask={true}
+      maskClosable={true}
+      maskAnimation={true}
+      focusTriggerAfterClose={true}
+      keyboard={true}
     >
       {children}
     </AntdModal>

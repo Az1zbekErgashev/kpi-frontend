@@ -33,7 +33,7 @@ export function TeamAction({ handleClose, open, title, type, team, createTeam, u
   };
 
   return (
-    <Modal width={300} footer={[]} onCancel={handleClose} open={open} title={t(title)}>
+    <Modal width={500} footer={[]} onCancel={handleClose} open={open} title={t(title)}>
       <StyledTeamAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <Input
