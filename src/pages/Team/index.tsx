@@ -4,17 +4,11 @@ import { TFunction } from 'i18next';
 import React, { useState } from 'react';
 import { ConfirmModal } from 'ui';
 
-const createModalConfig = (
-  t: TFunction,
-  isDelete: 'DELETE' | 'RECOVER',
-  onConfirm: () => void,
-  onCancel: () => void
-) => ({
-  isDelete,
+const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
-  confirmText: t(isDelete === 'DELETE' ? 'delete' : 'recover'),
-  title: t(isDelete === 'DELETE' ? 'delete_team_title' : 'recover_team_title'),
-  content: t(isDelete === 'DELETE' ? 'delete_team_description' : 'recover_team_description'),
+  confirmText: t('delete'),
+  title: t('delete_team_title'),
+  content: t('delete_team_description'),
   open: true,
   onConfirm,
   onCancel,
@@ -41,13 +35,13 @@ export function Team() {
     setActionModalConfig({ open: false, title: '', type: 'ADD' });
   };
 
-  const handleOpenConfirmModal = (t: TFunction, type: 'DELETE' | 'RECOVER', id: number) => {
+  const handleOpenConfirmModal = (t: TFunction, id: number) => {
     setConiformModal(
       createModalConfig(
         t,
-        type,
         () => {
           hookTeam.handleDelete(id);
+          setConiformModal(null);
         },
         () => {
           setConiformModal(null);

@@ -13,7 +13,7 @@ export interface DatePickerProps {
   suffix?: React.ReactNode;
   type?: string;
   size?: 'large' | 'middle' | 'small';
-  defaultValue?: string;
+  defaultValue?: any;
   maxLength?: number;
   allowClear?: boolean;
   label?: string;
@@ -37,7 +37,6 @@ export const DatePicker = ({
   name,
   size = 'large',
   onBlur,
-  maxLength = 255,
   allowClear,
   label,
   rules,
@@ -50,6 +49,7 @@ export const DatePicker = ({
   customDisabledDate,
   value,
   picker,
+  defaultValue,
 }: DatePickerProps) => {
   const defaultDisabledDate = (current: dayjs.Dayjs) => {
     // Disable dates before 1990
@@ -72,11 +72,12 @@ export const DatePicker = ({
         disabled={disabled}
         placeholder={placeholder}
         size={size}
-        value={value ? dayjs(value) : null}
+        value={value}
         onBlur={onBlur}
         allowClear={allowClear}
         format={format}
         picker={picker}
+        defaultValue={defaultValue}
         disabledDate={(current: dayjs.Dayjs) => {
           return disabledDateFunc(current) || (disabledDate ? disabledDate(current) : false);
         }}

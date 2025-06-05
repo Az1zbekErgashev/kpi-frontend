@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { ColumnsType } from 'antd/es/table';
 import SvgSelector from 'assets/icons/SvgSelector';
 import { Button, Table } from 'ui';
+import { TFunction } from 'i18next';
 
 interface props {
   rooms: {
@@ -22,9 +23,10 @@ interface props {
       title: string;
     }>
   >;
+  handleOpenConfirmModal: (t: TFunction, id: number) => void;
 }
 
-export function RoomList({ rooms, setActionModalConfig }: props) {
+export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
 
   const columns: ColumnsType = [
@@ -90,7 +92,7 @@ export function RoomList({ rooms, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('delete_room_tooltip')}
             >
-              <Button danger icon={<SvgSelector id="trash" />} />
+              <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
             </Tooltip>
           </div>
         </div>

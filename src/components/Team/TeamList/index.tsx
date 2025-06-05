@@ -18,7 +18,7 @@ interface props {
     }>
   >;
   teams: any;
-  handleOpenConfirmModal: (t: TFunction, type: 'DELETE' | 'RECOVER', id: number) => void;
+  handleOpenConfirmModal: (t: TFunction, id: number) => void;
 }
 
 export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }: props) {
@@ -86,19 +86,13 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
               trigger={['hover']}
               title={t('delete_team_tooltip')}
             >
-              <Button
-                danger
-                onClick={() => handleOpenConfirmModal(t, 'DELETE', record.id)}
-                icon={<SvgSelector id="trash" />}
-              />
+              <Button danger onClick={() => handleOpenConfirmModal(t, record.id)} icon={<SvgSelector id="trash" />} />
             </Tooltip>
           </div>
         </div>
       ),
     },
   ];
-
-  console.log(teams?.data);
 
   return (
     <StyledTeamList>

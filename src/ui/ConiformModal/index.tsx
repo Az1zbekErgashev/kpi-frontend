@@ -37,7 +37,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     };
   }, [open]);
   return (
-    <Modal {...restProps} width={400} open={open} onCancel={onCancel} footer={null}>
+    <Modal {...restProps} width={400} open={open} onCancel={onCancel} footer={[]}>
       <StyledConiformModal>
         <div className={danger ? 'title' : 'title title-green'}>{title}</div>
         <div className="content">{content}</div>

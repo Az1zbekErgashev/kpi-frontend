@@ -1,5 +1,7 @@
 import { Modal as AntdModal } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from 'ui/Button';
 
 export interface ModalProps {
   title?: string;
@@ -21,6 +23,7 @@ export interface ModalProps {
   closable?: boolean;
   className?: string;
   afterOpenChange?: boolean;
+  submitTitle?: string;
 }
 
 export const Modal = ({
@@ -34,14 +37,15 @@ export const Modal = ({
   zIndex = 2050,
   wrapClassName,
   width = 1000,
-  footer,
   forceRender,
   getContainer,
   destroyOnClose,
-  centered,
   closable,
   className,
+  submitTitle,
+  footer,
 }: ModalProps) => {
+  const { t } = useTranslation();
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -61,7 +65,17 @@ export const Modal = ({
       zIndex={zIndex}
       wrapClassName={wrapClassName}
       width={width}
-      footer={footer}
+      footer={
+        footer
+          ? footer
+          : [
+              <div>
+                <Button onClick={onCancel} label={t('cancel')} />
+                &nbsp;&nbsp;&nbsp;
+                <Button onClick={onOk} type="primary" label={t(submitTitle ?? 'submit')} />
+              </div>,
+            ]
+      }
       forceRender={forceRender}
       getContainer={getContainer}
       destroyOnClose={destroyOnClose}

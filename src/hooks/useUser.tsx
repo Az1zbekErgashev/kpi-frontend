@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useQueryApiClient from 'utils/useQueryApiClient';
-
+import { Notification } from 'ui';
+import { useTranslation } from 'react-i18next';
 interface initialQuery {
   text?: string;
   IsDeleted?: string | number;
@@ -10,7 +11,7 @@ interface initialQuery {
 export function useUsers() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
   const [userId, setUserId] = useState<number | null>(null);
-
+  const { t } = useTranslation();
   const { appendData: createUser } = useQueryApiClient({
     request: {
       url: `/api/user/create`,
@@ -18,6 +19,9 @@ export function useUsers() {
     },
     onSuccess() {
       refetchUsers();
+    },
+    onError(error) {
+      Notification({ type: 'error', text: t(error.error) });
     },
   });
 
@@ -38,6 +42,9 @@ export function useUsers() {
     },
     onSuccess() {
       refetchUsers();
+    },
+    onError(error) {
+      Notification({ type: 'error', text: t(error.error) });
     },
   });
 

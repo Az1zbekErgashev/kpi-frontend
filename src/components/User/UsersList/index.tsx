@@ -6,6 +6,8 @@ import { Button, Table } from 'ui';
 import dayjs from 'dayjs';
 import SvgSelector from 'assets/icons/SvgSelector';
 import Tooltip from 'antd/lib/tooltip';
+import { useUser } from 'hooks/useUserState';
+import { TFunction } from 'i18next';
 interface props {
   users: {
     id: number;
@@ -24,10 +26,11 @@ interface props {
       title: string;
     }>
   >;
+  handleOpenConfirmModal: (t: TFunction, id: number) => void;
 }
-export function UsersList({ users, setActionModalConfig }: props) {
+export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
-
+  const { user } = useUser();
   const columns: ColumnsType = [
     {
       title: t('user_name'),
@@ -87,6 +90,20 @@ export function UsersList({ users, setActionModalConfig }: props) {
       render: (action, record) => (
         <div className="action-btn-wrap">
           <div className="action-btn">
+            {user?.Id != record.id && (
+              <Tooltip
+                color="#151a2d"
+                style={{ color: 'white' }}
+                placement="bottom"
+                trigger={['hover']}
+                title={t('update_user')}
+              >
+                <Button
+                  icon={<SvgSelector id="edit" />}
+                  onClick={() => setActionModalConfig({ open: true, title: 'edit_user', type: 'EDIT', user: record })}
+                />
+              </Tooltip>
+            )}
             <Tooltip
               color="#151a2d"
               style={{ color: 'white' }}
@@ -94,19 +111,7 @@ export function UsersList({ users, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('update_user')}
             >
-              <Button
-                icon={<SvgSelector id="edit" />}
-                onClick={() => setActionModalConfig({ open: true, title: 'edit_user', type: 'EDIT', user: record })}
-              />
-            </Tooltip>
-            <Tooltip
-              color="#151a2d"
-              style={{ color: 'white' }}
-              placement="bottom"
-              trigger={['hover']}
-              title={t('update_user')}
-            >
-              <Button danger icon={<SvgSelector id="trash" />} />
+              <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
             </Tooltip>
           </div>
         </div>

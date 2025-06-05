@@ -38,6 +38,9 @@ export interface InputProps {
   getInitValueInParam?: boolean;
   valueType?: 'NUMBER' | 'STRING';
   autoComplete?: 'off' | 'on';
+  max?: any;
+  min?: any;
+  addonAfter?: any;
 }
 
 export const Input = ({
@@ -70,6 +73,9 @@ export const Input = ({
   getInitValueInParam,
   valueType = 'STRING',
   autoComplete,
+  max,
+  min,
+  addonAfter,
 }: InputProps) => {
   return (
     <StyledFormInput
@@ -117,6 +123,9 @@ export const Input = ({
           variant={variant}
           onPressEnter={onPressEnter}
           autoFocus={autoFocus}
+          min={min}
+          max={max}
+          addonAfter={addonAfter}
         />
       )}
     </StyledFormInput>

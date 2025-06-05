@@ -40,7 +40,7 @@ export function UserAction({
 
   const onFinish = (values: { name: string }) => {
     if (type == 'ADD') createUser(values);
-    else updateUser({ id: user.id, name: values.name });
+    else updateUser({ id: user.id, ...values });
     handleClose();
   };
 
@@ -85,12 +85,7 @@ export function UserAction({
             </Select>
           </div>
           <div className="flex">
-            <Select
-              label={t('team')}
-              allowClear
-              name="teamId"
-              rules={[{ required: true, message: t('this_field_required') }]}
-            >
+            <Select label={t('team')} allowClear name="teamId">
               {teamData?.data?.map((item: { name: string; id: number }, index: number) => (
                 <SelectOption value={item.id} key={index}>
                   {item.name}
