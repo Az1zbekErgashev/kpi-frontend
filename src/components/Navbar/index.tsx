@@ -9,6 +9,9 @@ import SvgSelector from 'assets/icons/SvgSelector';
 import { TFunction } from 'i18next';
 import Cookies from 'js-cookie';
 import { useLanguage } from 'contexts/LanguageContext';
+import axios from 'axios';
+import { routes } from 'config/config';
+import useQueryApiClient from 'utils/useQueryApiClient';
 
 const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
@@ -35,6 +38,14 @@ export function Navbar({ title }: props) {
     Cookies.remove('jwt');
     navigate('/login');
   };
+
+  const { data: userProfile } = useQueryApiClient({
+    request: {
+      url: '/api/user/profile',
+      method: 'GET',
+    },
+  });
+  console.log('userProfile', userProfile.data);
 
   const handleLogout = () => {
     setConiformModal(
@@ -107,7 +118,7 @@ export function Navbar({ title }: props) {
                 <div className="userAvatar">
                   <UserCircle size={24} />
                 </div>
-                <span className="userName">John Doe</span>
+                <span className="userName">{userProfile?.data?.userName}</span>
                 <ChevronDown size={14} />
               </button>
             </div>
