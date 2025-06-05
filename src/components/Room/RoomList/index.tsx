@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { ColumnsType } from 'antd/es/table';
 import SvgSelector from 'assets/icons/SvgSelector';
 import { Button, Table } from 'ui';
+import { TFunction } from 'i18next';
 
 interface props {
   rooms: {
@@ -14,6 +15,7 @@ interface props {
     name: string;
     teamsCount: number;
   }[];
+  handleOpenConfirmModal: (t: TFunction,  type: 'DELETE' | 'RECOVER', id: number) => void;
   setActionModalConfig: React.Dispatch<
     React.SetStateAction<{
       open: boolean;
@@ -22,9 +24,10 @@ interface props {
       title: string;
     }>
   >;
+  
 }
 
-export function RoomList({ rooms, setActionModalConfig }: props) {
+export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
 
   const columns: ColumnsType = [
@@ -90,7 +93,11 @@ export function RoomList({ rooms, setActionModalConfig }: props) {
               trigger={['hover']}
               title={t('delete_room_tooltip')}
             >
-              <Button danger icon={<SvgSelector id="trash" />} />
+              <Button
+                danger
+                icon={<SvgSelector id="trash" />}
+                onClick={() => handleOpenConfirmModal(t, 'DELETE', record.id)}
+              />
             </Tooltip>
           </div>
         </div>

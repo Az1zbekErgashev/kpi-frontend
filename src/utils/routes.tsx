@@ -1,5 +1,6 @@
 import DefaultLayout from 'layouts/DefaultLayout';
-import { HomePage, Login, Room, Team, Translations, User } from 'pages';
+import { Login, Room, Team, Translations, User } from 'pages';
+import { Home } from 'pages/HomePage';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
 
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedUserRoute>
         <DefaultLayout title="dashboard">
-          <HomePage />
+          <Home />
         </DefaultLayout>
       </ProtectedUserRoute>
     ),

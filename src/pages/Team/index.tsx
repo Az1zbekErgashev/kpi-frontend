@@ -48,6 +48,7 @@ export function Team() {
         type,
         () => {
           hookTeam.handleDelete(id);
+          setConiformModal(null);
         },
         () => {
           setConiformModal(null);

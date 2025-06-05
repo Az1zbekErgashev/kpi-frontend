@@ -11,3 +11,7 @@ export { RoomFilter } from './Room/RoomFilter';
 export { RoomList } from './Room/RoomList';
 export { RoomAction } from './Room/RoomAction';
 export { TeamAction } from './Team/TeamAction';
+export { HomeList } from './Home/HomeList';
+export { HomeFilter } from './Home/HomeFilter';
+export { HomeAction } from './Home/HomeAction';
+
