@@ -7,39 +7,12 @@ import { token } from 'config/token';
 import { RouterProvider } from 'react-router-dom';
 import { routes } from 'config/config';
 import { router } from 'utils/routes';
-import Cookies from 'js-cookie';
-import { useUser } from 'hooks/useUserState';
 import useJwt from 'utils/useJwt';
 import i18n from 'utils/i18n';
 import { useLanguage } from 'contexts/LanguageContext';
 
 function App() {
-  const jwt = !!Cookies.get('jwt');
-  const { setUser } = useUser();
-  const { getHeader } = useJwt();
-  const getToken = getHeader();
   const { language } = useLanguage();
-
-  useEffect(() => {
-    if (jwt) {
-      getProfile();
-    }
-  }, []);
-
-  const getProfile = async () => {
-    try {
-      const res = await axios.get(`${routes.api.baseUrl}/api/user/profile`, {
-        headers: {
-          Authorization: getToken,
-        },
-      });
-      if (res.data.data) {
-        setUser(res.data.data);
-      }
-    } catch (e) {
-      return;
-    }
-  };
 
   const getLanguages = async () => {
     try {

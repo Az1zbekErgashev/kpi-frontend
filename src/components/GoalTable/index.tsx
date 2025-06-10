@@ -13,23 +13,15 @@ export function GoalTable({ goal }: props) {
   const params = useParams();
   const year = params.year ?? '';
   const { user } = useUser();
-  return (
+  return (  
     <StyledGoalTable>
+      <div className="styled_header">
+        <h1 className="title">2025년 WSU컵 KPI 수집 진행현황</h1>
+      </div>
       <div className="kpi-table-container">
         <div className="table-wrapper">
           <table className="kpi-table">
             <thead>
-              <tr className="header-row">
-                <th
-                  colSpan={4}
-                  className="main-header"
-                  dangerouslySetInnerHTML={{
-                    __html: t('goal_table_header_title')
-                      .replace('{year}', year.toString())
-                      .replace('{team}', goal?.createdBy?.room || ''),
-                  }}
-                ></th>
-              </tr>
               <tr className="sub-header-row">
                 <th colSpan={2} className="empty-header"></th>
                 <th

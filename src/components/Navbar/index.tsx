@@ -31,7 +31,6 @@ export function Navbar({ title }: props) {
   const { t } = useTranslation();
   const [coniformModal, setConiformModal] = useState<any>(null);
   const { changeLanguage, language } = useLanguage();
-
   const navigate = useNavigate();
 
   const logout = () => {
@@ -45,7 +44,6 @@ export function Navbar({ title }: props) {
       method: 'GET',
     },
   });
-  console.log('userProfile', userProfile.data);
 
   const handleLogout = () => {
     setConiformModal(

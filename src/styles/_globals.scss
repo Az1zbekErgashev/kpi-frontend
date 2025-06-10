@@ -374,4 +374,16 @@ tbody {
     }
   }
 }
-
+.styled_header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 2rem 0;
+  .title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #316ec7;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(49, 110, 199, 0.1);
+    letter-spacing: -0.025em;
+  }
+}

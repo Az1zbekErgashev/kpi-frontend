@@ -173,7 +173,7 @@ export const StyledGoalForm = styled.div`
   }
 
   .submit-section {
-    text-align: center;
+    text-align: end;
     padding: 24px 0;
   }
 

@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyledGoalPage } from './style';
-import { GoalForm, GoalTable } from 'components';
+import { CommentHistory, GoalForm, GoalTable } from 'components';
 import { useGoal } from 'hooks/useGoal';
 import { useUser } from 'hooks/useUserState';
 
 export function GoalPage() {
   const goalHook = useGoal();
   const { user } = useUser();
-  console.log(user);
 
   return (
     <StyledGoalPage>
@@ -19,10 +18,16 @@ export function GoalPage() {
           {goalHook.goalByUserId?.data?.status == 'Approved' ? (
             <GoalTable goal={goalHook.goalByUserId?.data} />
           ) : (
-            <GoalForm />
+            <GoalForm
+              goal={goalHook.goalByUserId?.data}
+              createGoal={goalHook.createGoalFromTeam}
+              updateGoal={goalHook.updateGoal}
+              type={goalHook.goalByUserId?.data?.id ? 'EDIT' : 'ADD'}
+            />
           )}
         </>
       )}
+      <CommentHistory comment={goalHook.goalByUserId?.data?.comments} />
     </StyledGoalPage>
   );
 }

@@ -12,11 +12,9 @@ export function useGoal() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
   const params = useParams();
 
-  console.log(params);
-
-  const { data: goalByUserId } = useQueryApiClient({
+  const { data: goalByUserId, refetch: getGoalByUserId } = useQueryApiClient({
     request: {
-      url: `/api/goal/by-userid/${params.id}/${params.year}`,
+      url: `/api/goal/by-team/${params.id}/${params.year}`,
       method: 'GET',
     },
   });
@@ -27,9 +25,36 @@ export function useGoal() {
     },
   });
 
+  const { appendData: createGoalFromTeam } = useQueryApiClient({
+    request: {
+      url: '/api/goal/create-from-team',
+      method: 'POST',
+    },
+  });
+
+  const { appendData: createGoalFromCeo } = useQueryApiClient({
+    request: {
+      url: '/api/goal/create-from-ceo',
+      method: 'POST',
+    },
+  });
+
+  const { appendData: updateGoal } = useQueryApiClient({
+    request: {
+      url: '/api/goal/update',
+      method: 'PUT',
+    },
+    onSuccess() {
+      getGoalByUserId();
+    },
+  });
+
   return {
     goalByUserId,
     setQueryParams,
     ceoGoal,
+    updateGoal,
+    createGoalFromCeo,
+    createGoalFromTeam,
   };
 }

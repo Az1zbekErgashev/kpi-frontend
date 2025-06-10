@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyledGoalForm } from './style';
 import { Card, Col, Divider, Form, Radio, Row, Typography } from 'antd';
 import { Button, Input, Modal, Select, SelectOption, TextArea } from 'ui';
@@ -15,7 +15,7 @@ const STATUS_OPTIONS = [
   { value: 'Over', label: 'Over' },
 ];
 
-export function GoalForm() {
+export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
   const [form] = Form.useForm();
   const [modalForm] = Form.useForm();
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ export function GoalForm() {
 
   const TARGET_TYPES = [
     { value: 'RatioType', label: t('radio_type'), icon: '📊' },
-    { value: 'NumberType', label: t('number_of_times'), icon: '🔢' },
+    { value: 'NumberOfTimesType', label: t('number_of_times'), icon: '🔢' },
     { value: 'TextType', label: t('text_type'), icon: '📝' },
     { value: 'IndividualEvaluation', label: t('individual_evaluation'), icon: '⭐' },
     { value: 'LeaderEvaluation', label: t('leader_evaluation'), icon: '👨‍💼' },
@@ -74,7 +74,7 @@ export function GoalForm() {
   const renderTargetValueFields = () => {
     switch (selectedTargetType) {
       case 'RatioType':
-      case 'NumberType': {
+      case 'NumberOfTimesType': {
         const isRatio = selectedTargetType === 'RatioType';
         return (
           <Row gutter={[16, 16]}>
@@ -125,8 +125,20 @@ export function GoalForm() {
   };
 
   const onFinish = (value: any) => {
-    console.log(value);
+    if (type == 'ADD') {
+      createGoal(value);
+    } else {
+      updateGoal({ ...value, goalId: goal.id });
+    }
   };
+
+  useEffect(() => {
+    if (type === 'ADD') {
+      return;
+    } else {
+      form.setFieldsValue({ ...goal });
+    }
+  }, [goal]);
 
   const handleModalSubmit = async () => {
     try {
@@ -189,6 +201,7 @@ export function GoalForm() {
       <div className="kpi-form-container">
         <Card className="main-card">
           <Form form={form} layout="vertical" className="kpi-form" onFinish={onFinish}>
+            <Input type="hidden" name="id" size="small" />
             <Form.List name="divisions" initialValue={[{}]}>
               {(fields, { add, remove }) => (
                 <>
@@ -234,7 +247,7 @@ export function GoalForm() {
 
                                     const TYPE_LABELS = {
                                       RatioType: `📊 ${t('ratio_type')}`,
-                                      NumberType: `🔢 ${t('number_type')}`,
+                                      NumberOfTimesType: `🔢 ${t('number_type')}`,
                                       TextType: `📝 ${t('text_type')}`,
                                       IndividualEvaluation: `👤 ${t('individual_evaluation')}`,
                                       LeaderEvaluation: `🧑‍💼 ${t('leader_evaluation')}`,
@@ -363,6 +376,7 @@ export function GoalForm() {
                 </Form.Item>
 
                 <Divider>{t('target_value')}</Divider>
+                <Input type="hidden" name="id" size="small" />
 
                 <Form.Item
                   name="type"
