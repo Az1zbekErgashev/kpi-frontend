@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledGoalTable = styled.div`
   .kpi-table-container {
-    margin: 20px auto;
     padding: 20px;
   }
 

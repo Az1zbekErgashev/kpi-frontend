@@ -6,7 +6,11 @@ import { Table } from 'ui';
 import dayjs from 'dayjs';
 
 interface props {
-  comment: { status: string; content: string; createdAt: string }[];
+  comment: {
+    comments: { status: string; content: string; createdAt: string }[];
+    createdAt: string;
+    createdBy: { room: string; team: string };
+  };
 }
 export function CommentHistory({ comment }: props) {
   const { t } = useTranslation();
@@ -36,6 +40,8 @@ export function CommentHistory({ comment }: props) {
     }
   };
 
+  const year = new Date().getFullYear().toString();
+
   const columns: ColumnsType = [
     { dataIndex: 'no', key: 'no', title: t('no'), render: (type, record, index) => index + 1 },
     { dataIndex: 'content', key: 'content', title: t('comment') },
@@ -62,14 +68,16 @@ export function CommentHistory({ comment }: props) {
     },
   ];
 
-  console.log(comment);
-
   return (
     <StyledCommentHistory>
       <div className="styled_header">
-        <h1 className="title">2025년 WSU컵 KPI 수집 진행현황</h1>
+        <h1 className="title">
+          {t('comment_title_with_room')
+            .replace('{year}', comment?.createdAt ? dayjs(comment.createdAt).year().toString() : year.toString())
+            .replace('{team}', comment?.createdBy?.team ?? '')}
+        </h1>
       </div>
-      <Table columns={columns} dataSource={comment ?? []} />
+      <Table columns={columns} dataSource={comment?.comments ?? []} />
     </StyledCommentHistory>
   );
 }

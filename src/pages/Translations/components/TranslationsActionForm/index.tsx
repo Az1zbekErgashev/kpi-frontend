@@ -32,7 +32,7 @@ export function TranslationActionForm({ form, open, handleClose, handleSubmitTra
       onCancel={handleClose}
       title={t('translation_action_title')}
       open={open.open}
-      footer={null}
+      footer={[]}
       width={700}
     >
       <StyledTranslation className="translation-modal">

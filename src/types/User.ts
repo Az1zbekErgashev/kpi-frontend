@@ -31,7 +31,7 @@ interface Goal {
 interface Division {
   name: string;
   description: string;
-  percentage: number;
+  ratio: number;
   goals: Goal[];
   id: number;
   createdAt: string;

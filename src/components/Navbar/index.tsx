@@ -12,6 +12,7 @@ import { useLanguage } from 'contexts/LanguageContext';
 import axios from 'axios';
 import { routes } from 'config/config';
 import useQueryApiClient from 'utils/useQueryApiClient';
+import { useUser } from 'hooks/useUserState';
 
 const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
@@ -32,7 +33,7 @@ export function Navbar({ title }: props) {
   const [coniformModal, setConiformModal] = useState<any>(null);
   const { changeLanguage, language } = useLanguage();
   const navigate = useNavigate();
-
+  const { setUser } = useUser();
   const logout = () => {
     Cookies.remove('jwt');
     navigate('/login');
@@ -42,6 +43,9 @@ export function Navbar({ title }: props) {
     request: {
       url: '/api/user/profile',
       method: 'GET',
+    },
+    onSuccess(response) {
+      setUser(response?.data);
     },
   });
 

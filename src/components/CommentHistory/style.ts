@@ -14,4 +14,8 @@ export const StyledCommentHistory = styled.div`
       border-radius: 10px;
     }
   }
+
+  .styled_header {
+    margin-bottom: 20px !important;
+  }
 `;
