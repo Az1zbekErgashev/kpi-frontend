@@ -22,7 +22,7 @@ export function TeamLeadersFilter({ rooms, teams }: props) {
           picker="year"
           disabledDate={(current) => current && current.year() > currentYear}
         />
-        <Select label={t('searcch_by_room')}>
+        <Select label={t('search_by_room')}>
           {rooms?.map((item, index) => (
             <SelectOption key={index} value={item.id.toString()}>
               {item.name}
@@ -31,7 +31,7 @@ export function TeamLeadersFilter({ rooms, teams }: props) {
 
           <SelectOption value={null}>{t('all')}</SelectOption>
         </Select>
-        <Select label={t('searcch_by_team')}>
+        <Select label={t('search_by_team')}>
           {teams?.map((item, index) => (
             <SelectOption key={index} value={item.id.toString()}>
               {item.name}
@@ -39,7 +39,7 @@ export function TeamLeadersFilter({ rooms, teams }: props) {
           ))}
           <SelectOption value={null}>{t('all')}</SelectOption>
         </Select>
-        <Input label={t('searcch_by_user_name')} />
+        <Input label={t('search_by_user_name')} />
       </Form>
     </StyledTeamLeadersList>
   );

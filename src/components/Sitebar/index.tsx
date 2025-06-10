@@ -1,5 +1,5 @@
-import { ChevronDown, LayoutDashboard, Zap } from 'lucide-react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { ChevronDown, Zap } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { StyledSitebar } from './style';
 import { ADMIN_NAVIGATE } from 'utils/consts';
 import { useTranslation } from 'react-i18next';
@@ -11,11 +11,13 @@ export function Sitebar() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const location = useLocation();
   const currentPath = location.pathname;
-  const handleItemClick = (index: number, path?: string) => {
+
+  const handleItemClick = (index: number, path?: string, isParent?: boolean) => {
     const item = ADMIN_NAVIGATE[index];
-    if (item?.children) {
-      setOpenIndex(openIndex === index ? null : index);
+    if (item?.children && isParent) {
+      setOpenIndex(openIndex === index ? null : index); // Toggle only for parent click
     }
+    // Do not reset openIndex for child clicks to keep parent open unless manually closed
   };
 
   return (
@@ -48,26 +50,38 @@ export function Sitebar() {
                 const Icon = item.icon;
                 const isActive = currentPath === item.path;
                 const isChildActive = item.children?.some((child) => currentPath === child.path);
+
                 return (
                   <li className="nav-item" key={index}>
                     <motion.div
                       className={`nav-link ${isActive || isChildActive ? 'active' : ''}`}
-                      onClick={() => handleItemClick(index, item?.path)}
                       whileHover={{ x: 4 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <div className="nav-link-content">
-                        <div className="nav-icon">
-                          <Icon />
+                      {item.path ? (
+                        <NavLink
+                          to={item.path}
+                          className="nav-link-content"
+                          onClick={() => handleItemClick(index, item?.path)}
+                        >
+                          <div className="nav-icon">
+                            {Icon && <Icon />}
+                          </div>
+                          <span className="nav-text">{t(item.key)}</span>
+                        </NavLink>
+                      ) : (
+                        <div
+                          className="nav-link-content"
+                          onClick={() => handleItemClick(index, undefined, true)} // Toggle for parent
+                          role="button"
+                          tabIndex={0} // For accessibility
+                        >
+                          <div className="nav-icon">
+                            {Icon && <Icon />}
+                          </div>
+                          <span className="nav-text">{t(item.key)}</span>
                         </div>
-                        {item.path ? (
-                          <NavLink to={item.path} className="nav-text">
-                            {t(item.key)}
-                          </NavLink>
-                        ) : (
-                          <span className="nav-text"> {t(item.key)}</span>
-                        )}
-                      </div>
+                      )}
                       {item.children && (
                         <motion.div
                           className="chevron-container"
@@ -99,22 +113,29 @@ export function Sitebar() {
                               className="submenu-item"
                               initial={{ x: -20, opacity: 0 }}
                               animate={{ x: 0, opacity: 1 }}
-                              onClick={() => handleItemClick(childIndex, child?.path)}
                               transition={{
                                 delay: childIndex * 0.1,
                                 duration: 0.3,
                               }}
                             >
-                              <div className={`submenu-link ${currentPath === child.path ? 'active' : ''}`}>
-                                <div className="submenu-dot"></div>
-                                {child.path ? (
-                                  <NavLink to={child.path} className="nav-text">
-                                    {t(child.key)}
-                                  </NavLink>
-                                ) : (
-                                  <span>{t(child.key)}</span>
-                                )}
-                              </div>
+                              {child.path ? (
+                                <NavLink
+                                  to={child.path}
+                                  className={`submenu-link ${currentPath === child.path ? 'active' : ''}`}
+                                  onClick={() => handleItemClick(index, child?.path)}
+                                >
+                                  <div className="submenu-dot"></div>
+                                  <span className="nav-text">{t(child.key)}</span>
+                                </NavLink>
+                              ) : (
+                                <div
+                                  className={`submenu-link ${currentPath === child.path ? 'active' : ''}`}
+                                  onClick={() => handleItemClick(index, child?.path)}
+                                >
+                                  <div className="submenu-dot"></div>
+                                  <span className="nav-text">{t(child.key)}</span>
+                                </div>
+                              )}
                             </motion.li>
                           ))}
                         </motion.ul>

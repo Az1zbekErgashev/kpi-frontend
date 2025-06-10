@@ -50,9 +50,11 @@ export const StyledTranslation = styled.div`
     display: flex;
     align-items: center;
     gap: 20px;
-    width: 60%;
+    width: 80%;
     padding: 15px;
     box-sizing: border-box;
+    padding: 0 !important;
+    margin: 0 !important;
 
     .ant-form-item {
       width: 100%;
@@ -118,6 +120,12 @@ export const StyledTranslation = styled.div`
 
     .ant-select-selection-item {
       display: none !important;
+    }
+    
+    .ant-form-item-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 `;

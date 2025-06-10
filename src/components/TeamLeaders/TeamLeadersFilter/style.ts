@@ -6,7 +6,7 @@ export const StyledTeamLeadersList = styled.div`
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
-    width: 50%;
+    width: 70%;
 
     .ant-form-item {
       width: 100%;

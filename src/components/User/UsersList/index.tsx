@@ -17,6 +17,7 @@ interface props {
     role: string;
     teamId: number;
     team: string;
+    rank?: string | number;
   }[];
   setActionModalConfig: React.Dispatch<
     React.SetStateAction<{
@@ -36,37 +37,71 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       title: t('user_name'),
       dataIndex: 'userName',
       key: 'userName',
+      width: 150,
     },
     {
       title: t('full_name'),
       dataIndex: 'fullName',
       key: 'fullName',
+      width: 150,
     },
     {
       title: t('registration_date'),
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 150,
       render: (date, _) => dayjs(date).format('YYYY.MM.DD'),
     },
     {
       title: t('role'),
       dataIndex: 'role',
       key: 'role',
+      width: 150,
+    },
+    {
+      title: t('rank'),
+      dataIndex: 'rank',
+      key: 'rank',
+      width: 150,
+      render: (rank, _) => rank || t('-'),
+    },
+    {
+      title: t('date_of_employment'),
+      dataIndex: 'dateOfEmployment',
+      key: 'dateOfEmployment',
+      width: 150,
+      render: (date, _) => {
+        if (!date) return t('-');
+        return dayjs(date).format('YYYY.MM.DD');
+      }
+    },
+    {
+      title: t('pj_date_of_employment'),
+      dataIndex: 'pjDateOfEmployment',
+      key: 'pjDateOfEmployment',
+      width: 150,
+      render: (date, _) => {
+        if (!date) return t('-');
+        return dayjs(date).format('YYYY.MM.DD');
+      }
     },
     {
       title: t('team'),
       dataIndex: 'team',
       key: 'team',
+      width: 150,
     },
     {
       title: t('room'),
       dataIndex: 'room',
       key: 'room',
+      width: 150,
     },
     {
       title: t('status'),
       dataIndex: 'isDeleted',
       key: 'isDeleted',
+      width: 150,
       render: (isDeleted, _) => (
         <div className="status">
           {isDeleted == 1 ? (
@@ -87,6 +122,7 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       title: t('action'),
       dataIndex: 'action',
       key: 'action',
+      width: 150,
       render: (action, record) => (
         <div className="action-btn-wrap">
           <div className="action-btn">
@@ -121,7 +157,9 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
 
   return (
     <StyledUsersList>
-      <Table columns={columns} dataSource={users || []} />
+      <Table columns={columns} dataSource={users || []}
+        scroll={{ x: 'max-content' }}
+      />
     </StyledUsersList>
   );
 }
