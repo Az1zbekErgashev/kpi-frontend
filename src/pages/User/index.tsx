@@ -2,7 +2,7 @@ import { UserAction, UsersFilter, UsersList } from 'components';
 import { useUsers } from 'hooks/useUser';
 import { TFunction } from 'i18next';
 import React, { useState } from 'react';
-import { ConfirmModal } from 'ui';
+import { ConfirmModal, ScrollWithShift } from 'ui';
 
 const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
@@ -53,6 +53,10 @@ export function User() {
   return (
     <div>
       <UsersFilter setActionModalConfig={setActionModalConfig} handleValueChange={handleValueChange} />
+      <div className="scroll-wrapp">
+        <ScrollWithShift />
+      </div>
+
       <UsersList
         handleOpenConfirmModal={handleOpenConfirmModal}
         setActionModalConfig={setActionModalConfig}

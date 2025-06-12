@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledGoalTable = styled.div`
   .kpi-table-container {
-    padding: 20px;
   }
 
   .table-wrapper {
@@ -198,7 +197,6 @@ export const StyledGoalTable = styled.div`
 
   @media (max-width: 768px) {
     .kpi-table-container {
-      padding: 10px;
       margin: 10px;
     }
 

@@ -12,6 +12,7 @@ export function useUsers() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
   const [userId, setUserId] = useState<number | null>(null);
   const { t } = useTranslation();
+
   const { appendData: createUser } = useQueryApiClient({
     request: {
       url: `/api/user/create`,
@@ -69,6 +70,12 @@ export function useUsers() {
     },
   });
 
+  const { data: positions } = useQueryApiClient({
+    request: {
+      url: '/api/user/position',
+    },
+  });
+
   const handleDelete = (userId: number | null) => {
     setUserId(userId);
   };
@@ -92,5 +99,6 @@ export function useUsers() {
     users,
     roomData,
     teamData,
+    positions,
   };
 }

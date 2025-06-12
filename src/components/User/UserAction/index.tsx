@@ -15,6 +15,7 @@ interface props {
   createUser: any;
   roomData: any;
   teamData: any;
+  positions: { data: { name: string; id: number }[] };
 }
 
 export function UserAction({
@@ -27,6 +28,7 @@ export function UserAction({
   updateUser,
   roomData,
   teamData,
+  positions,
 }: props) {
   const { t } = useTranslation();
   const [form] = Form.useForm();
@@ -34,7 +36,7 @@ export function UserAction({
   useEffect(() => {
     form.resetFields();
     if (type == 'EDIT') {
-      form.setFieldsValue({ ...user, password: '*********' });
+      form.setFieldsValue({ ...user, password: '*********', positionId: user?.position?.id });
     }
   }, [open]);
 
@@ -45,7 +47,7 @@ export function UserAction({
   };
 
   return (
-    <Modal width={550} open={open} title={title} onCancel={handleClose} footer={[]}>
+    <Modal width={550} open={open} title={t(title)} onCancel={handleClose} footer={[]}>
       <StyledUserAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <div className="flex">
@@ -101,6 +103,15 @@ export function UserAction({
               {roomData?.data?.map((item: { name: string; id: number }, index: number) => (
                 <SelectOption value={item.id} key={index}>
                   {item.name}
+                </SelectOption>
+              ))}
+            </Select>
+          </div>
+          <div className="flex">
+            <Select showSearch={false} label={t('position')} allowClear name="positionId">
+              {positions?.data?.map((item, index) => (
+                <SelectOption key={index} value={item.id}>
+                  {t(item.name)}
                 </SelectOption>
               ))}
             </Select>

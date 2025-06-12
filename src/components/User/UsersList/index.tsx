@@ -65,25 +65,13 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       width: 150,
       render: (rank, _) => rank || t('-'),
     },
+
     {
-      title: t('date_of_employment'),
-      dataIndex: 'dateOfEmployment',
-      key: 'dateOfEmployment',
+      title: t('position'),
+      dataIndex: ['position', 'name'],
+      key: 'position',
       width: 150,
-      render: (date, _) => {
-        if (!date) return t('-');
-        return dayjs(date).format('YYYY.MM.DD');
-      }
-    },
-    {
-      title: t('pj_date_of_employment'),
-      dataIndex: 'pjDateOfEmployment',
-      key: 'pjDateOfEmployment',
-      width: 150,
-      render: (date, _) => {
-        if (!date) return t('-');
-        return dayjs(date).format('YYYY.MM.DD');
-      }
+      render: (position) => t(position),
     },
     {
       title: t('team'),
@@ -145,7 +133,7 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
               style={{ color: 'white' }}
               placement="bottom"
               trigger={['hover']}
-              title={t('update_user')}
+              title={t('delete_user')}
             >
               <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
             </Tooltip>
@@ -157,9 +145,7 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
 
   return (
     <StyledUsersList>
-      <Table columns={columns} dataSource={users || []}
-        scroll={{ x: 'max-content' }}
-      />
+      <Table columns={columns} dataSource={users || []} scroll={{ x: 'max-content' }} />
     </StyledUsersList>
   );
 }

@@ -16,3 +16,5 @@ export { TeamLeadersList } from './TeamLeaders/TeamLeadersList';
 export { TeamLeadersFilter } from './TeamLeaders/TeamLeadersFilter';
 export { GoalTable } from './GoalTable';
 export { CommentHistory } from './CommentHistory';
+export { GoalFormModal } from './GoalFormModal';
+export { GoalCommentForCEO } from './GoalCommentForCEO';

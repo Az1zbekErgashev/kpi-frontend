@@ -2,18 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { StyledGoalForm } from './style';
-import { Card, Col, Divider, Form, Radio, Row, Typography } from 'antd';
-import { Button, Input, Modal, Select, SelectOption, TextArea } from 'ui';
+import { Card, Col, Divider, Form, Row, Typography } from 'antd';
+import { Button, Input, Select, SelectOption, TextArea } from 'ui';
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-
-const STATUS_OPTIONS = [
-  { value: 'More', label: 'More' },
-  { value: 'Agreement', label: 'Agreement' },
-  { value: 'Below', label: 'Below' },
-  { value: 'Under', label: 'Under' },
-  { value: 'Over', label: 'Over' },
-];
+import { GoalFormModal } from 'components';
 
 export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
   const [form] = Form.useForm();
@@ -23,14 +16,6 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
   const [selectedTargetType, setSelectedTargetType] = useState('');
   const [currentDivisionIndex, setCurrentDivisionIndex] = useState<number | null>(null);
   const [editGoalIndex, setEditGoalIndex] = useState<number | null>(null);
-
-  const TARGET_TYPES = [
-    { value: 'RatioType', label: t('radio_type'), icon: '📊' },
-    { value: 'NumberOfTimesType', label: t('number_of_times'), icon: '🔢' },
-    { value: 'TextType', label: t('text_type'), icon: '📝' },
-    { value: 'IndividualEvaluation', label: t('individual_evaluation'), icon: '⭐' },
-    { value: 'LeaderEvaluation', label: t('leader_evaluation'), icon: '👨‍💼' },
-  ];
 
   const handleOpenModal = (divisionIndex: number, goalIndex: number | null = null) => {
     setCurrentDivisionIndex(divisionIndex);
@@ -69,52 +54,6 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
     const value = e.target.value;
     setSelectedTargetType(value);
     modalForm.setFieldsValue({ type: value });
-  };
-
-  const renderTargetValueFields = () => {
-    switch (selectedTargetType) {
-      case 'RatioType':
-      case 'NumberOfTimesType': {
-        const isRatio = selectedTargetType === 'RatioType';
-        return (
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={24} md={14}>
-              <Input name="valueText" label={t('text')} />
-            </Col>
-            <Col xs={12} sm={8} md={5}>
-              <Input
-                name={isRatio ? 'valueRatio' : 'valueNumber'}
-                label={t('ratio')}
-                min={0}
-                max={100}
-                maxLength={3}
-                onKeyDown={handleKeyDown}
-                addonAfter="%"
-              />
-            </Col>
-            <Col xs={12} sm={8} md={5}>
-              <Select defaultValue={'More'} initialValue={'More'} showSearch={false} name="status" label="Условие">
-                {STATUS_OPTIONS.map(({ value, label }) => (
-                  <SelectOption key={value} value={value}>
-                    {label}
-                  </SelectOption>
-                ))}
-              </Select>
-            </Col>
-          </Row>
-        );
-      }
-
-      case 'TextType':
-        return <></>;
-
-      case 'IndividualEvaluation':
-      case 'LeaderEvaluation':
-        return <TextArea rows={4} name="evaluationText" allowClear />;
-
-      default:
-        return null;
-    }
   };
 
   const handleKeyDown = (event: any) => {
@@ -357,50 +296,15 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
             <div className="submit-section">
               <Button type="primary" size="large" className="submit-btn" label={t('send_request')} htmlType="submit" />
             </div>
-
-            <Modal
-              title={t('add_target_indicator')}
-              open={modalVisible}
-              onOk={handleModalSubmit}
-              onCancel={handleCloseModal}
-              width={800}
-              className="target-modal"
-            >
-              <Form form={modalForm} layout="vertical">
-                <Form.Item
-                  name="goalContent"
-                  label={t('goal_content')}
-                  rules={[{ required: true, message: t('this_field_required') }]}
-                >
-                  <TextArea rows={2} allowClear />
-                </Form.Item>
-
-                <Divider>{t('target_value')}</Divider>
-                <Input type="hidden" name="id" size="small" />
-
-                <Form.Item
-                  name="type"
-                  label={t('target_type')}
-                  rules={[{ required: true, message: t('please_choose_value') }]}
-                >
-                  <Radio.Group onChange={handleTargetTypeChange} className="target-type-radio">
-                    {TARGET_TYPES.map(({ value, label, icon }) => (
-                      <Radio key={value} value={value} className="target-type-option">
-                        <span className="target-type-icon">{icon}</span>
-                        <span className="target-type-label">{label}</span>
-                      </Radio>
-                    ))}
-                  </Radio.Group>
-                </Form.Item>
-
-                {selectedTargetType && (
-                  <div className="target-fields-section">
-                    {selectedTargetType !== 'TextType' && <Divider>{t('parametrs')}</Divider>}
-                    {renderTargetValueFields()}
-                  </div>
-                )}
-              </Form>
-            </Modal>
+            <GoalFormModal
+              handleCloseModal={handleCloseModal}
+              handleKeyDown={handleKeyDown}
+              handleModalSubmit={handleModalSubmit}
+              handleTargetTypeChange={handleTargetTypeChange}
+              modalForm={modalForm}
+              modalVisible={modalVisible}
+              selectedTargetType={selectedTargetType}
+            />
           </Form>
         </Card>
       </div>

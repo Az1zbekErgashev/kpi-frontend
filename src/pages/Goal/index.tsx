@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledGoalPage } from './style';
-import { CommentHistory, GoalForm, GoalTable } from 'components';
+import { CommentHistory, GoalCommentForCEO, GoalForm, GoalTable } from 'components';
 import { useGoal } from 'hooks/useGoal';
 import { useUser } from 'hooks/useUserState';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 
 export function GoalPage() {
   const goalHook = useGoal();
-  const { user } = useUser();
   const { t } = useTranslation();
 
   const year = new Date().getFullYear().toString();
@@ -30,23 +29,11 @@ export function GoalPage() {
         </h1>
       </div>
       <GoalTable goal={goalHook.ceoGoal?.data} roleType="CEO" />
-      {user?.role === 'Ceo' ? (
-        <GoalTable goal={goalHook.goalByUserId?.data} roleType="TEAM_LEADER" />
-      ) : (
-        <>
-          {goalHook.goalByUserId?.data?.status == 'Approved' ? (
-            <GoalTable goal={goalHook.goalByUserId?.data} roleType="TEAM_LEADER" />
-          ) : (
-            <GoalForm
-              goal={goalHook.goalByUserId?.data}
-              createGoal={goalHook.createGoalFromTeam}
-              updateGoal={goalHook.updateGoal}
-              type={goalHook.goalByUserId?.data?.id ? 'EDIT' : 'ADD'}
-            />
-          )}
-        </>
-      )}
-      <CommentHistory comment={goalHook.goalByUserId?.data} />
+      <br />
+      <br />
+      <GoalTable goal={goalHook.goalByUserId?.data} roleType="TEAM_LEADER" />
+      {goalHook.goalByUserId?.data?.createdAt && <CommentHistory comment={goalHook.goalByUserId?.data} />}
+      <GoalCommentForCEO status={goalHook.goalByUserId?.data?.createdAt ? true : false} />
     </StyledGoalPage>
   );
 }

@@ -11,4 +11,8 @@ export const StyledUsersFilter = styled.div`
     align-items: center;
     gap: 20px;
   }
+
+  .scroll-div{
+    
+  }
 `;
