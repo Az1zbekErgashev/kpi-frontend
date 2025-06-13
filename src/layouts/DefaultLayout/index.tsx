@@ -12,7 +12,6 @@ interface DefaultLayoutProps {
 }
 
 const DefaultLayout = ({ title, children }: DefaultLayoutProps) => {
-  console.log(title);
   return (
     <StyledDefaultLayout>
       <Sitebar />

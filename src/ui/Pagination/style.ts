@@ -32,7 +32,6 @@ export const StyledPagination = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
   }
 
   .ant-pagination-prev,
@@ -51,6 +50,10 @@ export const StyledPagination = styled.div`
         background: #e0e0e0;
       }
     }
+  }
+
+  .ant-pagination-next {
+    margin-left: 5px;
   }
 
   .pagination-btn {

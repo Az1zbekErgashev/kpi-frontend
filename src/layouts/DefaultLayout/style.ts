@@ -8,5 +8,6 @@ export const StyledDefaultLayout = styled.div`
     transition: 0.4s;
     background-color: #f5f7fa;
     padding-top: 20px;
+    padding-bottom: 70px;
   }
 `;

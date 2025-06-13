@@ -18,6 +18,7 @@ interface props {
     teamId: number;
     team: string;
     rank?: string | number;
+    isDeleted: number;
   }[];
   setActionModalConfig: React.Dispatch<
     React.SetStateAction<{
@@ -32,6 +33,9 @@ interface props {
 export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
   const { user } = useUser();
+
+  const hasActiveUsers = users?.some((team: any) => team.isDeleted !== 1);
+
   const columns: ColumnsType = [
     {
       title: t('user_name'),
@@ -106,7 +110,10 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
         </div>
       ),
     },
-    {
+  ];
+
+  if (hasActiveUsers) {
+    columns.push({
       title: t('action'),
       dataIndex: 'action',
       key: 'action',
@@ -140,8 +147,8 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
           </div>
         </div>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <StyledUsersList>

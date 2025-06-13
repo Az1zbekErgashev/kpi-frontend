@@ -1,15 +1,13 @@
 import React from 'react';
 import { StyledGoalPage } from './style';
-import { CommentHistory, GoalCommentForCEO, GoalForm, GoalTable } from 'components';
+import { CommentHistory, GoalCommentForCEO, GoalTable } from 'components';
 import { useGoal } from 'hooks/useGoal';
-import { useUser } from 'hooks/useUserState';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 export function GoalPage() {
   const goalHook = useGoal();
   const { t } = useTranslation();
-
   const year = new Date().getFullYear().toString();
 
   return (

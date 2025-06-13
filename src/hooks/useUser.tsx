@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import useQueryApiClient from 'utils/useQueryApiClient';
 import { Notification } from 'ui';
 import { useTranslation } from 'react-i18next';
+import { smoothScroll } from 'utils/globalFunctions';
 interface initialQuery {
   text?: string;
   IsDeleted?: string | number;
@@ -90,6 +91,11 @@ export function useUsers() {
     setUserId(null);
   }, [userId]);
 
+  const handlePaginationChange = (page: number, pageSize: number) => {
+    smoothScroll('top', 0);
+    setQueryParams((res) => ({ ...res, pageIndex: page, pageSize: pageSize }));
+  };
+
   return {
     createUser,
     handleDelete,
@@ -100,5 +106,6 @@ export function useUsers() {
     roomData,
     teamData,
     positions,
+    handlePaginationChange,
   };
 }

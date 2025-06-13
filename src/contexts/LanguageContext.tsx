@@ -1,6 +1,4 @@
-import { routes } from 'config/config';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import i18n from 'utils/i18n';
 
 interface LanguageContextProps {
   language: string;

@@ -3,6 +3,7 @@ import { useRooms } from 'hooks/useRoom';
 import { TFunction } from 'i18next';
 import React, { useState } from 'react';
 import { ConfirmModal } from 'ui';
+import Pagination from 'ui/Pagination/Pagination';
 
 const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
@@ -57,6 +58,13 @@ export function Room() {
         handleOpenConfirmModal={handleOpenConfirmModal}
         rooms={roomHook.rooms?.data?.items}
         setActionModalConfig={setActionModalConfig}
+      />
+      <Pagination
+        total={roomHook.rooms?.data?.totalItems}
+        pageSize={roomHook.rooms?.data?.itemsPerPage}
+        onChange={roomHook.handlePaginationChange}
+        hideOnSinglePage={true}
+        current={roomHook.rooms?.data?.PageIndex}
       />
       <RoomAction {...roomHook} handleClose={handleClose} {...actionModalConfig} />
       {coniformModal && <ConfirmModal {...coniformModal} />}

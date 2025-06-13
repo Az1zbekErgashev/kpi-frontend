@@ -3,6 +3,7 @@ import { useTeams } from 'hooks/useTeam';
 import { TFunction } from 'i18next';
 import React, { useState } from 'react';
 import { ConfirmModal } from 'ui';
+import Pagination from 'ui/Pagination/Pagination';
 
 const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
@@ -57,6 +58,13 @@ export function Team() {
         handleOpenConfirmModal={handleOpenConfirmModal}
         teams={hookTeam.teams?.data?.items}
         setActionModalConfig={setActionModalConfig}
+      />
+      <Pagination
+        total={hookTeam.teams?.data?.totalItems}
+        pageSize={hookTeam.teams?.data?.itemsPerPage}
+        onChange={hookTeam.handlePaginationChange}
+        hideOnSinglePage={true}
+        current={hookTeam.teams?.data?.PageIndex}
       />
       <TeamAction {...hookTeam} {...actionModalConfig} handleClose={handleClose} />
       {coniformModal && <ConfirmModal {...coniformModal} />}

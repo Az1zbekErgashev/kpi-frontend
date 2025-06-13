@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const StyledTranslation = styled.div`
-  margin-bottom: 70px !important;
-
   &.translation-modal,
   &.statuses {
     margin-bottom: 0px !important;
@@ -20,14 +18,14 @@ export const StyledTranslation = styled.div`
       font-size: 1rem;
       font-weight: 500;
       border-radius: 6px;
-      background-color: var(--primary-color,rgb(88, 153, 214));
+      background-color: var(--primary-color, rgb(88, 153, 214));
       border: none;
       color: #fff;
       transition: all 0.3s ease;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
       &:hover {
-        background-color: var(--primary-color,rgb(88, 153, 214));
+        background-color: var(--primary-color, rgb(88, 153, 214));
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         transform: translateY(-1px);
       }
@@ -121,7 +119,7 @@ export const StyledTranslation = styled.div`
     .ant-select-selection-item {
       display: none !important;
     }
-    
+
     .ant-form-item-label {
       white-space: nowrap;
       overflow: hidden;

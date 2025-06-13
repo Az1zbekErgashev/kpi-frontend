@@ -14,6 +14,7 @@ interface props {
     createdAt: string;
     name: string;
     teamsCount: number;
+    isDeleted: number;
   }[];
   setActionModalConfig: React.Dispatch<
     React.SetStateAction<{
@@ -28,6 +29,8 @@ interface props {
 
 export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
+
+  const hasActiveRooms = rooms?.some((room) => room.isDeleted !== 1);
 
   const columns: ColumnsType = [
     {
@@ -66,7 +69,10 @@ export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }
         </div>
       ),
     },
-    {
+  ];
+
+  if (hasActiveRooms) {
+    columns.push({
       title: t('action'),
       dataIndex: 'action',
       key: 'action',
@@ -97,8 +103,8 @@ export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }
           </div>
         </div>
       ),
-    },
-  ];
+    });
+  }
   return (
     <StyledRoomList>
       <Table columns={columns} dataSource={rooms || []} />

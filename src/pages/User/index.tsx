@@ -3,6 +3,7 @@ import { useUsers } from 'hooks/useUser';
 import { TFunction } from 'i18next';
 import React, { useState } from 'react';
 import { ConfirmModal, ScrollWithShift } from 'ui';
+import Pagination from 'ui/Pagination/Pagination';
 
 const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => void) => ({
   cancelText: t('cancel'),
@@ -61,6 +62,13 @@ export function User() {
         handleOpenConfirmModal={handleOpenConfirmModal}
         setActionModalConfig={setActionModalConfig}
         users={hookUser.users?.data?.items}
+      />
+      <Pagination
+        total={hookUser.users?.data?.totalItems}
+        pageSize={hookUser.users?.data?.itemsPerPage}
+        onChange={hookUser.handlePaginationChange}
+        hideOnSinglePage={true}
+        current={hookUser.users?.data?.PageIndex}
       />
       <UserAction {...hookUser} handleClose={handleClose} {...actionModalConfig} />
       {coniformModal && <ConfirmModal {...coniformModal} />}

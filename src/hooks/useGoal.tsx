@@ -49,6 +49,12 @@ export function useGoal() {
     },
   });
 
+  const {} = useQueryApiClient({
+    request: {
+      url: '',
+    },
+  });
+
   return {
     goalByUserId,
     setQueryParams,

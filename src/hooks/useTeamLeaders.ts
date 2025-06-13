@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { smoothScroll } from 'utils/globalFunctions';
 import useQueryApiClient from 'utils/useQueryApiClient';
 
 interface initialQuery {
@@ -9,7 +10,7 @@ interface initialQuery {
   userName?: string;
   teamId?: string;
   roomId?: string;
-  year?: number;
+  year?: string;
 }
 export function useTeamLeaders() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
@@ -41,11 +42,17 @@ export function useTeamLeaders() {
     refetchUsers();
   }, [queryParams]);
 
+  const handlePaginationChange = (page: number, pageSize: number) => {
+    smoothScroll('top', 0);
+    setQueryParams((res) => ({ ...res, pageIndex: page, pageSize: pageSize }));
+  };
+
   return {
     refetchUsers,
     setQueryParams,
     teamLeaders,
     rooms,
     teams,
+    handlePaginationChange,
   };
 }

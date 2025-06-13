@@ -23,6 +23,9 @@ interface props {
 
 export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }: props) {
   const { t } = useTranslation();
+
+  const hasActiveTeams = teams?.some((team: any) => team.isDeleted !== 1);
+
   const columns: ColumnsType = [
     {
       title: t('team_name'),
@@ -60,7 +63,10 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
         </div>
       ),
     },
-    {
+  ];
+
+  if (hasActiveTeams) {
+    columns.push({
       title: t('action'),
       dataIndex: 'action',
       key: 'action',
@@ -91,8 +97,8 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
           </div>
         </div>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <StyledTeamList>

@@ -7,9 +7,5 @@ export const StyledTeamLeadersList = styled.div`
     gap: 20px;
     margin-bottom: 20px;
     width: 70%;
-
-    .ant-form-item {
-      width: 100%;
-    }
   }
 `;
