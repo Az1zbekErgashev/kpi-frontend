@@ -10,6 +10,7 @@ export { RedirectModal } from './RedirectModal';
 export { Tabs } from './Tabs';
 export { PageSizeController } from './PageSizeController';
 export { ScrollWithShift } from './ScrollWithShift';
+export { LanguageSwitcher } from './LanguageSwitcher';
 export * from './Radio';
 export * from './RadioGroup';
 export * from './Select';

@@ -663,4 +663,10 @@ export const StyledLoginPage = styled.div`
       right: 10px;
     }
   }
+
+  .select-item-language {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
 `;

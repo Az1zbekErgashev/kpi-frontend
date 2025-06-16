@@ -153,7 +153,7 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
                         <Col xs={24} sm={11} md={6}>
                           <Input
                             name={[name, 'name']}
-                            rules={[{ required: true, message: t('this_field_required') }]}
+                            rules={[{ required: true, message: t('field_is_required') }]}
                             placeholder={t('division')}
                             label={t('division_name')}
                           />
@@ -169,7 +169,7 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
                             placeholder={t('ratio')}
                             addonAfter="%"
                             label={t('division_ratio')}
-                            rules={[{ required: true, message: t('this_field_required') }]}
+                            rules={[{ required: true, message: t('field_is_required') }]}
                           />
                         </Col>
                         <Col xs={24} sm={24} md={12}>

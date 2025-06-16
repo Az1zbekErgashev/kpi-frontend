@@ -84,7 +84,7 @@ export function GoalFormModal({
         <Form.Item
           name="goalContent"
           label={t('goal_content')}
-          rules={[{ required: true, message: t('this_field_required') }]}
+          rules={[{ required: true, message: t('field_is_required') }]}
         >
           <TextArea rows={2} allowClear />
         </Form.Item>

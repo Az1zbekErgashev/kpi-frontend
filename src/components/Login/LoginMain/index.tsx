@@ -1,7 +1,14 @@
 import React from 'react';
 import { LoginForm } from '../LoginForm';
+import { LanguageSwitcher } from 'ui';
+import { useLanguage } from 'contexts/LanguageContext';
 
 export function LoginMain() {
+  const { changeLanguage, language } = useLanguage();
+  const handleLanguageChange = async (value: number) => {
+    localStorage.setItem('language', value.toString());
+    changeLanguage(value.toString());
+  };
   return (
     <main className="login-container">
       <div className="background-effect">
@@ -16,7 +23,9 @@ export function LoginMain() {
         ))}
       </div>
 
-      <div className="language-switcher-container">{/* //<LanguageSwitcher /> */}</div>
+      <div className="language-switcher-container">
+        <LanguageSwitcher handleLanguageChange={handleLanguageChange} language={language} />
+      </div>
 
       <div className="login-wrapper">
         <div className="image-side">

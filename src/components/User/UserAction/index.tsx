@@ -53,13 +53,13 @@ export function UserAction({
           <div className="flex">
             <Input
               label={t('full_name')}
-              rules={[{ required: true, message: t('this_field_required') }]}
+              rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
               name="fullName"
             />
             <Input
               label={t('user_name')}
-              rules={[{ required: true, message: t('this_field_required') }]}
+              rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
               name="userName"
             />
@@ -67,14 +67,14 @@ export function UserAction({
           <div className="flex">
             <Input
               label={t('password')}
-              rules={[{ required: true, message: t('this_field_required') }]}
+              rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
               name="password"
               disabled={type == 'EDIT' ? true : false}
             />
             <Select
               label={t('role')}
-              rules={[{ required: true, message: t('this_field_required') }]}
+              rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
               showSearch={false}
               name="role"
@@ -98,7 +98,7 @@ export function UserAction({
               label={t('room')}
               allowClear
               name="roomId"
-              rules={[{ required: true, message: t('this_field_required') }]}
+              rules={[{ required: true, message: t('field_is_required') }]}
             >
               {roomData?.data?.map((item: { name: string; id: number }, index: number) => (
                 <SelectOption value={item.id} key={index}>

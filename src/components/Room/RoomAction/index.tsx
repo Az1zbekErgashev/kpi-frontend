@@ -38,7 +38,7 @@ export function RoomAction({ handleClose, open, title, type, room, createRoom, u
           <Input
             label={t('room_name')}
             name="name"
-            rules={[{ required: true, message: t('this_field_required') }]}
+            rules={[{ required: true, message: t('field_is_required') }]}
             allowClear
           />
           <div className="footer-btn">

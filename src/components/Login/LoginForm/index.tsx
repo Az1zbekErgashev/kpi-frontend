@@ -86,7 +86,7 @@ export function LoginForm() {
           <Input
             type="password"
             label={t('password')}
-            rules={[{ required: true, message: t('this_field_required') }]}
+            rules={[{ required: true, message: t('field_is_required') }]}
             name="password"
           />
         </div>

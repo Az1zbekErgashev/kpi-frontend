@@ -4,7 +4,7 @@ import { StyledNavbar } from './style';
 import { Dropdown, MenuProps } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Select, SelectOption, ConfirmModal } from 'ui';
+import { Select, SelectOption, ConfirmModal, LanguageSwitcher } from 'ui';
 import SvgSelector from 'assets/icons/SvgSelector';
 import { TFunction } from 'i18next';
 import Cookies from 'js-cookie';
@@ -87,32 +87,7 @@ export function Navbar({ title }: props) {
 
         <div className="navActions">
           <div className="dropdown">
-            <Select value={language} onChange={handleLanguageChange} showSearch={false}>
-              <SelectOption value={'1'}>
-                <div className="select-item-language">
-                  <SvgSelector id="english" />
-                  EN
-                </div>
-              </SelectOption>
-              <SelectOption value={'0'}>
-                <div className="select-item-language">
-                  <SvgSelector id="korea" />
-                  KO
-                </div>
-              </SelectOption>
-              <SelectOption value={'2'}>
-                <div className="select-item-language">
-                  <SvgSelector id="uzbekistan" />
-                  UZ
-                </div>
-              </SelectOption>
-              <SelectOption value={'3'}>
-                <div className="select-item-language">
-                  <SvgSelector id="russia" />
-                  RU
-                </div>
-              </SelectOption>
-            </Select>
+            <LanguageSwitcher handleLanguageChange={handleLanguageChange} language={language} />
           </div>
           <Dropdown menu={{ items }} trigger={['click']}>
             <div className="dropdown">
