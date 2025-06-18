@@ -7,9 +7,31 @@ import { Table } from 'ui';
 interface props {
   users: any;
 }
+
+type Status = 'NoWritte' | 'PendingReview' | 'Returned' | 'Approved';
+
+const statusColors: Record<Status, { background: string; color: string }> = {
+  NoWritte: {
+    background: '#e0e0e0',
+    color: '#4a4a4a',
+  },
+  PendingReview: {
+    background: '#fff0b3',
+    color: '#b38600',
+  },
+  Returned: {
+    background: '#ffcccc',
+    color: '#cc0000',
+  },
+  Approved: {
+    background: '#c6f6d5',
+    color: '#006644',
+  },
+};
 export function TeamLeadersList({ users }: props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
   const columns: ColumnsType = [
     {
       title: t('room'),
@@ -35,8 +57,20 @@ export function TeamLeadersList({ users }: props) {
       title: t('status'),
       dataIndex: 'status',
       key: 'status',
+      render: (record, _) => (
+        <div className="status-wrapp">
+          <div style={{ backgroundColor: getColors(record).background, color: getColors(record).color }}>
+            {t(record)}
+          </div>
+        </div>
+      ),
     },
   ];
+
+  const getColors = (status: Status) => {
+    return statusColors[status];
+  };
+
   return (
     <div>
       <Table

@@ -3,12 +3,19 @@
 import { useEffect, useState } from 'react';
 import { StyledGoalForm } from './style';
 import { Card, Col, Divider, Form, Row, Typography } from 'antd';
-import { Button, Input, Select, SelectOption, TextArea } from 'ui';
+import { Button, Input, TextArea } from 'ui';
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { GoalFormModal } from 'components';
 
-export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
+interface props {
+  type: 'ADD' | 'EDIT';
+  createGoal: any;
+  updateGoal: any;
+  goal: any;
+  setFormStatus: any;
+}
+export function GoalForm({ goal, createGoal, updateGoal, type, setFormStatus }: props) {
   const [form] = Form.useForm();
   const [modalForm] = Form.useForm();
   const { t } = useTranslation();
@@ -23,17 +30,18 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
 
     if (goalIndex !== null) {
       const goal = form.getFieldValue(['divisions', divisionIndex, 'goals', goalIndex]);
-      const { goalContent, targetValue } = goal;
+      const { goalContent, targetValue, id } = goal;
 
-      setSelectedTargetType(targetValue.type);
+      setSelectedTargetType(targetValue?.type);
       modalForm.setFieldsValue({
         goalContent,
-        type: targetValue.type,
-        status: targetValue.status,
-        valueRatio: targetValue.valueRatio,
-        valueNumber: targetValue.valueNumber,
-        valueText: targetValue.valueText,
-        evaluationText: targetValue.evaluationText,
+        id,
+        type: targetValue?.type,
+        status: targetValue?.status,
+        valueRatio: targetValue?.valueRatio,
+        valueNumber: targetValue?.valueNumber,
+        valueText: targetValue?.valueText,
+        evaluationText: targetValue?.evaluationText,
       });
     } else {
       modalForm.resetFields();
@@ -67,24 +75,28 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
     if (type == 'ADD') {
       createGoal(value);
     } else {
-      updateGoal({ ...value, goalId: goal.id });
+      updateGoal({ ...value, goalId: goal?.data?.id });
     }
   };
 
   useEffect(() => {
     if (type === 'ADD') {
+      form.resetFields();
       return;
     } else {
-      form.setFieldsValue({ ...goal });
+      form.setFieldsValue({ ...goal?.data });
     }
   }, [goal]);
 
   const handleModalSubmit = async () => {
     try {
       const values = await modalForm.validateFields();
+
+      console.log(values);
+
       const newGoal = {
         goalContent: values.goalContent,
-        assignedToId: 0,
+        id: values.id,
         targetValue: {
           type: values.type,
           status: values.status || null,
@@ -140,7 +152,9 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
       <div className="kpi-form-container">
         <Card className="main-card">
           <Form form={form} layout="vertical" className="kpi-form" onFinish={onFinish}>
-            <Input type="hidden" name="id" size="small" />
+            <Form.Item className="hidden-input">
+              <Input type="hidden" name="id" size="small" />
+            </Form.Item>
             <Form.List name="divisions" initialValue={[{}]}>
               {(fields, { add, remove }) => (
                 <>
@@ -158,7 +172,7 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
                             label={t('division_name')}
                           />
                         </Col>
-                        <Col xs={12} sm={6} md={2}>
+                        <Col xs={12} sm={6} md={3}>
                           <Input
                             name={[name, 'ratio']}
                             className="no-arrows"
@@ -172,7 +186,7 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
                             rules={[{ required: true, message: t('field_is_required') }]}
                           />
                         </Col>
-                        <Col xs={24} sm={24} md={12}>
+                        <Col xs={24} sm={24} md={11}>
                           <div className="goals-section">
                             <Form.List name={[name, 'goals']}>
                               {(goalFields) => (
@@ -198,7 +212,7 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
                                       displayValue = valueText
                                         ? `${valueText} : ${valueRatio ?? 0}% ${status}`
                                         : `${valueRatio ?? ''}% ${status}`;
-                                    } else if (type === 'NumberType') {
+                                    } else if (type === 'NumberOfTimesType') {
                                       displayValue = valueText
                                         ? `${valueText} : ${valueNumber ?? 0} ${status}`
                                         : `${valueNumber ?? ''}% ${status}`;
@@ -285,16 +299,15 @@ export function GoalForm({ goal, createGoal, updateGoal, type }: any) {
               )}
             </Form.List>
 
-            <Card className="comment-card">
-              <Form.Item name="comment">
-                <TextArea rows={4} placeholder={t('add_comment_area')} />
-              </Form.Item>
-            </Card>
-
-            <Divider />
-
             <div className="submit-section">
-              <Button type="primary" size="large" className="submit-btn" label={t('send_request')} htmlType="submit" />
+              <Button onClick={() => setFormStatus(true)} className="cancel-btn" size="large" label={t('cancel')} />
+              <Button
+                type="primary"
+                size="large"
+                className="submit-btn"
+                label={goal?.data?.id ? t('update_yearly_gaol') : t('create_yearly_gaol')}
+                htmlType="submit"
+              />
             </div>
             <GoalFormModal
               handleCloseModal={handleCloseModal}

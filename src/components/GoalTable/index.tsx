@@ -2,44 +2,41 @@ import React from 'react';
 import { StyledGoalTable } from './style';
 import { useTranslation } from 'react-i18next';
 import { ApiData } from 'types/User';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface props {
   goal: ApiData | null;
   roleType: 'CEO' | 'TEAM_LEADER' | 'TEAM_MEMBER';
+  goalAndTeam: { team: string; room: string };
 }
-export function GoalTable({ goal, roleType }: props) {
+export function GoalTable({ goal, roleType, goalAndTeam }: props) {
   const { t } = useTranslation();
   const params = useParams();
-  const year = params.year ?? '';
-
+  const year = params.year;
+  const newDateTime = new Date().getFullYear().toString();
+  const location = useLocation();
   return (
     <StyledGoalTable>
       <div className="kpi-table-container">
         <div className="table-wrapper">
           <table className="kpi-table">
             <thead>
-              <tr className="header-row">
-                <th
-                  colSpan={4}
-                  className="main-header"
-                  dangerouslySetInnerHTML={{
-                    __html: t('goal_table_header_title')
-                      .replace('{year}', year.toString())
-                      .replace('{team}', goal?.createdBy?.room || ''),
-                  }}
-                ></th>
-              </tr>
-              <tr className="sub-header-row">
-                <th colSpan={2} className="empty-header"></th>
-                <th
-                  colSpan={2}
-                  className="year-header"
-                  dangerouslySetInnerHTML={{
-                    __html: t('goal_table_header').replace('{year}', year.toString()),
-                  }}
-                ></th>
-              </tr>
+              {!location.pathname.includes('yearly-goal') && (
+                <tr className="header-row">
+                  <th
+                    colSpan={4}
+                    className="main-header"
+                    dangerouslySetInnerHTML={{
+                      __html: t(roleType == 'CEO' ? 'goal_table_header_ceo_title' : 'goal_table_header_team_title')
+                        .replace('{year}', year?.toString() ?? newDateTime)
+                        .replace('{room}', goalAndTeam?.room || '')
+
+                        .replace('{team}', goalAndTeam?.team || ''),
+                    }}
+                  ></th>
+                </tr>
+              )}
+
               <tr className="column-headers">
                 <th className="category-header">{t('division')}</th>
                 <th className="ratio-header">{t('ratio')}</th>
@@ -55,12 +52,12 @@ export function GoalTable({ goal, roleType }: props) {
                     let displayValue: string | null = null;
                     if (type === 'RatioType') {
                       displayValue = valueText
-                        ? `${valueText} : ${valueRatio ?? 0}% ${status}`
-                        : `${valueRatio ?? 0}% ${status}`;
-                    } else if (type === 'NumberType') {
+                        ? `${valueText} : ${valueRatio ?? 0}% ${t(status)}`
+                        : `${valueRatio ?? 0}% ${t(status)}`;
+                    } else if (type === 'NumberOfTimesType') {
                       displayValue = valueText
-                        ? `${valueText} : ${valueNumber ?? 0} ${status}`
-                        : `${valueNumber ?? 0} ${status}`;
+                        ? `${valueText} : ${valueNumber ?? 0} ${t(status)}`
+                        : `${valueNumber ?? 0} ${t(status)}`;
                     } else if (type === 'IndividualEvaluation' || type === 'LeaderEvaluation') {
                       const label =
                         type === 'IndividualEvaluation' ? t('[individual_evaluation]') : t('[leader_evaluation]');

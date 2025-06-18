@@ -14,7 +14,7 @@ export function GoalCommentForCEO({ status }: props) {
   const navigate = useNavigate();
   return (
     <StyledGoalCommentForCEO>
-      {status ? (
+      {status && (
         <Form>
           <Card className="comment-card">
             <TextArea name="comment" rows={4} placeholder={t('add_comment_area')} />
@@ -25,10 +25,6 @@ export function GoalCommentForCEO({ status }: props) {
             </div>
           </Card>
         </Form>
-      ) : (
-        <div className="flex-button">
-          <Button label={t('cancel')} onClick={() => navigate(-1)} />
-        </div>
       )}
     </StyledGoalCommentForCEO>
   );

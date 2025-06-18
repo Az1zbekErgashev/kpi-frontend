@@ -33,6 +33,7 @@ export function GoalFormModal({
         const isRatio = selectedTargetType === 'RatioType';
         return (
           <Row gutter={[16, 16]}>
+            <Input type="hidden" name="targetValueId" size="small" />
             <Col xs={24} sm={24} md={14}>
               <Input name="valueText" label={t('text')} />
             </Col>
@@ -48,10 +49,16 @@ export function GoalFormModal({
               />
             </Col>
             <Col xs={12} sm={8} md={5}>
-              <Select defaultValue={'More'} initialValue={'More'} showSearch={false} name="status" label="Условие">
+              <Select
+                defaultValue={t('More')}
+                initialValue={t('More')}
+                showSearch={false}
+                name="status"
+                label="Условие"
+              >
                 {STATUS_OPTIONS.map(({ value, label }) => (
                   <SelectOption key={value} value={value}>
-                    {label}
+                    {t(label)}
                   </SelectOption>
                 ))}
               </Select>

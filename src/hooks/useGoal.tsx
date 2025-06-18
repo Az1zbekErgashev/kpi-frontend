@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useQueryApiClient from 'utils/useQueryApiClient';
 
@@ -7,6 +7,7 @@ interface initialQuery {
   IsDeleted?: string | number;
   pageIndex: number;
   pageSize: number;
+  year?: number;
 }
 export function useGoal() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
@@ -18,9 +19,10 @@ export function useGoal() {
       method: 'GET',
     },
   });
+
   const { data: ceoGoal } = useQueryApiClient({
     request: {
-      url: `/api/goal/ceo-goal/${params.year}`,
+      url: `/api/goal/ceo-goal/${params.year || queryParams?.year}`,
       method: 'GET',
     },
   });
@@ -49,9 +51,10 @@ export function useGoal() {
     },
   });
 
-  const {} = useQueryApiClient({
+  const { data: rommAndTeam } = useQueryApiClient({
     request: {
-      url: '',
+      url: `/api/goal/team-by-id?id=${params.id}`,
+      method: 'GET',
     },
   });
 
@@ -62,5 +65,6 @@ export function useGoal() {
     updateGoal,
     createGoalFromCeo,
     createGoalFromTeam,
+    rommAndTeam,
   };
 }

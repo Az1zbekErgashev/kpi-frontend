@@ -13,6 +13,10 @@ export const StyledGoalForm = styled.div`
     margin: 0 auto;
   }
 
+  .hidden-input {
+    display: none;
+  }
+
   .form-title {
     text-align: center;
     color: #1890ff;
@@ -30,14 +34,6 @@ export const StyledGoalForm = styled.div`
     border: 1px solid #e8e8e8;
     border-radius: 8px;
     transition: all 0.3s ease;
-
-    .ant-card-body {
-      padding: 12px;
-
-      @media (min-width: 768px) {
-        padding: 16px;
-      }
-    }
   }
 
   .division-card:hover {
@@ -172,31 +168,77 @@ export const StyledGoalForm = styled.div`
     border-radius: 8px;
   }
 
-  .submit-section {
-    text-align: end;
-    padding: 24px 0;
+  .submit-section{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 12px;
   }
 
-  .submit-btn {
+  .cancel-btn {
     height: 48px;
     padding: 0 32px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 8px;
-    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-    border: none;
-    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
-    min-width: 200px;
+    background: #ffffff;
+    border: 2px solid #d9d9d9;
+    color: #595959;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    min-width: 120px;
+  }
 
-    @media (min-width: 768px) {
-      padding: 0 48px;
-    }
+  .cancel-btn:hover {
+    border-color: #40a9ff;
+    color: #1890ff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .cancel-btn:active {
+    transform: translateY(0);
+  }
+
+  .cancel-btn:focus {
+    outline: none;
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+
+  .submit-btn {
+    height: 48px !important;
+    padding: 0 32px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3) !important;
+    min-width: 200px !important;
+    position: relative !important;
+    overflow: hidden !important;
   }
 
   .submit-btn:hover {
-    background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(24, 144, 255, 0.4);
+    background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(24, 144, 255, 0.4) !important;
+  }
+
+  .submit-btn:active {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3) !important;
+  }
+
+  .submit-btn:focus {
+    outline: none !important;
+    box-shadow:
+      0 6px 16px rgba(24, 144, 255, 0.4),
+      0 0 0 2px rgba(24, 144, 255, 0.2) !important;
   }
 
   .target-modal {

@@ -2,7 +2,7 @@ interface adminNavigate {
   key: string;
   path?: string;
   icon: string;
-  children?: { key: string; path: string; icon?: string }[];
+  children?: { key: string; path: string }[];
 }
 
 export const ADMIN_NAVIGATE: adminNavigate[] = [
@@ -11,23 +11,11 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
     key: 'setting',
     icon: 'setting',
     children: [
-      { key: 'users', path: '/setting/users', icon: 'people' },
-      { key: 'teams', path: '/setting/teams', icon: 'teams' },
-      { key: 'rooms', path: '/setting/rooms', icon: 'rooms' },
-      { key: 'translations', path: '/setting/translations', icon: 'translations' },
-    ],
-  },
-];
-
-export const EMPLOYEE_NAVIGATE: adminNavigate[] = [
-  { key: 'dashboard', path: '/', icon: 'dashboard' },
-  {
-    key: 'requests',
-    path: '/requests',
-    icon: 'card-list',
-    children: [
-      { key: 'all_requests', path: '/requests' },
-      { key: 'deleted_requests', path: '/deleted-requests' },
+      { key: 'users', path: '/setting/users' },
+      { key: 'teams', path: '/setting/teams' },
+      { key: 'rooms', path: '/setting/rooms' },
+      { key: 'translations', path: '/setting/translations' },
+      { key: 'yearly_goal', path: '/setting/yearly-goal' },
     ],
   },
 ];
@@ -44,7 +32,7 @@ export const defaultImageUrl =
 
 export const TARGET_TYPES = [
   { value: 'RatioType', label: 'radio_type', icon: '📊' },
-  { value: 'NumberOfTimesType', label: 'number_of_times', icon: '🔢' },
+  { value: 'NumberOfTimesType', label: 'number_type', icon: '🔢' },
   { value: 'TextType', label: 'text_type', icon: '📝' },
   { value: 'IndividualEvaluation', label: 'individual_evaluation', icon: '⭐' },
   { value: 'LeaderEvaluation', label: 'leader_evaluation', icon: '👨‍💼' },
