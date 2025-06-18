@@ -93,7 +93,7 @@ export function GoalFormModal({
           label={t('goal_content')}
           rules={[{ required: true, message: t('field_is_required') }]}
         >
-          <TextArea rows={2} allowClear />
+          <TextArea maxLength={1000} rows={6} allowClear />
         </Form.Item>
 
         <Divider>{t('target_value')}</Divider>

@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
 export const StyledGoalTable = styled.div`
-  .kpi-table-container {
-  }
-
   .table-wrapper {
     border: 1px solid #d1d5db;
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    white-space: pre-line;
   }
 
   .kpi-table {
