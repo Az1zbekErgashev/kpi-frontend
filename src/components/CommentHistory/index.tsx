@@ -77,6 +77,7 @@ export function CommentHistory({ comment }: props) {
             .replace('{team}', comment?.createdBy?.team ?? '')}
         </h1>
       </div>
+      <br />
       <Table columns={columns} dataSource={comment?.comments ?? []} />
     </StyledCommentHistory>
   );

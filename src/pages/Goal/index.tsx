@@ -28,8 +28,15 @@ export function GoalPage() {
       <br />
       <br />
       <GoalTable goalAndTeam={goalHook.rommAndTeam?.data} goal={goalHook.goalByUserId?.data} roleType="TEAM_LEADER" />
+      <br />
       {goalHook.goalByUserId?.data?.createdAt && <CommentHistory comment={goalHook.goalByUserId?.data} />}
-      <GoalCommentForCEO status={goalHook.goalByUserId?.data?.createdAt ? true : false} />
+
+      {goalHook.goalByUserId?.data?.status == 'PendingReview' && (
+        <GoalCommentForCEO
+          status={goalHook.goalByUserId?.data?.createdAt ? true : false}
+          goal={goalHook.goalByUserId?.data}
+        />
+      )}
     </StyledGoalPage>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useQueryApiClient from 'utils/useQueryApiClient';
 
 interface initialQuery {
@@ -12,10 +12,10 @@ interface initialQuery {
 export function useGoal() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
   const params = useParams();
-
+  const navigate = useNavigate();
   const { data: goalByUserId, refetch: getGoalByUserId } = useQueryApiClient({
     request: {
-      url: `/api/goal/by-team/${params.id}/${params.year}`,
+      url: `/api/goal/by-user-id/${params.id}/${params.year}`,
       method: 'GET',
     },
   });
@@ -55,6 +55,9 @@ export function useGoal() {
     request: {
       url: `/api/goal/team-by-id?id=${params.id}`,
       method: 'GET',
+    },
+    onError(error) {
+      if (error.error == 'team_not_found') navigate('/');
     },
   });
 
