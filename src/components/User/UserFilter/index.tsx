@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledUsersFilter } from './style';
 import { Form } from 'antd';
-import { Button, Input, Select, SelectOption } from 'ui';
+import { Button, Input } from 'ui';
 import { useTranslation } from 'react-i18next';
 
 interface props {
@@ -23,12 +23,6 @@ export function UsersFilter({ handleValueChange, setActionModalConfig }: props) 
     <StyledUsersFilter>
       <Form form={form} layout="vertical" onValuesChange={handleValueChange}>
         <Input allowClear placeholder={t('search....')} name="text" label={t('search_by_username_fullname_team')} />
-        <div className="select">
-          <Select showSearch={false} name="IsDeleted" label={t('search_by_status')} defaultValue={0} initialValue={0}>
-            <SelectOption value={0}>{t('active')}</SelectOption>
-            <SelectOption value={1}>{t('inactive')}</SelectOption>
-          </Select>
-        </div>
       </Form>
 
       <Button
