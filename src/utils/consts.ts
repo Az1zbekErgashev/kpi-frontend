@@ -11,11 +11,11 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
     key: 'setting',
     icon: 'setting',
     children: [
-      { key: 'users', path: '/setting/users' },
-      { key: 'teams', path: '/setting/teams' },
-      { key: 'rooms', path: '/setting/rooms' },
-      { key: 'translations', path: '/setting/translations' },
       { key: 'yearly_goal', path: '/setting/yearly-goal' },
+      { key: 'rooms', path: '/setting/rooms' },
+      { key: 'teams', path: '/setting/teams' },
+      { key: 'users', path: '/setting/users' },
+      { key: 'translations', path: '/setting/translations' },
     ],
   },
 ];
