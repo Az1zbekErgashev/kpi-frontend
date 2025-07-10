@@ -19,3 +19,4 @@ export { CommentHistory } from './CommentHistory';
 export { GoalFormModal } from './GoalFormModal';
 export { GoalCommentForCEO } from './GoalCommentForCEO';
 export { YearlyGoalFilter } from './YearlyGoal/YearlyGoalFilter';
+export { MonthlyPerformanceFilter } from './TeamLeaders/MonthlyPerformanceFilter';
