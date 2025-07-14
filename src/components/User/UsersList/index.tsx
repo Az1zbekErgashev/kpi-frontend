@@ -38,23 +38,16 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
 
   const columns: ColumnsType = [
     {
-      title: t('user_name'),
+      title: t('id'),
       dataIndex: 'userName',
       key: 'userName',
       width: 150,
     },
     {
-      title: t('full_name'),
+      title: t('usernamee'),
       dataIndex: 'fullName',
       key: 'fullName',
       width: 150,
-    },
-    {
-      title: t('registration_date'),
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: 150,
-      render: (date, _) => dayjs(date).format('YYYY.MM.DD'),
     },
     {
       title: t('role'),
@@ -109,6 +102,13 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
           )}
         </div>
       ),
+    },
+    {
+      title: t('registration_date'),
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      width: 160,
+      render: (date, _) => dayjs(date).format('YYYY.MM.DD'),
     },
   ];
 

@@ -51,17 +51,17 @@ export function UserAction({
       <StyledUserAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <div className="flex">
+           <Input
+              label={t('id')}
+              rules={[{ required: true, message: t('field_is_required') }]}
+              allowClear
+              name="userName"
+            />
             <Input
               label={t('full_name')}
               rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
               name="fullName"
-            />
-            <Input
-              label={t('user_name')}
-              rules={[{ required: true, message: t('field_is_required') }]}
-              allowClear
-              name="userName"
             />
           </div>
           <div className="flex">
