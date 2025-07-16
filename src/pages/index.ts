@@ -7,3 +7,5 @@ export { Translations } from './Translations';
 export { GoalPage } from './Goal';
 export { TeamLeaders } from './TeamLeaders';
 export { YearlyGoal } from './YearlyGoal';
+export { GradeDisplay } from './YearlyEvaluation';
+export { MonthlyTarget } from './MonthlyTarget';

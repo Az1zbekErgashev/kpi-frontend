@@ -75,7 +75,7 @@ export function TeamLeadersList({ users }: props) {
     <div>
       <Table
         onRow={(record: any) => ({
-          onClick: () => navigate(`/goal/user-id/${record.teamId}/${record.year}`),
+          onClick: () => navigate(`/monthly-target/${record.teamId}/${record.year}/${record.month}`),
         })}
         columns={columns}
         dataSource={users ?? []}

@@ -12,9 +12,23 @@ interface initialQuery {
   roomId?: string;
   year?: string;
 }
+
+interface initialQueryForPerformance {
+  pageIndex: number;
+  pageSize: number;
+  year?: number;
+  month?: number;
+  userId?: number;
+}
+
 export function useTeamLeaders() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
-
+  const [queryParamsForPerformance, setQueryParamsForPerformance] = useState<initialQueryForPerformance | null>({
+    pageIndex: 1,
+    pageSize: 10,
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+  });
   const { data: teamLeaders, refetch: refetchUsers } = useQueryApiClient({
     request: {
       url: `/api/user/filter-ceo`,
@@ -38,6 +52,14 @@ export function useTeamLeaders() {
     },
   });
 
+  const { data: monthlyData } = useQueryApiClient({
+    request: {
+      url: '/api/monthlytarget/list-ceo',
+      method: 'GET',
+      data: queryParamsForPerformance,
+    },
+  });
+
   useEffect(() => {
     refetchUsers();
   }, [queryParams]);
@@ -54,5 +76,7 @@ export function useTeamLeaders() {
     rooms,
     teams,
     handlePaginationChange,
+    setQueryParamsForPerformance,
+    monthlyData,
   };
 }

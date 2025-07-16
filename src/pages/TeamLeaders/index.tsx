@@ -6,7 +6,6 @@ import Pagination from 'ui/Pagination/Pagination';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Tabs } from 'ui';
-import useQueryApiClient from 'utils/useQueryApiClient';
 
 export function TeamLeaders() {
   const leaderHook = useTeamLeaders();
@@ -20,12 +19,13 @@ export function TeamLeaders() {
     }));
   };
 
-  const { data: monthlyData } = useQueryApiClient({
-    request: {
-      url: '/api/monthlytarget/list-ceo',
-      method: 'GET',
-    },
-  });
+  const handleValueChangePerformance = (value: any) => {
+    leaderHook.setQueryParamsForPerformance((prev: any) => ({
+      ...prev,
+      ...value,
+      year: dayjs(value.year).format('YYYY'),
+    }));
+  };
 
   const tabItems = [
     {
@@ -54,19 +54,20 @@ export function TeamLeaders() {
       label: t('kpi_performance'),
       children: (
         <>
-          <MonthlyPerformanceFilter />
-          <TeamLeadersList users={monthlyData?.data?.items} />
+          <MonthlyPerformanceFilter handleValueChange={handleValueChangePerformance} />
+          <TeamLeadersList users={leaderHook.monthlyData?.data?.items} />
           <Pagination
-            total={monthlyData?.data?.totalItems}
-            pageSize={monthlyData?.data?.itemsPerPage}
+            total={leaderHook.monthlyData?.data?.totalItems}
+            pageSize={leaderHook.monthlyData?.data?.itemsPerPage}
             onChange={leaderHook.handlePaginationChange}
             hideOnSinglePage={true}
-            current={monthlyData?.data?.PageIndex}
+            current={leaderHook.monthlyData?.data?.PageIndex}
           />
         </>
       ),
     },
   ];
+
   return (
     <StyledTeamLeadersPage>
       <Tabs animated={true} type="line" activeKey={activeTab} onChange={setActiveTab} items={tabItems} />

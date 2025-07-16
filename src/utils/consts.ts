@@ -7,6 +7,7 @@ interface adminNavigate {
 
 export const ADMIN_NAVIGATE: adminNavigate[] = [
   { key: 'dashboard', path: '/', icon: 'dashboard' },
+  { key: 'yearly_evaluation', path: '/evaluation', icon: 'evaluation' },
   {
     key: 'setting',
     icon: 'setting',
