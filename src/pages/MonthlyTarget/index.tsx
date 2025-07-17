@@ -415,7 +415,7 @@ export function MonthlyTarget() {
                               <span className="department">{student.department}</span>
                             </div>
                             <div className="student-extra">
-                              <span className="subject">{student.subject}</span>
+                              <span className="subject">{student.role}</span>
                               <span className="date">{student.date}</span>
                             </div>
                           </div>
