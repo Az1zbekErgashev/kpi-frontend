@@ -6,6 +6,7 @@ import { Table } from 'ui';
 
 interface props {
   users: any;
+  isMonthly: boolean;
 }
 
 type Status = 'NoWritte' | 'PendingReview' | 'Returned' | 'Approved';
@@ -28,7 +29,7 @@ const statusColors: Record<Status, { background: string; color: string }> = {
     color: '#006644',
   },
 };
-export function TeamLeadersList({ users }: props) {
+export function TeamLeadersList({ users, isMonthly }: props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -71,11 +72,17 @@ export function TeamLeadersList({ users }: props) {
     return statusColors[status];
   };
 
+  const handleNavigate = (record: any) => {
+    if (!isMonthly) {
+      navigate(`/goal/user-id/${record.teamId}/${record.year}`);
+    } else navigate(`/monthly-target/${record.teamId}/${record.year}/${record.month}`);
+  };
+
   return (
     <div>
       <Table
         onRow={(record: any) => ({
-          onClick: () => navigate(`/monthly-target/${record.teamId}/${record.year}/${record.month}`),
+          onClick: () => handleNavigate(record),
         })}
         columns={columns}
         dataSource={users ?? []}

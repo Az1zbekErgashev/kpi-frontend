@@ -38,7 +38,7 @@ export function TeamLeaders() {
             rooms={leaderHook?.rooms?.data?.items}
             teams={leaderHook.teams?.data?.items}
           />
-          <TeamLeadersList users={leaderHook.teamLeaders?.data?.items} />
+          <TeamLeadersList users={leaderHook.teamLeaders?.data?.items} isMonthly={false} />
           <Pagination
             total={leaderHook.teamLeaders?.data?.totalItems}
             pageSize={leaderHook.teamLeaders?.data?.itemsPerPage}
@@ -55,7 +55,7 @@ export function TeamLeaders() {
       children: (
         <>
           <MonthlyPerformanceFilter handleValueChange={handleValueChangePerformance} />
-          <TeamLeadersList users={leaderHook.monthlyData?.data?.items} />
+          <TeamLeadersList users={leaderHook.monthlyData?.data?.items} isMonthly={true} />
           <Pagination
             total={leaderHook.monthlyData?.data?.totalItems}
             pageSize={leaderHook.monthlyData?.data?.itemsPerPage}
