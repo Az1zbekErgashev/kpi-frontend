@@ -52,7 +52,7 @@ export function useTeamLeaders() {
     },
   });
 
-  const { data: monthlyData } = useQueryApiClient({
+  const { data: monthlyData, refetch: getMonthly } = useQueryApiClient({
     request: {
       url: '/api/monthlytarget/list-ceo',
       method: 'GET',
@@ -63,6 +63,10 @@ export function useTeamLeaders() {
   useEffect(() => {
     refetchUsers();
   }, [queryParams]);
+
+  useEffect(() => {
+    getMonthly();
+  }, [queryParamsForPerformance]);
 
   const handlePaginationChange = (page: number, pageSize: number) => {
     smoothScroll('top', 0);
