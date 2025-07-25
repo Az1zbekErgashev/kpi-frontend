@@ -5,6 +5,7 @@ import { ADMIN_NAVIGATE } from 'utils/consts';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import dayjs from 'dayjs';
 
 export function Sitebar() {
   const { t } = useTranslation();
@@ -148,7 +149,7 @@ export function Sitebar() {
           </nav>
 
           <div className="sidebar-footer">
-            <div className="footer-year">© 2025 KPI Dashboard</div>
+          <div className="footer-year">© {dayjs().year()} KPI Dashboard</div>
           </div>
         </div>
       </div>

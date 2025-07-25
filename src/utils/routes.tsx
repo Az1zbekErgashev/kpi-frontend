@@ -99,7 +99,7 @@ export const router = createBrowserRouter([
     path: '/evaluation',
     element: (
       <ProtectedUserRoute>
-        <DefaultLayout title="yearl_evaluation">
+        <DefaultLayout title="yearly_evaluation">
           <GradeDisplay />
         </DefaultLayout>
       </ProtectedUserRoute>
@@ -119,7 +119,7 @@ export const router = createBrowserRouter([
     path: '/monthly-target/:id/:year/:month',
     element: (
       <ProtectedUserRoute>
-        <DefaultLayout title="score_management">
+        <DefaultLayout title="monthly_target">
           <MonthlyTarget />
         </DefaultLayout>
       </ProtectedUserRoute>
