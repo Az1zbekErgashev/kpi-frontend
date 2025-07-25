@@ -6,7 +6,7 @@ import { StyledGoalCommentForCEO } from 'components/GoalCommentForCEO/style';
 import { StyledGoalTable } from 'components/GoalTable/style';
 import dayjs from 'dayjs';
 import { StyledGradeForm } from 'pages/YearlyEvaluation/style';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BackButton, Button, Table, TextArea } from 'ui';
@@ -28,6 +28,13 @@ interface ApiResponse {
         [period: number]: string | null;
       };
     };
+    finalScore: number | null; // Numerical annual grade
+    divisions: {
+      divisionId: string;
+      average: number;
+      adjusted: number;
+      weighted: number;
+    }[];
   }[];
   evaluationPeriods: {
     id: string;
@@ -42,12 +49,21 @@ interface ApiResponse {
   };
 }
 
-const GRADE_POINTS = {
-  A: 4.0,
-  B: 3.0,
-  C: 2.0,
-  D: 1.0,
-  F: 0.0,
+const generateDivisionColor = (index: number) => {
+  const colors = [
+    { bg: '#fef3c7', text: '#92400e' }, // Yellow
+    { bg: '#dbeafe', text: '#1e40af' }, // Blue
+    { bg: '#f3e8ff', text: '#7c3aed' }, // Purple
+    { bg: '#dcfce7', text: '#166534' }, // Green
+    { bg: '#fce7f3', text: '#be185d' }, // Pink
+    { bg: '#ecfdf5', text: '#059669' }, // Light Green
+    { bg: '#fef2f2', text: '#dc2626' }, // Light Red
+    { bg: '#f0f9ff', text: '#0369a1' }, // Light Blue
+    { bg: '#fffbeb', text: '#d97706' }, // Orange
+    { bg: '#f5f3ff', text: '#6366f1' }, // Indigo
+  ];
+
+  return colors[index % colors.length];
 };
 
 export function MonthlyTarget() {
@@ -56,6 +72,9 @@ export function MonthlyTarget() {
   const navigate = useNavigate();
   const newDateTime = new Date().getFullYear().toString();
   const [form] = Form.useForm();
+  const [data, setData] = useState<ApiResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const { data: targets } = useQueryApiClient({
     request: {
@@ -79,6 +98,15 @@ export function MonthlyTarget() {
       method: 'GET',
       data: { year: params.year, team: params.id },
     },
+    onSuccess(response) {
+      setData(response.data);
+    },
+    onError() {
+      setError('Failed to fetch data');
+    },
+    onFinally() {
+      setLoading(false);
+    },
   });
 
   const { appendData: changeTargetStatus } = useQueryApiClient({
@@ -90,43 +118,6 @@ export function MonthlyTarget() {
       navigate(-1);
     },
   });
-
-  const calculateAnnualGrade = (
-    student: ApiResponse['students'][0],
-    evaluationPeriods: ApiResponse['evaluationPeriods']
-  ): string => {
-    let totalWeightedPoints = 0;
-    let totalWeight = 0;
-
-    evaluationPeriods.forEach((evaluation) => {
-      const studentGrades = student.grades[evaluation.id];
-      if (studentGrades) {
-        const validGrades = Object.values(studentGrades).filter((grade): grade is string => grade !== null);
-
-        if (validGrades.length > 0) {
-          const totalPoints = validGrades.reduce(
-            (sum, grade) => sum + (GRADE_POINTS[grade as keyof typeof GRADE_POINTS] || 0),
-            0
-          );
-          const averagePoints = totalPoints / validGrades.length;
-
-          const weight = evaluation.percentage / 100;
-          totalWeightedPoints += averagePoints * weight;
-          totalWeight += weight;
-        }
-      }
-    });
-
-    if (totalWeight === 0) return 'F';
-
-    const finalPoints = totalWeightedPoints / totalWeight;
-
-    // Convert back to letter grade
-    if (finalPoints >= 3.5) return 'A';
-    if (finalPoints >= 2.5) return 'B';
-    if (finalPoints >= 1.5) return 'C';
-    return 'F';
-  };
 
   const getStatusText = (status: string) => {
     switch (status) {
@@ -179,10 +170,6 @@ export function MonthlyTarget() {
     },
   ];
 
-  const getGrade = (student: ApiResponse['students'][0], evaluationId: string, period: number): string => {
-    return student.grades[evaluationId]?.[period] || '-';
-  };
-
   const handleFinish = (status: boolean) => {
     changeTargetStatus({
       status: status,
@@ -190,6 +177,33 @@ export function MonthlyTarget() {
       goalId: targets?.data?.id,
     });
   };
+
+  const getGrade = (student: ApiResponse['students'][0], evaluationId: string, period: number): string => {
+    return student.grades[evaluationId]?.[period] || '-';
+  };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <span>Loading grade data...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h3>Error Loading Data</h3>
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <div className="error-container">No data available</div>;
+  }
 
   return (
     <StyledGoalTable>
@@ -372,12 +386,14 @@ export function MonthlyTarget() {
               <div className="grade-system">
                 <div className="table-container">
                   <table className="grade-table">
+                    {/* Table Header */}
                     <thead>
+                      {/* First header row - Evaluation categories */}
                       <tr className="category-header">
-                        <th rowSpan={2} className="student-info-header">
+                        <th rowSpan={3} className="student-info-header">
                           Student Information
                         </th>
-                        {evaluationData?.data?.evaluationPeriods.map((period: any) => (
+                        {data?.evaluationPeriods?.map((period) => (
                           <th
                             key={period.id}
                             colSpan={period.periods.length}
@@ -390,39 +406,63 @@ export function MonthlyTarget() {
                             </div>
                           </th>
                         ))}
-                        <th rowSpan={2} className="annual-header">
+                        <th rowSpan={3} className="annual-header">
                           Annual Grade
                         </th>
                       </tr>
 
                       {/* Second header row - Period numbers */}
                       <tr className="period-header">
-                        {evaluationData?.data?.evaluationPeriods.map(
-                          (evaluation: any) =>
-                            evaluation?.periods?.map((period: any) => (
-                              <th
-                                key={`${evaluation.id}-${period}`}
-                                className={`period-cell category-${evaluation.id}`}
-                              >
-                                {period}
-                              </th>
-                            ))
+                        {data?.evaluationPeriods?.map((evaluation) =>
+                          evaluation.periods.map((period) => (
+                            <th key={`${evaluation.id}-${period}`} className={`period-cell category-${evaluation.id}`}>
+                              {period}
+                            </th>
+                          ))
                         )}
+                      </tr>
+
+                      {/* Third header row - Average values (only at the beginning of each division) */}
+                      <tr className="avg-header">
+                        {data?.evaluationPeriods?.map((evaluation, evaluationIndex) => {
+                          const divisionColor = generateDivisionColor(evaluationIndex);
+                          const avgValue =
+                            data?.students[0]?.divisions?.find((div) => div.divisionId === evaluation.id)?.average || 0;
+
+                          return evaluation?.periods?.map((period, index) => (
+                            <th
+                              key={`avg-${evaluation.id}-${period}`}
+                              style={{
+                                backgroundColor: index === 0 ? divisionColor.bg : '#f0f9ff',
+                                color: index === 0 ? divisionColor.text : '#1e40af',
+                              }}
+                              className={`avg-cell category-${evaluation.id}`}
+                            >
+                              {index === 0 ? (
+                                <div className="avg-content">
+                                  <div className="avg-label">AVG</div>
+                                  <div className="avg-value">{avgValue}</div>
+                                </div>
+                              ) : (
+                                <div className="avg-empty"></div>
+                              )}
+                            </th>
+                          ));
+                        })}
+                        <th className="avg-annual-cell">-</th>
                       </tr>
                     </thead>
 
                     {/* Table Body */}
                     <tbody>
-                      {evaluationData?.data?.students?.map((student: any) => {
-                        const annualGrade = calculateAnnualGrade(student, evaluationData?.data?.evaluationPeriods);
-                        return (
-                          <tr key={student.id} className="student-row">
+                      {data?.students?.map((student) => (
+                        <React.Fragment key={student.id}>
+                          <tr className="student-row">
                             {/* Student Information */}
                             <td className="student-info-cell">
                               <div className="student-details">
                                 <div className="student-main">
                                   <span className="room">{student.room}</span>
-                                  <span className="class">{student.class}</span>
                                   <span className="name">{student.name}</span>
                                 </div>
                                 <div className="student-secondary">
@@ -430,34 +470,36 @@ export function MonthlyTarget() {
                                   <span className="department">{student.department}</span>
                                 </div>
                                 <div className="student-extra">
-                                  <span className="subject">{student.role}</span>
                                   <span className="date">{student.date}</span>
                                 </div>
                               </div>
                             </td>
 
-                            {evaluationData?.data?.evaluationPeriods?.map((evaluation: any) =>
-                              evaluation.periods.map((period: any) => {
-                                const grade = getGrade(student, evaluation.id, period);
-                                return (
-                                  <td
-                                    key={`${evaluation.id}-${period}`}
-                                    className={`grade-cell grade-${grade.toLowerCase()} category-${evaluation.id}`}
-                                    title={`${student.name} - ${evaluation.name} - Period ${period}: ${grade}`}
-                                  >
-                                    {grade}
-                                  </td>
-                                );
-                              })
+                            {/* Grade cells for each evaluation period */}
+                            {data?.evaluationPeriods?.map(
+                              (evaluation) =>
+                                evaluation?.periods?.map((period) => {
+                                  const grade = getGrade(student, evaluation.id, period);
+                                  return (
+                                    <td
+                                      key={`${evaluation.id}-${period}`}
+                                      className={`grade-cell grade-${grade.toLowerCase()} category-${evaluation.id}`}
+                                      title={`${student.name} - ${evaluation.name} - Period ${period}: ${grade}`}
+                                    >
+                                      {grade}
+                                    </td>
+                                  );
+                                })
                             )}
 
+                            {/* Annual Grade */}
                             <td className="annual-cell">
-                              <div className={`annual-grade grade-${annualGrade.toLowerCase()}`}>{annualGrade}</div>
+                              <div className="annual-grade">{student.finalScore ?? '-'}</div>
                               <div className="annual-label">Final</div>
                             </td>
                           </tr>
-                        );
-                      })}
+                        </React.Fragment>
+                      ))}
                     </tbody>
                   </table>
                 </div>

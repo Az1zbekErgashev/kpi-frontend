@@ -11,6 +11,7 @@ import {
   YearlyGoal,
   GradeDisplay,
   MonthlyTarget,
+  ScoreManagement,
 } from 'pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
@@ -105,10 +106,20 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: '/setting/score-management',
+    element: (
+      <ProtectedUserRoute>
+        <DefaultLayout title="score_management">
+          <ScoreManagement />
+        </DefaultLayout>
+      </ProtectedUserRoute>
+    ),
+  },
+  {
     path: '/monthly-target/:id/:year/:month',
     element: (
       <ProtectedUserRoute>
-        <DefaultLayout title="yearl_evaluation">
+        <DefaultLayout title="score_management">
           <MonthlyTarget />
         </DefaultLayout>
       </ProtectedUserRoute>

@@ -1,8 +1,59 @@
 import styled from 'styled-components';
 
 export const StyledGradeForm = styled.div`
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    gap: 12px;
+  }
+
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .error-container {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    margin: 20px;
+  }
+
+  .error-container h3 {
+    color: #dc2626;
+    margin-bottom: 12px;
+  }
+
+  .error-container button {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* Main layout */
   .grade-system {
-    margin-top: 30px;
+    padding: 20px 0; /* Adjusted padding */
     max-width: 100%;
     overflow-x: hidden;
     display: flex;
@@ -10,57 +61,9 @@ export const StyledGradeForm = styled.div`
     gap: 20px;
   }
 
-  /* Info container */
+  /* Info container (removed as per image, but keeping styles if needed elsewhere) */
   .info-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .info-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
-  }
-
-  .card-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .card-header h3 {
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .card-content {
-    padding: 20px;
-  }
-
-  .calculation-info h4 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #374151;
-  }
-
-  .calculation-steps {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .calculation-steps p {
-    margin-bottom: 8px;
-  }
-
-  .calculation-steps ul {
-    margin: 8px 0 8px 20px;
-  }
-
-  .calculation-steps li {
-    margin-bottom: 4px;
+    display: none; /* Hidden as per image */
   }
 
   /* Table container */
@@ -68,7 +71,7 @@ export const StyledGradeForm = styled.div`
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* This enables horizontal scrolling */
+    overflow-x: auto; /* Enables horizontal scrolling */
   }
 
   /* Main table */
@@ -81,7 +84,7 @@ export const StyledGradeForm = styled.div`
 
   /* Table headers */
   .category-header th {
-    background: #f8fafc;
+    background: #f8fafc; /* Light background for category headers */
     border: 1px solid #e2e8f0;
     padding: 12px 8px;
     text-align: center;
@@ -93,27 +96,55 @@ export const StyledGradeForm = styled.div`
     background: #f1f5f9 !important;
     width: 200px;
     min-width: 200px;
-    margin-top: 100px;
   }
 
   .category-cell {
     position: relative;
   }
 
-  .category-cell.category-basic_performance {
-    /* background: #fce7f3 !important; */
+  /* Specific category background colors (adjusted to be more subtle like image) */
+  .category-cell.category-basic_performance,
+  .category-cell.category-division_1 {
+    background: #f8fafc !important; /* Light grey */
   }
 
-  .category-cell.category-performance_evaluation {
-    background: #dbeafe !important;
+  .category-cell.category-performance_evaluation,
+  .category-cell.category-division_2 {
+    background: #f8fafc !important; /* Light grey */
   }
 
-  .category-cell.category-attendance_check {
-    background: #bfdbfe !important;
+  .category-cell.category-attendance_check,
+  .category-cell.category-division_3 {
+    background: #f8fafc !important; /* Light grey */
   }
 
-  .category-cell.category-training_participation {
-    background: #dcfce7 !important;
+  .category-cell.category-training_participation,
+  .category-cell.category-division_4 {
+    background: #f8fafc !important; /* Light grey */
+  }
+
+  .category-cell.category-division_5 {
+    background: #f8fafc !important; /* Light grey */
+  }
+
+  .category-cell.category-division_6 {
+    background: #f8fafc !important; /* Light grey */
+  }
+
+  .category-cell.category-division_7 {
+    background: #f8fafc !important; /* Light grey */
+  }
+
+  .category-cell.category-division_8 {
+    background: #f8fafc !important; /* Light grey */
+  }
+
+  .category-cell.category-division_9 {
+    background: #f8fafc !important; /* Light grey */
+  }
+
+  .category-cell.category-division_10 {
+    background: #f8fafc !important; /* Light grey */
   }
 
   .category-content {
@@ -143,10 +174,9 @@ export const StyledGradeForm = styled.div`
   }
 
   .annual-header {
-    background: #fef3c7 !important;
+    background: #fffbe6 !important; /* Yellowish background for annual grade */
     width: 100px;
     min-width: 100px;
-    background-color: green;
   }
 
   /* Period header */
@@ -161,24 +191,49 @@ export const StyledGradeForm = styled.div`
     min-width: 30px;
   }
 
-  .period-cell.category-basic_performance {
-    background: #fce7f3 !important;
-    padding: 8px;
+  /* Period cell background colors (adjusted to be more subtle like image) */
+  .period-cell.category-basic_performance,
+  .period-cell.category-division_1 {
+    background: white !important; /* White */
   }
 
-  .period-cell.category-performance_evaluation {
-    background: #dbeafe !important;
-    padding: 8px;
+  .period-cell.category-performance_evaluation,
+  .period-cell.category-division_2 {
+    background: white !important; /* White */
   }
 
-  .period-cell.category-attendance_check {
-    background: #bfdbfe !important;
-    padding: 8px;
+  .period-cell.category-attendance_check,
+  .period-cell.category-division_3 {
+    background: white !important; /* White */
   }
 
-  .period-cell.category-training_participation {
-    background: #dcfce7 !important;
-    padding: 8px;
+  .period-cell.category-training_participation,
+  .period-cell.category-division_4 {
+    background: white !important; /* White */
+  }
+
+  .period-cell.category-division_5 {
+    background: white !important; /* White */
+  }
+
+  .period-cell.category-division_6 {
+    background: white !important; /* White */
+  }
+
+  .period-cell.category-division_7 {
+    background: white !important; /* White */
+  }
+
+  .period-cell.category-division_8 {
+    background: white !important; /* White */
+  }
+
+  .period-cell.category-division_9 {
+    background: white !important; /* White */
+  }
+
+  .period-cell.category-division_10 {
+    background: white !important; /* White */
   }
 
   /* Table body */
@@ -289,7 +344,7 @@ export const StyledGradeForm = styled.div`
 
   /* Annual grade cell */
   .annual-cell {
-    background: #fef3c7;
+    background: #fffbe6; /* Yellowish background */
     border: 1px solid #e2e8f0;
     padding: 12px;
     text-align: center;
@@ -310,134 +365,113 @@ export const StyledGradeForm = styled.div`
     font-weight: normal;
   }
 
-  /* Statistics */
-  .statistics-container {
-    display: flex;
-    gap: 20px;
-  }
-
-  .stats-card {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-  }
-
-  .stats-card h3 {
-    margin-bottom: 16px;
-    font-size: 18px;
+  /* Average header row */
+  .avg-header th {
+    background: #f0f9ff;
+    border: 1px solid #e2e8f0;
+    padding: 6px 4px;
+    text-align: center;
     font-weight: 600;
+    font-size: 10px;
+    color: #1e40af;
   }
 
-  .stats-content {
+  .avg-cell {
+    font-weight: 700;
+  }
+
+  .avg-cell.category-basic_performance,
+  .avg-cell.category-division_1 {
+    background: #fef3c7 !important; /* Yellow */
+    color: #92400e;
+  }
+
+  .avg-cell.category-performance_evaluation,
+  .avg-cell.category-division_2 {
+    background: #dbeafe !important; /* Blue */
+    color: #1e40af;
+  }
+
+  .avg-cell.category-attendance_check,
+  .avg-cell.category-division_3 {
+    background: #f3e8ff !important; /* Purple */
+    color: #7c3aed;
+  }
+
+  .avg-cell.category-training_participation,
+  .avg-cell.category-division_4 {
+    background: #dcfce7 !important; /* Green */
+    color: #166534;
+  }
+
+  .avg-cell.category-division_5 {
+    background: #fce7f3 !important; /* Pink */
+    color: #be185d;
+  }
+
+  .avg-cell.category-division_6 {
+    background: #ecfdf5 !important; /* Light Green */
+    color: #059669;
+  }
+
+  .avg-cell.category-division_7 {
+    background: #fef2f2 !important; /* Light Red */
+    color: #dc2626;
+  }
+
+  .avg-cell.category-division_8 {
+    background: #f0f9ff !important; /* Light Blue */
+    color: #0369a1;
+  }
+
+  .avg-cell.category-division_9 {
+    background: #fffbeb !important; /* Orange */
+    color: #d97706;
+  }
+
+  .avg-cell.category-division_10 {
+    background: #f5f3ff !important; /* Indigo */
+    color: #6366f1;
+  }
+
+  .avg-content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 2px;
   }
 
-  .total-students {
-    text-align: center;
+  .avg-label {
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
-  .stats-number {
-    display: block;
-    font-size: 32px;
+  .avg-value {
+    font-size: 12px;
     font-weight: 700;
-    color: #3b82f6;
   }
 
-  .stats-label {
-    font-size: 14px;
+  .avg-empty {
+    height: 100%;
+    min-height: 30px;
+  }
+
+  .avg-annual-cell {
+    background: #f9fafb !important;
     color: #6b7280;
   }
 
-  .grade-distribution h4 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
+  /* Statistics (removed as per image) */
+  .statistics-container {
+    display: none; /* Hidden as per image */
   }
 
-  .distribution-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .grade-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 12px;
-    border: 1px solid;
-  }
-
-  .count {
-    font-size: 12px;
-    color: #6b7280;
-  }
-
-  /* Legend */
+  /* Legend (removed as per image) */
   .legend {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hidden as per image */
   }
 
-  .legend-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    font-size: 14px;
-  }
-
-  .legend-title {
-    font-weight: 600;
-    margin-right: 10px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .legend-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    border: 1px solid #e2e8f0;
-  }
-
-  .legend-color.grade-a {
-    background: #ecfdf5;
-    border-color: #a7f3d0;
-  }
-  .legend-color.grade-b {
-    background: #eff6ff;
-    border-color: #93c5fd;
-  }
-  .legend-color.grade-c {
-    background: #fee2e2;
-    border-color: #fca5a5;
-  }
-  .legend-color.grade-d {
-    background: #fef2f2;
-    border-color: #fca5a5;
-  }
-  .legend-color.grade-f {
-    background: #fef2f2;
-    border-color: #f87171;
-  }
-  .legend-color.grade-- {
-    background: #f9fafb;
-    border-color: #e5e7eb;
-  }
-
-  /* API Management */
+  /* API Management (kept for completeness, though not directly used in this snippet) */
   .api-management {
     display: flex;
     flex-direction: column;
@@ -528,16 +562,6 @@ export const StyledGradeForm = styled.div`
     .table-container {
       overflow-x: auto; /* Ensure scroll on smaller screens */
     }
-
-    .legend-content {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .statistics-container {
-      flex-direction: column;
-    }
   }
 
   /* Custom Scrollbar Styles */
@@ -553,7 +577,7 @@ export const StyledGradeForm = styled.div`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #3b82f6;
+    background: #3b82f6; /* Blue color for the thumb */
     border-radius: 10px;
   }
 

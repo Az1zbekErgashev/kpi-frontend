@@ -13,6 +13,7 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
     icon: 'setting',
     children: [
       { key: 'yearly_goal', path: '/setting/yearly-goal' },
+      { key: 'score_management', path: '/setting/score-management' },
       { key: 'rooms', path: '/setting/rooms' },
       { key: 'teams', path: '/setting/teams' },
       { key: 'users', path: '/setting/users' },
