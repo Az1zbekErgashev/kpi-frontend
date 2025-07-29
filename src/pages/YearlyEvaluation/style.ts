@@ -1,59 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledGradeForm = styled.div`
-  .loading-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    gap: 12px;
-  }
-
-  .loading-spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid #e2e8f0;
-    border-top: 3px solid #3b82f6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .error-container {
-    text-align: center;
-    padding: 40px;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    margin: 20px;
-  }
-
-  .error-container h3 {
-    color: #dc2626;
-    margin-bottom: 12px;
-  }
-
-  .error-container button {
-    margin-top: 16px;
-    padding: 8px 16px;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  /* Main layout */
   .grade-system {
-    padding: 20px 0; /* Adjusted padding */
+    padding: 20px 0;
     max-width: 100%;
     overflow-x: hidden;
     display: flex;
@@ -61,17 +10,14 @@ export const StyledGradeForm = styled.div`
     gap: 20px;
   }
 
-  /* Info container (removed as per image, but keeping styles if needed elsewhere) */
-  .info-container {
-    display: none; /* Hidden as per image */
-  }
-
   /* Table container */
   .table-container {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* Enables horizontal scrolling */
+    overflow-x: auto;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   /* Main table */
@@ -79,12 +25,13 @@ export const StyledGradeForm = styled.div`
     width: 100%;
     border-collapse: collapse;
     font-size: 12px;
-    min-width: 1600px; /* Increased min-width to ensure scroll */
+    min-width: 1600px;
+    margin-bottom: 0;
   }
 
   /* Table headers */
   .category-header th {
-    background: #f8fafc; /* Light background for category headers */
+    background: #f8fafc;
     border: 1px solid #e2e8f0;
     padding: 12px 8px;
     text-align: center;
@@ -100,51 +47,7 @@ export const StyledGradeForm = styled.div`
 
   .category-cell {
     position: relative;
-  }
-
-  /* Specific category background colors (adjusted to be more subtle like image) */
-  .category-cell.category-basic_performance,
-  .category-cell.category-division_1 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-performance_evaluation,
-  .category-cell.category-division_2 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-attendance_check,
-  .category-cell.category-division_3 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-training_participation,
-  .category-cell.category-division_4 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-division_5 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-division_6 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-division_7 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-division_8 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-division_9 {
-    background: #f8fafc !important; /* Light grey */
-  }
-
-  .category-cell.category-division_10 {
-    background: #f8fafc !important; /* Light grey */
+    background: #f8fafc !important;
   }
 
   .category-content {
@@ -174,7 +77,7 @@ export const StyledGradeForm = styled.div`
   }
 
   .annual-header {
-    background: #fffbe6 !important; /* Yellowish background for annual grade */
+    background: #fffbe6 !important;
     width: 100px;
     min-width: 100px;
   }
@@ -191,54 +94,65 @@ export const StyledGradeForm = styled.div`
     min-width: 30px;
   }
 
-  /* Period cell background colors (adjusted to be more subtle like image) */
-  .period-cell.category-basic_performance,
-  .period-cell.category-division_1 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-performance_evaluation,
-  .period-cell.category-division_2 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-attendance_check,
-  .period-cell.category-division_3 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-training_participation,
-  .period-cell.category-division_4 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-division_5 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-division_6 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-division_7 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-division_8 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-division_9 {
-    background: white !important; /* White */
-  }
-
-  .period-cell.category-division_10 {
-    background: white !important; /* White */
+  .period-cell {
+    background: white !important;
   }
 
   /* Table body */
   .student-row {
     border-bottom: 1px solid #e2e8f0;
+  }
+
+  /* Student AVG row */
+  .student-avg-row {
+    border-bottom: 2px solid #d1d5db;
+    background: #e0f2fe;
+  }
+
+  /* AVG label cell for students */
+  .avg-label-cell {
+    background: #e0f2fe;
+    border: 1px solid #e2e8f0;
+    padding: 8px;
+    width: 200px;
+    min-width: 200px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .avg-student-label {
+    font-weight: 700;
+    font-size: 11px;
+    color: #0c4a6e;
+  }
+
+  /* AVG period cells */
+  .avg-period-cell {
+    background: #e0f2fe;
+    padding: 6px 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10px;
+    width: 30px;
+    min-width: 30px;
+    vertical-align: middle;
+  }
+
+  /* AVG value display */
+  .avg-value-display {
+    background: #fbbf24;
+    color: #92400e;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 11px;
+    border: 1px solid #d97706;
+  }
+
+  /* Empty AVG cells */
+  .avg-empty-cell {
+    height: 100%;
+    min-height: 24px;
   }
 
   /* Student info cell */
@@ -295,48 +209,42 @@ export const StyledGradeForm = styled.div`
 
   /* Grade colors */
   .grade-cell.grade-a,
-  .annual-grade.grade-a,
-  .grade-badge.grade-a {
+  .annual-grade.grade-a {
     background: #ecfdf5;
     color: #059669;
     border-color: #a7f3d0;
   }
 
   .grade-cell.grade-b,
-  .annual-grade.grade-b,
-  .grade-badge.grade-b {
+  .annual-grade.grade-b {
     background: #eff6ff;
     color: #2563eb;
     border-color: #93c5fd;
   }
 
   .grade-cell.grade-c,
-  .annual-grade.grade-c,
-  .grade-badge.grade-c {
-    background: #fee2e2; /* Light red background */
-    color: #b91c1c; /* Darker red text */
-    border-color: #fca5a5; /* Medium red border */
+  .annual-grade.grade-c {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fca5a5;
   }
 
   .grade-cell.grade-d,
-  .annual-grade.grade-d,
-  .grade-badge.grade-d {
+  .annual-grade.grade-d {
     background: #fef2f2;
     color: #dc2626;
     border-color: #fca5a5;
   }
 
   .grade-cell.grade-f,
-  .annual-grade.grade-f,
-  .grade-badge.grade-f {
+  .annual-grade.grade-f {
     background: #fef2f2;
     color: #991b1b;
     border-color: #f87171;
   }
 
   .grade-cell.grade--,
-  .annual-grade.grade--,
-  .grade-badge.grade-- {
+  .annual-grade.grade-- {
     background: #f9fafb;
     color: #9ca3af;
     border-color: #e5e7eb;
@@ -344,7 +252,7 @@ export const StyledGradeForm = styled.div`
 
   /* Annual grade cell */
   .annual-cell {
-    background: #fffbe6; /* Yellowish background */
+    background: #fffbe6;
     border: 1px solid #e2e8f0;
     padding: 12px;
     text-align: center;
@@ -365,194 +273,6 @@ export const StyledGradeForm = styled.div`
     font-weight: normal;
   }
 
-  /* Average header row */
-  .avg-header th {
-    background: #f0f9ff;
-    border: 1px solid #e2e8f0;
-    padding: 6px 4px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 10px;
-    color: #1e40af;
-  }
-
-  .avg-cell {
-    font-weight: 700;
-  }
-
-  .avg-cell.category-basic_performance,
-  .avg-cell.category-division_1 {
-    background: #fef3c7 !important; /* Yellow */
-    color: #92400e;
-  }
-
-  .avg-cell.category-performance_evaluation,
-  .avg-cell.category-division_2 {
-    background: #dbeafe !important; /* Blue */
-    color: #1e40af;
-  }
-
-  .avg-cell.category-attendance_check,
-  .avg-cell.category-division_3 {
-    background: #f3e8ff !important; /* Purple */
-    color: #7c3aed;
-  }
-
-  .avg-cell.category-training_participation,
-  .avg-cell.category-division_4 {
-    background: #dcfce7 !important; /* Green */
-    color: #166534;
-  }
-
-  .avg-cell.category-division_5 {
-    background: #fce7f3 !important; /* Pink */
-    color: #be185d;
-  }
-
-  .avg-cell.category-division_6 {
-    background: #ecfdf5 !important; /* Light Green */
-    color: #059669;
-  }
-
-  .avg-cell.category-division_7 {
-    background: #fef2f2 !important; /* Light Red */
-    color: #dc2626;
-  }
-
-  .avg-cell.category-division_8 {
-    background: #f0f9ff !important; /* Light Blue */
-    color: #0369a1;
-  }
-
-  .avg-cell.category-division_9 {
-    background: #fffbeb !important; /* Orange */
-    color: #d97706;
-  }
-
-  .avg-cell.category-division_10 {
-    background: #f5f3ff !important; /* Indigo */
-    color: #6366f1;
-  }
-
-  .avg-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .avg-label {
-    font-size: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .avg-value {
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .avg-empty {
-    height: 100%;
-    min-height: 30px;
-  }
-
-  .avg-annual-cell {
-    background: #f9fafb !important;
-    color: #6b7280;
-  }
-
-  /* Statistics (removed as per image) */
-  .statistics-container {
-    display: none; /* Hidden as per image */
-  }
-
-  /* Legend (removed as per image) */
-  .legend {
-    display: none; /* Hidden as per image */
-  }
-
-  /* API Management (kept for completeness, though not directly used in this snippet) */
-  .api-management {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .api-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .card-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .card-header h3 {
-    font-size: 18px;
-    font-weight: 600;
-  }
-
-  .card-content {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .action-button {
-    padding: 12px 16px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .action-button.primary {
-    background: #3b82f6;
-    color: white;
-  }
-
-  .action-button.primary:hover {
-    background: #2563eb;
-  }
-
-  .action-button.secondary {
-    background: #f8fafc;
-    color: #374151;
-    border: 1px solid #e2e8f0;
-  }
-
-  .action-button.secondary:hover {
-    background: #f1f5f9;
-  }
-
-  .action-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .last-updated {
-    text-align: center;
-    font-size: 12px;
-    color: #6b7280;
-    background: #f8fafc;
-    padding: 8px;
-    border-radius: 4px;
-  }
-
-  .api-details {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .api-details p {
-    margin-bottom: 8px;
-  }
-
   /* Responsive design */
   @media (max-width: 768px) {
     .grade-system {
@@ -560,12 +280,11 @@ export const StyledGradeForm = styled.div`
     }
 
     .table-container {
-      overflow-x: auto; /* Ensure scroll on smaller screens */
+      overflow-x: auto;
     }
   }
 
   /* Custom Scrollbar Styles */
-  /* For Webkit browsers (Chrome, Safari) */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -577,17 +296,116 @@ export const StyledGradeForm = styled.div`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #3b82f6; /* Blue color for the thumb */
+    background: #3b82f6;
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #2563eb; /* Darker blue on hover */
+    background: #2563eb;
   }
 
-  /* For Firefox (requires specific properties) */
   html {
-    scrollbar-width: thin; /* "auto" or "thin" */
-    scrollbar-color: #3b82f6 #f1f1f1; /* thumb color track color */
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #f1f1f1;
+  }
+
+  .logo-section {
+    position: relative;
+    padding: 28px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .logo-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, rgba(74, 149, 255, 0.95) 0%, rgba(58, 123, 213, 0.95) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 8px 32px rgba(255, 255, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+    animation: logoShine 2.5s ease-in-out infinite;
+  }
+
+  @keyframes logoShine {
+    0% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    50% {
+      transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+    100% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+  }
+
+  .logo-svg {
+    color: #ffffffff;
+    filter: drop-shadow(0 2px 8px rgba(58, 123, 213, 0.4));
+    z-index: 1;
+    position: relative;
+  }
+
+  .logo-text h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: rgba(58, 123, 213, 0.95);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text span {
+    font-size: 13px;
+    color: rgba(58, 123, 213, 0.95);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    animation: logoGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes logoGlow {
+    0%,
+    100% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.2);
+    }
   }
 `;

@@ -49,26 +49,6 @@ export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }
       dataIndex: 'teamsCount',
       key: 'teamsCount',
     },
-    {
-      title: t('status'),
-      dataIndex: 'isDeleted',
-      key: 'isDeleted',
-      render: (isDeleted, _) => (
-        <div className="status">
-          {isDeleted == 1 ? (
-            <div className="inactive_status">
-              <div className="span"></div>
-              {t('inactive')}
-            </div>
-          ) : (
-            <div className="active_status">
-              <div className="span"></div>
-              {t('active')}
-            </div>
-          )}
-        </div>
-      ),
-    },
   ];
 
   if (hasActiveRooms) {

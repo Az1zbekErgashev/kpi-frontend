@@ -12,8 +12,12 @@ interface props {
       open: boolean;
       scoreId?: number;
       divisionId?: number;
+      divisions?: number[];
       grade?: string;
-      score?: number;
+      maxScore?: number;
+      minScore?: number;
+      isMoreDivisions?: boolean;
+      isFinalScore?: boolean;
       type: 'ADD' | 'EDIT';
     }>
   >;
@@ -34,9 +38,27 @@ export function ScoreManagementList({ scoreData, setActionModal, getScore }: pro
   const [coniformModal, setConiformModal] = useState<any>(null);
   const [scoreId, setScoreId] = useState<number | null>(null);
   const columns: ColumnsType = [
-    { dataIndex: 'divisionName', key: 'divisionName', title: t('divisionName') },
+    {
+      dataIndex: 'divisionName',
+      key: 'divisionName',
+      title: t('divisionName'),
+      render: (text) => text || t('no_division'),
+    },
+    {
+      dataIndex: 'isFinalScore',
+      key: 'isFinalScore',
+      title: t('isFinalScore'),
+      render: (text) => (text ? t('yes') : t('no')),
+    },
+    {
+      dataIndex: 'isMoreDivisions',
+      key: 'isMoreDivisions',
+      title: t('isMoreDivisionScore'),
+      render: (text) => (text ? t('yes') : t('no')),
+    },
     { dataIndex: 'grade', key: 'grade', title: t('grade') },
-    { dataIndex: 'score', key: 'score', title: t('score') },
+    { dataIndex: 'minScore', key: 'minScore', title: t('minScore') },
+    { dataIndex: 'maxScore', key: 'maxScore', title: t('maxScore') },
     {
       dataIndex: 'action',
       key: 'action',
@@ -51,7 +73,11 @@ export function ScoreManagementList({ scoreData, setActionModal, getScore }: pro
                 type: 'EDIT',
                 divisionId: record.divisionId,
                 grade: record.grade,
-                score: record.score,
+                maxScore: record.maxScore,
+                minScore: record.minScore,
+                isFinalScore: record.isFinalScore,
+                isMoreDivisions: record.isMoreDivisions,
+                divisions: record.divisions,
                 scoreId: record.scoreId,
               })
             }

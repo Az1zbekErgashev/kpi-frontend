@@ -12,6 +12,7 @@ import {
   GradeDisplay,
   MonthlyTarget,
   ScoreManagement,
+  Profile,
 } from 'pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedUserRoute from 'routes/ProtectedUserRoutes';
@@ -41,6 +42,16 @@ export const router = createBrowserRouter([
       <ProtectedUserRoute>
         <DefaultLayout title="users_setting">
           <User />
+        </DefaultLayout>
+      </ProtectedUserRoute>
+    ),
+  },
+  {
+    path: '/profile',
+    element: (
+      <ProtectedUserRoute>
+        <DefaultLayout title="user_profile">
+          <Profile />
         </DefaultLayout>
       </ProtectedUserRoute>
     ),

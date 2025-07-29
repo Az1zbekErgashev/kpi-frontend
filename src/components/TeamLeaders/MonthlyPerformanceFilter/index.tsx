@@ -23,50 +23,32 @@ const months = [
 
 interface props {
   handleValueChange: (value: any) => void;
+  activeTab: string;
 }
 
-export function MonthlyPerformanceFilter({ handleValueChange }: props) {
+export function MonthlyPerformanceFilter({ handleValueChange, activeTab }: props) {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const currentYear = dayjs().year();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const yearFromQuery = searchParams.get('year') || currentYear;
-  const monthFromQuery = searchParams.get('month') || (dayjs().month() + 1).toString();
 
   useEffect(() => {
     const initialValues: any = {
-      year: dayjs(`${yearFromQuery}-01-01`),
+      year: dayjs(`${dayjs().year()}-01-01`),
     };
-    initialValues.month = monthFromQuery;
+    initialValues.month = dayjs().month() + 1;
 
     form.setFieldsValue(initialValues);
-
-    handleValueChange(initialValues);
-  }, [form]);
-
-  const onValuesChange = (changed: any, all: any) => {
-    const newParams = new URLSearchParams(searchParams);
-    if (all.year) {
-      newParams.set('year', dayjs(all.year).year().toString());
-    }
-    if (all.month) {
-      newParams.set('month', all.month.toString());
-    }
-    setSearchParams(newParams);
-    handleValueChange(all);
-  };
+  }, [form, activeTab]);
 
   return (
     <StyledTeamLeadersList>
-      <Form form={form} layout="vertical" onValuesChange={onValuesChange}>
+      <Form form={form} layout="vertical" onValuesChange={handleValueChange}>
         <DatePicker
-          defaultValue={dayjs(`${currentYear}-01-01`)}
           label={t('select_year')}
           picker="year"
           name="year"
-          disabledDate={(current) => current && current.year() > currentYear}
           allowClear={false}
+          disabledDate={(current) => current && current.year() > currentYear}
         />
         <Select
           style={{ width: '150px' }}

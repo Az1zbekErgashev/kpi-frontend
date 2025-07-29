@@ -65,9 +65,7 @@ export function Sitebar() {
                           className="nav-link-content"
                           onClick={() => handleItemClick(index, item?.path)}
                         >
-                          <div className="nav-icon">
-                            {Icon && <Icon />}
-                          </div>
+                          <div className="nav-icon">{Icon && <Icon />}</div>
                           <span className="nav-text">{t(item.key)}</span>
                         </NavLink>
                       ) : (
@@ -77,9 +75,7 @@ export function Sitebar() {
                           role="button"
                           tabIndex={0} // For accessibility
                         >
-                          <div className="nav-icon">
-                            {Icon && <Icon />}
-                          </div>
+                          <div className="nav-icon">{Icon && <Icon />}</div>
                           <span className="nav-text">{t(item.key)}</span>
                         </div>
                       )}
@@ -149,7 +145,7 @@ export function Sitebar() {
           </nav>
 
           <div className="sidebar-footer">
-          <div className="footer-year">© {dayjs().year()} KPI Dashboard</div>
+            <div className="footer-year">© {dayjs().year()} KPI Dashboard</div>
           </div>
         </div>
       </div>

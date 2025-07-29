@@ -10,3 +10,4 @@ export { YearlyGoal } from './YearlyGoal';
 export { GradeDisplay } from './YearlyEvaluation';
 export { MonthlyTarget } from './MonthlyTarget';
 export { ScoreManagement } from './ScoreManagement';
+export { Profile } from './Profile';

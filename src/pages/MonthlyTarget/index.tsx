@@ -449,7 +449,6 @@ export function MonthlyTarget() {
                             </th>
                           ));
                         })}
-                        <th className="avg-annual-cell">-</th>
                       </tr>
                     </thead>
 

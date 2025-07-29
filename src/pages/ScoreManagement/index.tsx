@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyledScoreManagement } from './style';
 import { ScoreManagementList } from 'components';
 import useQueryApiClient from 'utils/useQueryApiClient';
-import { Button, DatePicker, Input, Modal, Select, SelectOption } from 'ui';
+import { Button, Checkbox, DatePicker, Input, Modal, Select, SelectOption } from 'ui';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'antd';
 import dayjs from 'dayjs';
@@ -10,12 +10,19 @@ import dayjs from 'dayjs';
 export function ScoreManagement() {
   const { t } = useTranslation();
   const [form] = Form.useForm();
+  const [isFinalScore, setIsFinalScore] = useState<boolean>(false);
+  const [isMoreDivision, setIsMoreDivision] = useState<boolean>(false);
+
   const [actionModa, setActionModal] = useState<{
     open: boolean;
     scoreId?: number;
     divisionId?: number;
+    divisions?: number[];
     grade?: string;
-    score?: number;
+    maxScore?: number;
+    minScore?: number;
+    isMoreDivisions?: boolean;
+    isFinalScore?: boolean;
     type: 'ADD' | 'EDIT';
   }>({
     open: false,
@@ -29,7 +36,7 @@ export function ScoreManagement() {
     appendData: appendScore,
   } = useQueryApiClient({
     request: {
-      url: `/api/evaluation/all-score`,
+      url: `/api/evaluation/score-management`,
       method: 'GET',
       data: {
         year: currentYear,
@@ -82,6 +89,8 @@ export function ScoreManagement() {
         createScore({
           ...values,
           year: dayjs(values.year).format('YYYY'),
+          isFinalScore: isFinalScore,
+          isMoreDivisions: isMoreDivision,
         });
       })
       .catch((error) => {
@@ -94,8 +103,21 @@ export function ScoreManagement() {
       form.setFieldsValue({
         divisionId: actionModa.divisionId,
         grade: actionModa.grade,
-        score: actionModa.score,
+        maxScore: actionModa.maxScore,
+        minScore: actionModa.minScore,
+        divisions: actionModa.divisions,
       });
+
+      if (actionModa.isFinalScore) {
+        setIsFinalScore(true);
+        setIsMoreDivision(false);
+      } else if (actionModa.isMoreDivisions) {
+        setIsMoreDivision(true);
+        setIsFinalScore(false);
+      } else {
+        setIsFinalScore(false);
+        setIsMoreDivision(false);
+      }
     }
   }, [actionModa.open]);
 
@@ -134,32 +156,136 @@ export function ScoreManagement() {
       >
         <StyledScoreManagement>
           <Form form={form} layout="vertical" onFinish={(values) => console.log(values)}>
-            <Select
-              name="divisionId"
-              label={t('division')}
-              rules={[{ required: true, message: t('this_field_required') }]}
-              disabled={actionModa.type === 'EDIT'}
-            >
-              {divisionData?.data?.map((item: any, index: number) => (
-                <SelectOption value={item.id} key={index}>
-                  {item.name}
-                </SelectOption>
-              ))}
-            </Select>
+            <div>
+              <Checkbox
+                label={t('relation_divisions')}
+                onChange={() => {
+                  setIsFinalScore(false);
+                  setIsMoreDivision(true);
+                }}
+                checked={isMoreDivision}
+                disabled={actionModa.type === 'EDIT'}
+              />
+              <Checkbox
+                label={t('final_score')}
+                onChange={() => {
+                  setIsFinalScore(true);
+                  setIsMoreDivision(false);
+                }}
+                checked={isFinalScore}
+                disabled={actionModa.type === 'EDIT'}
+              />
+              <Checkbox
+                onChange={() => {
+                  setIsFinalScore(false);
+                  setIsMoreDivision(false);
+                }}
+                checked={!isFinalScore && !isMoreDivision}
+                label={t('by_one_ratio')}
+                disabled={actionModa.type === 'EDIT'}
+              />
+            </div>
             <br />
-            <Input
-              disabled={actionModa.type === 'EDIT'}
-              rules={[{ required: true, message: t('this_field_required') }]}
-              name="grade"
-              label={t('grade')}
-            />
+            {!isFinalScore && !isMoreDivision && (
+              <>
+                <Select
+                  name="divisionId"
+                  label={t('division')}
+                  rules={[{ required: true, message: t('this_field_required') }]}
+                  disabled={actionModa.type === 'EDIT'}
+                >
+                  {divisionData?.data?.map((item: any, index: number) => (
+                    <SelectOption value={item.id} key={index}>
+                      {item.name}
+                    </SelectOption>
+                  ))}
+                </Select>
+                <br />
+                <Input
+                  disabled={actionModa.type === 'EDIT'}
+                  rules={[{ required: true, message: t('this_field_required') }]}
+                  name="grade"
+                  label={t('grade')}
+                />
+                <br />
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <Input
+                    rules={[{ required: true, message: t('this_field_required') }]}
+                    name="minScore"
+                    label={t('minScore')}
+                  />
+                  <Input
+                    rules={[{ required: true, message: t('this_field_required') }]}
+                    name="maxScore"
+                    type="number"
+                    label={t('maxScore')}
+                  />
+                </div>
+              </>
+            )}
+            {isFinalScore && (
+              <>
+                <Input
+                  disabled={actionModa.type === 'EDIT'}
+                  rules={[{ required: true, message: t('this_field_required') }]}
+                  name="grade"
+                  label={t('grade')}
+                />
+                <br />
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <Input
+                    rules={[{ required: true, message: t('this_field_required') }]}
+                    name="minScore"
+                    label={t('minScore')}
+                  />
+                  <Input
+                    rules={[{ required: true, message: t('this_field_required') }]}
+                    name="maxScore"
+                    type="number"
+                    label={t('maxScore')}
+                  />
+                </div>
+              </>
+            )}
+            {isMoreDivision && (
+              <>
+                <Select
+                  name="divisions"
+                  label={t('divisions')}
+                  rules={[{ required: true, message: t('this_field_required') }]}
+                  disabled={actionModa.type === 'EDIT'}
+                  mode="multiple"
+                >
+                  {divisionData?.data?.map((item: any, index: number) => (
+                    <SelectOption value={item.id} key={index}>
+                      {item.name}
+                    </SelectOption>
+                  ))}
+                </Select>
+                <br />
+                <Input
+                  disabled={actionModa.type === 'EDIT'}
+                  rules={[{ required: true, message: t('this_field_required') }]}
+                  name="grade"
+                  label={t('grade')}
+                />
+                <br />
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <Input
+                    rules={[{ required: true, message: t('this_field_required') }]}
+                    name="minScore"
+                    label={t('minScore')}
+                  />
+                  <Input
+                    rules={[{ required: true, message: t('this_field_required') }]}
+                    name="maxScore"
+                    type="number"
+                    label={t('maxScore')}
+                  />
+                </div>
+              </>
+            )}
             <br />
-            <Input
-              rules={[{ required: true, message: t('this_field_required') }]}
-              name="score"
-              type="number"
-              label={t('score')}
-            />
           </Form>
         </StyledScoreManagement>
       </Modal>

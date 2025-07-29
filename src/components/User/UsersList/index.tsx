@@ -83,27 +83,6 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       width: 150,
     },
     {
-      title: t('status'),
-      dataIndex: 'isDeleted',
-      key: 'isDeleted',
-      width: 150,
-      render: (isDeleted, _) => (
-        <div className="status">
-          {isDeleted == 1 ? (
-            <div className="inactive_status">
-              <div className="span"></div>
-              {t('inactive')}
-            </div>
-          ) : (
-            <div className="active_status">
-              <div className="span"></div>
-              {t('active')}
-            </div>
-          )}
-        </div>
-      ),
-    },
-    {
       title: t('registration_date'),
       dataIndex: 'createdAt',
       key: 'createdAt',

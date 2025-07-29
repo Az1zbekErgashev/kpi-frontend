@@ -43,26 +43,6 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
       dataIndex: 'emplyeesCount',
       key: 'emplyeesCount',
     },
-    {
-      title: t('status'),
-      dataIndex: 'isDeleted',
-      key: 'isDeleted',
-      render: (isDeleted, _) => (
-        <div className="status">
-          {isDeleted == 1 ? (
-            <div className="inactive_status">
-              <div className="span"></div>
-              {t('inactive')}
-            </div>
-          ) : (
-            <div className="active_status">
-              <div className="span"></div>
-              {t('active')}
-            </div>
-          )}
-        </div>
-      ),
-    },
   ];
 
   if (hasActiveTeams) {
