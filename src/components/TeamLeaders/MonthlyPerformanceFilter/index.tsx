@@ -4,7 +4,6 @@ import { Form } from 'antd';
 import { DatePicker, Select, SelectOption } from 'ui';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
 
 const months = [
   { value: '1', label: 'January' },
@@ -35,7 +34,7 @@ export function MonthlyPerformanceFilter({ handleValueChange, activeTab }: props
     const initialValues: any = {
       year: dayjs(`${dayjs().year()}-01-01`),
     };
-    initialValues.month = dayjs().month() + 1;
+    initialValues.month = (dayjs().month() + 1).toString();
 
     form.setFieldsValue(initialValues);
   }, [form, activeTab]);

@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { StyledGradeForm } from './style';
 import useQueryApiClient from 'utils/useQueryApiClient';
-import { useParams } from 'react-router-dom';
 import { Empty, Form } from 'antd';
 import { DatePicker } from 'ui';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { NOTFOUND } from 'dns';
 import { Zap } from 'lucide-react';
 
 interface ApiResponse {
@@ -69,8 +67,6 @@ const generateDivisionColor = (index: number) => {
 
 export function GradeDisplay() {
   const [data, setData] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const currentYear = dayjs().year();
@@ -172,7 +168,7 @@ export function GradeDisplay() {
                     return missingDiv ? (
                       <th rowSpan={3} className="annual-header">
                         <div className="category-content">
-                          <div className="category-name">{t('final_result')}</div>
+                          <div className="category-name mission-content">{missingDiv.divisionId}</div>
                           <div className="category-percentage">{missingDiv.ratio}%</div>
                         </div>
                       </th>
@@ -211,13 +207,10 @@ export function GradeDisplay() {
               <tbody>
                 {data.students.map((student) => (
                   <React.Fragment key={student.id}>
-                    {/* Student grades row */}
                     <tr className="student-row">
-                      {/* Student Information */}
                       <td className="student-info-cell">
                         <div className="student-details">
                           <div className="student-main">
-                            <span className="room">{student.room}</span>
                             <span className="name">{student.name}</span>
                           </div>
                           <div className="student-secondary">
@@ -246,7 +239,7 @@ export function GradeDisplay() {
                       )}
                       <td className="annual-cell">
                         <div className="annual-grade">{student.finalScore ?? '-'}</div>
-                        <div className="annual-label">{student.finalGrade}</div>
+                        <div className="annual-label final-grade">{student.finalGrade}</div>
                       </td>
                       {(() => {
                         const missingDiv = student.divisions.find(
@@ -256,7 +249,7 @@ export function GradeDisplay() {
                         return missingDiv ? (
                           <td className="annual-cell">
                             <div className="annual-grade">{missingDiv.weighted ?? '-'}</div>
-                            <div className="annual-label">{missingDiv.grade}</div>
+                            <div className="annual-label final-grade">{missingDiv.grade}</div>
                           </td>
                         ) : null;
                       })()}

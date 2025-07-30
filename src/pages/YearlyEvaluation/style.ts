@@ -408,4 +408,9 @@ export const StyledGradeForm = styled.div`
       transform: translate(-50%, -50%) scale(1.2);
     }
   }
+
+  .final-grade {
+    font-weight: bold;
+    font-size: 20px;
+  }
 `;

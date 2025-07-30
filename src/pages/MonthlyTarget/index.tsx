@@ -1,10 +1,11 @@
-import { Card, Form } from 'antd';
+import { Card, Empty, Form } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { CommentHistory, GoalCommentForCEO } from 'components';
 import { StyledCommentHistory } from 'components/CommentHistory/style';
 import { StyledGoalCommentForCEO } from 'components/GoalCommentForCEO/style';
 import { StyledGoalTable } from 'components/GoalTable/style';
 import dayjs from 'dayjs';
+import { Zap } from 'lucide-react';
 import { StyledGradeForm } from 'pages/YearlyEvaluation/style';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,12 +29,15 @@ interface ApiResponse {
         [period: number]: string | null;
       };
     };
-    finalScore: number | null; // Numerical annual grade
+    finalScore: number | null;
+    finalGrade?: string; // Numerical annual grade
     divisions: {
       divisionId: string;
       average: number;
       adjusted: number;
       weighted: number;
+      ratio?: number;
+      grade?: string;
     }[];
   }[];
   evaluationPeriods: {
@@ -181,29 +185,6 @@ export function MonthlyTarget() {
   const getGrade = (student: ApiResponse['students'][0], evaluationId: string, period: number): string => {
     return student.grades[evaluationId]?.[period] || '-';
   };
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <span>Loading grade data...</span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error-container">
-        <h3>Error Loading Data</h3>
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()}>Retry</button>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return <div className="error-container">No data available</div>;
-  }
 
   return (
     <StyledGoalTable>
@@ -382,128 +363,183 @@ export function MonthlyTarget() {
                 </tbody>
               </table>
             </div>
-            <StyledGradeForm>
-              <div className="grade-system">
-                <div className="table-container">
-                  <table className="grade-table">
-                    {/* Table Header */}
-                    <thead>
-                      {/* First header row - Evaluation categories */}
-                      <tr className="category-header">
-                        <th rowSpan={3} className="student-info-header">
-                          Student Information
-                        </th>
-                        {data?.evaluationPeriods?.map((period) => (
-                          <th
-                            key={period.id}
-                            colSpan={period.periods.length}
-                            className={`category-cell category-${period.id}`}
-                          >
-                            <div className="category-content">
-                              <div className="category-name">{period.name}</div>
-                              <div className="category-percentage">{period.percentage}%</div>
-                              <div className="category-description">{period.description}</div>
-                            </div>
-                          </th>
-                        ))}
-                        <th rowSpan={3} className="annual-header">
-                          Annual Grade
-                        </th>
-                      </tr>
-
-                      {/* Second header row - Period numbers */}
-                      <tr className="period-header">
-                        {data?.evaluationPeriods?.map((evaluation) =>
-                          evaluation.periods.map((period) => (
-                            <th key={`${evaluation.id}-${period}`} className={`period-cell category-${evaluation.id}`}>
-                              {period}
-                            </th>
-                          ))
-                        )}
-                      </tr>
-
-                      {/* Third header row - Average values (only at the beginning of each division) */}
-                      <tr className="avg-header">
-                        {data?.evaluationPeriods?.map((evaluation, evaluationIndex) => {
-                          const divisionColor = generateDivisionColor(evaluationIndex);
-                          const avgValue =
-                            data?.students[0]?.divisions?.find((div) => div.divisionId === evaluation.id)?.average || 0;
-
-                          return evaluation?.periods?.map((period, index) => (
-                            <th
-                              key={`avg-${evaluation.id}-${period}`}
-                              style={{
-                                backgroundColor: index === 0 ? divisionColor.bg : '#f0f9ff',
-                                color: index === 0 ? divisionColor.text : '#1e40af',
-                              }}
-                              className={`avg-cell category-${evaluation.id}`}
-                            >
-                              {index === 0 ? (
-                                <div className="avg-content">
-                                  <div className="avg-label">AVG</div>
-                                  <div className="avg-value">{avgValue}</div>
+            {!!!data?.students ? (
+              <Empty />
+            ) : (
+              <StyledGradeForm>
+                <div className="grade-system">
+                  <div className="table-container">
+                    <table className="grade-table">
+                      <thead>
+                        <tr className="category-header">
+                          <th rowSpan={3} className="student-info-header">
+                            <div className="logo-section">
+                              <div className="logo-container">
+                                <div className="logo-icon">
+                                  <Zap className="logo-svg" />
                                 </div>
-                              ) : (
-                                <div className="avg-empty"></div>
-                              )}
-                            </th>
-                          ));
-                        })}
-                      </tr>
-                    </thead>
-
-                    {/* Table Body */}
-                    <tbody>
-                      {data?.students?.map((student) => (
-                        <React.Fragment key={student.id}>
-                          <tr className="student-row">
-                            {/* Student Information */}
-                            <td className="student-info-cell">
-                              <div className="student-details">
-                                <div className="student-main">
-                                  <span className="room">{student.room}</span>
-                                  <span className="name">{student.name}</span>
-                                </div>
-                                <div className="student-secondary">
-                                  <span className="position">{student.position}</span>
-                                  <span className="department">{student.department}</span>
-                                </div>
-                                <div className="student-extra">
-                                  <span className="date">{student.date}</span>
+                                <div className="logo-text">
+                                  <h2>KPI</h2>
+                                  <span>{t('evaluations')}</span>
                                 </div>
                               </div>
-                            </td>
+                              <div className="logo-glow"></div>
+                            </div>
+                          </th>
+                          {data?.evaluationPeriods?.map((period) => (
+                            <th
+                              key={period.id}
+                              colSpan={period.periods.length}
+                              className={`category-cell category-${period.id}`}
+                            >
+                              <div className="category-content">
+                                <div className="category-name">{period.name}</div>
+                                <div className="category-percentage">{period.percentage}%</div>
+                              </div>
+                            </th>
+                          ))}
+                          <th rowSpan={3} className="annual-header">
+                            <div className="category-content">
+                              <div className="category-name">{t('final_result')}</div>
+                              <div className="category-percentage">100%</div>
+                            </div>
+                          </th>
 
-                            {/* Grade cells for each evaluation period */}
-                            {data?.evaluationPeriods?.map(
-                              (evaluation) =>
-                                evaluation?.periods?.map((period) => {
+                          {(() => {
+                            const missingDiv = data?.students
+                              .flatMap((student) => student.divisions)
+                              .find((divs) => !data.evaluationPeriods?.some((div) => div.id === divs.divisionId));
+
+                            return missingDiv ? (
+                              <th rowSpan={3} className="annual-header">
+                                <div className="category-content">
+                                  <div className="category-name mission-content">{missingDiv.divisionId}</div>
+                                  <div className="category-percentage">{missingDiv.ratio}%</div>
+                                </div>
+                              </th>
+                            ) : null;
+                          })()}
+                        </tr>
+
+                        <tr className="period-header">
+                          {data?.evaluationPeriods?.map((evaluation) =>
+                            evaluation.periods.map((period) => (
+                              <th
+                                key={`${evaluation.id}-${period}`}
+                                className={`period-cell category-${evaluation.id}`}
+                              >
+                                {period}
+                              </th>
+                            ))
+                          )}
+                        </tr>
+
+                        <tr className="avg-header">
+                          {data?.evaluationPeriods?.map((evaluation, evaluationIndex) => {
+                            const divisionColor = generateDivisionColor(evaluationIndex);
+
+                            return evaluation?.periods?.map((period, index) => (
+                              <th
+                                key={`avg-${evaluation.id}-${period}`}
+                                style={{
+                                  backgroundColor: index === 0 ? divisionColor.bg : '#f0f9ff',
+                                  color: index === 0 ? divisionColor.text : '#1e40af',
+                                }}
+                                className={`avg-cell category-${evaluation.id}`}
+                              ></th>
+                            ));
+                          })}
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {data.students.map((student) => (
+                          <React.Fragment key={student.id}>
+                            {/* Student grades row */}
+                            <tr className="student-row">
+                              {/* Student Information */}
+                              <td className="student-info-cell">
+                                <div className="student-details">
+                                  <div className="student-main">
+                                    <span className="name">{student.name}</span>
+                                  </div>
+                                  <div className="student-secondary">
+                                    <span className="position">{student.position}</span>
+                                    <span className="department">{student.department}</span>
+                                  </div>
+                                  <div className="student-extra">
+                                    <span className="date">{student.date}</span>
+                                  </div>
+                                </div>
+                              </td>
+
+                              {data.evaluationPeriods.map((evaluation) =>
+                                evaluation.periods.map((period) => {
                                   const grade = getGrade(student, evaluation.id, period);
                                   return (
                                     <td
                                       key={`${evaluation.id}-${period}`}
-                                      className={`grade-cell grade-${grade.toLowerCase()} category-${evaluation.id}`}
+                                      className={`grade-cell grade-${grade.toLowerCase()}`}
                                       title={`${student.name} - ${evaluation.name} - Period ${period}: ${grade}`}
                                     >
                                       {grade}
                                     </td>
                                   );
                                 })
-                            )}
+                              )}
+                              <td className="annual-cell">
+                                <div className="annual-grade">{student.finalScore ?? '-'}</div>
+                                <div className="annual-label final-grade">{student.finalGrade}</div>
+                              </td>
+                              {(() => {
+                                const missingDiv = student.divisions.find(
+                                  (divs) => !data.evaluationPeriods?.some((div) => div.id === divs.divisionId)
+                                );
 
-                            {/* Annual Grade */}
-                            <td className="annual-cell">
-                              <div className="annual-grade">{student.finalScore ?? '-'}</div>
-                              <div className="annual-label">Final</div>
-                            </td>
-                          </tr>
-                        </React.Fragment>
-                      ))}
-                    </tbody>
-                  </table>
+                                return missingDiv ? (
+                                  <td className="annual-cell">
+                                    <div className="annual-grade">{missingDiv.weighted ?? '-'}</div>
+                                    <div className="annual-label final-grade">{missingDiv.grade}</div>
+                                  </td>
+                                ) : null;
+                              })()}
+                            </tr>
+
+                            <tr className="student-avg-row">
+                              <td className="avg-label-cell">
+                                <div className="avg-student-label">AVG</div>
+                              </td>
+
+                              {/* AVG values for each division - centered in middle of division */}
+                              {data.evaluationPeriods.map((evaluation) => {
+                                // Find the avg value for this division for this specific student
+                                const avgValue =
+                                  student.divisions?.find((div) => div.divisionId === evaluation.id)?.average || 0;
+                                const divisionLength = evaluation.periods.length;
+                                const middleIndex = Math.floor(divisionLength / 2);
+
+                                return evaluation.periods.map((period, index) => (
+                                  <td
+                                    key={`student-avg-${student.id}-${evaluation.id}-${period}`}
+                                    className="avg-period-cell"
+                                  >
+                                    {index === middleIndex ? (
+                                      <div className="avg-value-display">{avgValue}</div>
+                                    ) : (
+                                      <div className="avg-empty-cell"></div>
+                                    )}
+                                  </td>
+                                ));
+                              })}
+                            </tr>
+                          </React.Fragment>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-            </StyledGradeForm>
+              </StyledGradeForm>
+            )}
             <br />
             <br />
             <StyledCommentHistory>
