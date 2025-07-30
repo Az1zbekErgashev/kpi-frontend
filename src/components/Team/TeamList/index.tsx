@@ -53,27 +53,11 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
       render: (action, record) => (
         <div className="action-btn-wrap">
           <div className="action-btn">
-            <Tooltip
-              color="#151a2d"
-              style={{ color: 'white' }}
-              placement="bottom"
-              trigger={['hover']}
-              title={t('update_user_tooltip')}
-            >
-              <Button
-                icon={<SvgSelector id="edit" />}
-                onClick={() => setActionModalConfig({ open: true, title: 'edit_team', type: 'EDIT', team: record })}
-              />
-            </Tooltip>
-            <Tooltip
-              color="#151a2d"
-              style={{ color: 'white' }}
-              placement="bottom"
-              trigger={['hover']}
-              title={t('delete_team_tooltip')}
-            >
-              <Button danger onClick={() => handleOpenConfirmModal(t, record.id)} icon={<SvgSelector id="trash" />} />
-            </Tooltip>
+            <Button
+              icon={<SvgSelector id="edit" />}
+              onClick={() => setActionModalConfig({ open: true, title: 'edit_team', type: 'EDIT', team: record })}
+            />
+            <Button danger onClick={() => handleOpenConfirmModal(t, record.id)} icon={<SvgSelector id="trash" />} />
           </div>
         </div>
       ),

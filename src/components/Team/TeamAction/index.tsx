@@ -44,7 +44,7 @@ export function TeamAction({ handleClose, open, title, type, team, createTeam, u
           />
           <div className="footer-btn">
             <Button onClick={handleClose} label={t('cancel')} />
-            <Button htmlType="submit" type="primary" label={t('create_team')} />
+            <Button htmlType="submit" type="primary" label={t('submit')} />
           </div>
         </Form>
       </StyledTeamAction>

@@ -101,28 +101,12 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
         <div className="action-btn-wrap">
           <div className="action-btn">
             {user?.Id != record.id && (
-              <Tooltip
-                color="#151a2d"
-                style={{ color: 'white' }}
-                placement="bottom"
-                trigger={['hover']}
-                title={t('update_user')}
-              >
-                <Button
-                  icon={<SvgSelector id="edit" />}
-                  onClick={() => setActionModalConfig({ open: true, title: 'edit_user', type: 'EDIT', user: record })}
-                />
-              </Tooltip>
+              <Button
+                icon={<SvgSelector id="edit" />}
+                onClick={() => setActionModalConfig({ open: true, title: 'edit_user', type: 'EDIT', user: record })}
+              />
             )}
-            <Tooltip
-              color="#151a2d"
-              style={{ color: 'white' }}
-              placement="bottom"
-              trigger={['hover']}
-              title={t('delete_user')}
-            >
-              <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
-            </Tooltip>
+            <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
           </div>
         </div>
       ),

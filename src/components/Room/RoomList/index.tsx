@@ -34,7 +34,7 @@ export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }
 
   const columns: ColumnsType = [
     {
-      title: t('team_name'),
+      title: t('room'),
       dataIndex: 'name',
       key: 'name',
     },
@@ -59,27 +59,11 @@ export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }
       render: (action, record) => (
         <div className="action-btn-wrap">
           <div className="action-btn">
-            <Tooltip
-              color="#151a2d"
-              style={{ color: 'white' }}
-              placement="bottom"
-              trigger={['hover']}
-              title={t('update_room_tooltip')}
-            >
-              <Button
-                icon={<SvgSelector id="edit" />}
-                onClick={() => setActionModalConfig({ open: true, title: 'edit_room', type: 'EDIT', room: record })}
-              />
-            </Tooltip>
-            <Tooltip
-              color="#151a2d"
-              style={{ color: 'white' }}
-              placement="bottom"
-              trigger={['hover']}
-              title={t('delete_room_tooltip')}
-            >
-              <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
-            </Tooltip>
+            <Button
+              icon={<SvgSelector id="edit" />}
+              onClick={() => setActionModalConfig({ open: true, title: 'edit_room', type: 'EDIT', room: record })}
+            />
+            <Button onClick={() => handleOpenConfirmModal(t, record.id)} danger icon={<SvgSelector id="trash" />} />
           </div>
         </div>
       ),

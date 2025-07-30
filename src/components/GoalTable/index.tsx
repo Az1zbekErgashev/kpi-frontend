@@ -21,22 +21,6 @@ export function GoalTable({ goal, roleType, goalAndTeam }: props) {
         <div className="table-wrapper">
           <table className="kpi-table">
             <thead>
-              {!location.pathname.includes('yearly-goal') && (
-                <tr className="header-row">
-                  <th
-                    colSpan={4}
-                    className="main-header"
-                    dangerouslySetInnerHTML={{
-                      __html: t(roleType == 'CEO' ? 'goal_table_header_ceo_title' : 'goal_table_header_team_title')
-                        .replace('{year}', year?.toString() ?? newDateTime)
-                        .replace('{room}', goalAndTeam?.room || '')
-
-                        .replace('{team}', goalAndTeam?.team || ''),
-                    }}
-                  ></th>
-                </tr>
-              )}
-
               <tr className="column-headers">
                 <th className="category-header">{t('division')}</th>
                 <th className="ratio-header">{t('ratio')}</th>
