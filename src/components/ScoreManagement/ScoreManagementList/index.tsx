@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ConfirmModal, Table } from 'ui';
 import useQueryApiClient from 'utils/useQueryApiClient';
+import { StyledScoreManagementList } from './style';
 
 interface props {
   scoreData: any;
@@ -48,15 +49,33 @@ export function ScoreManagementList({ scoreData, setActionModal, getScore }: pro
       dataIndex: 'isFinalScore',
       key: 'isFinalScore',
       title: t('isFinalScore'),
-      render: (text) => (text ? t('yes') : t('no')),
+      sorter: (a, b) => (a.isFinalScore === b.isFinalScore ? 0 : a.isFinalScore ? -1 : 1),
+      render: (text) => (
+        <div className="flex-column">
+          {text ? (
+            <div className="score-status-active">{t('active')}</div>
+          ) : (
+            <div className="score-status-inactive">{t('inactive')}</div>
+          )}
+        </div>
+      ),
     },
     {
       dataIndex: 'isMoreDivisions',
       key: 'isMoreDivisions',
       title: t('isMoreDivisionScore'),
-      render: (text) => (text ? t('yes') : t('no')),
+      sorter: (a, b) => (a.isMoreDivisions === b.isMoreDivisions ? 0 : a.isMoreDivisions ? -1 : 1),
+      render: (text) => (
+        <div className="flex-column">
+          {text ? (
+            <div className="score-status-active">{t('active')}</div>
+          ) : (
+            <div className="score-status-inactive">{t('inactive')}</div>
+          )}
+        </div>
+      ),
     },
-    { dataIndex: 'grade', key: 'grade', title: t('grade') },
+    { dataIndex: 'grade', key: 'grade', title: t('grade'), className: 'grade-column' },
     { dataIndex: 'minScore', key: 'minScore', title: t('minScore') },
     { dataIndex: 'maxScore', key: 'maxScore', title: t('maxScore') },
     {
@@ -122,9 +141,9 @@ export function ScoreManagementList({ scoreData, setActionModal, getScore }: pro
   }, [scoreId]);
 
   return (
-    <div>
+    <StyledScoreManagementList>
       <Table columns={columns} dataSource={scoreData?.data ?? []} />
       {coniformModal && <ConfirmModal {...coniformModal} />}
-    </div>
+    </StyledScoreManagementList>
   );
 }
