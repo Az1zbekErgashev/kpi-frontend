@@ -37,7 +37,7 @@ export function TeamAction({ handleClose, open, title, type, team, createTeam, u
       <StyledTeamAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <Input
-            label={t('room_name')}
+            label={t('team_name')}
             name="name"
             rules={[{ required: true, message: t('field_is_required') }]}
             allowClear
