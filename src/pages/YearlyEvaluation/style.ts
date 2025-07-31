@@ -215,11 +215,25 @@ export const StyledGradeForm = styled.div`
     border-color: #a7f3d0;
   }
 
+  .grade-cell.grade-a-plus,
+  .annual-grade.grade-a-plus {
+    background: #d1fae5;
+    color: #047857;
+    border-color: #6ee7b7;
+  }
+
   .grade-cell.grade-b,
   .annual-grade.grade-b {
     background: #eff6ff;
     color: #2563eb;
     border-color: #93c5fd;
+  }
+
+  .grade-cell.grade-b-plus,
+  .annual-grade.grade-b-plus {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-color: #60a5fa;
   }
 
   .grade-cell.grade-c,

@@ -7,7 +7,6 @@ import { token } from 'config/token';
 import { RouterProvider } from 'react-router-dom';
 import { routes } from 'config/config';
 import { router } from 'utils/routes';
-import useJwt from 'utils/useJwt';
 import i18n from 'utils/i18n';
 import { useLanguage } from 'contexts/LanguageContext';
 

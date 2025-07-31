@@ -399,7 +399,7 @@ export function MonthlyTarget() {
                             return missingDiv ? (
                               <th rowSpan={3} className="annual-header">
                                 <div className="category-content">
-                                  <div className="category-name mission-content">{missingDiv.divisionId}</div>
+                                  <div className="category-name mission-content">{t('joined_division')}</div>
                                   <div className="category-percentage">{missingDiv.ratio}%</div>
                                 </div>
                               </th>
@@ -450,7 +450,7 @@ export function MonthlyTarget() {
                                     <span className="name">{student.name}</span>
                                   </div>
                                   <div className="student-secondary">
-                                    <span className="position">{student.position}</span>
+                                    <span className="position">{t(student.position)}</span>
                                     <span className="department">{student.department}</span>
                                   </div>
                                   <div className="student-extra">
@@ -465,7 +465,7 @@ export function MonthlyTarget() {
                                   return (
                                     <td
                                       key={`${evaluation.id}-${period}`}
-                                      className={`grade-cell grade-${grade.toLowerCase()}`}
+                                      className={`grade-cell grade-${grade.toLowerCase().replace('+', '-plus')}`}
                                       title={`${student.name} - ${evaluation.name} - Period ${period}: ${grade}`}
                                     >
                                       {grade}
