@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 export function ScoreManagement() {
   const { t } = useTranslation();
   const [form] = Form.useForm();
+  const [yearForm] = Form.useForm();
   const [isFinalScore, setIsFinalScore] = useState<boolean>(false);
   const [isMoreDivision, setIsMoreDivision] = useState<boolean>(false);
 
@@ -129,7 +130,7 @@ export function ScoreManagement() {
   return (
     <StyledScoreManagement>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end' }}>
-        <Form layout="vertical" form={form} onValuesChange={onValuesChange}>
+        <Form layout="vertical" form={yearForm} onValuesChange={onValuesChange}>
           <DatePicker
             className="date-picker-item"
             defaultValue={dayjs(`${currentYear}-01-01`)}
