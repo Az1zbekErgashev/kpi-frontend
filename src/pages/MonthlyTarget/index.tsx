@@ -74,11 +74,8 @@ export function MonthlyTarget() {
   const params = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const newDateTime = new Date().getFullYear().toString();
   const [form] = Form.useForm();
   const [data, setData] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const { data: targets } = useQueryApiClient({
     request: {
@@ -106,10 +103,7 @@ export function MonthlyTarget() {
       setData(response.data);
     },
     onError() {
-      setError('Failed to fetch data');
-    },
-    onFinally() {
-      setLoading(false);
+      setData(null);
     },
   });
 
@@ -190,23 +184,18 @@ export function MonthlyTarget() {
     <StyledGoalTable>
       <BackButton label={t('back')} onClick={() => navigate(-1)} color="black" />
       <br />
+      <div className="styled_header">
+        <h1 className="title">
+          {t('performance_page_title_with_room')
+            .replace('{year}', params.year ?? '')
+            .replace('{team}', rommAndTeam?.data?.team ?? '')}
+        </h1>
+      </div>
+
       <div className="kpi-table-container">
         <div className="table-wrapper">
           <table className="kpi-table">
             <thead>
-              <tr className="header-row">
-                <th
-                  colSpan={4}
-                  className="main-header"
-                  dangerouslySetInnerHTML={{
-                    __html: t('goal_table_header_ceo_title')
-                      .replace('{year}', params.year?.toString() ?? newDateTime)
-                      .replace('{room}', rommAndTeam?.data?.room || '')
-                      .replace('{team}', rommAndTeam?.data?.team || ''),
-                  }}
-                ></th>
-              </tr>
-
               <tr className="column-headers">
                 <th className="category-header">{t('division')}</th>
                 <th className="ratio-header">{t('ratio')}</th>
@@ -273,21 +262,17 @@ export function MonthlyTarget() {
         <br />
         {targets?.data?.status !== 'NoWritte' && (
           <>
+            <div className="styled_header">
+              <h1 className="title">
+                {t('performance_page_title_with_room_month')
+                  .replace('{year}', params.year ?? '')
+                  .replace('{month}', params.month ?? '')
+                  .replace('{team}', rommAndTeam?.data?.team ?? '')}
+              </h1>
+            </div>
             <div className="table-wrapper">
               <table className="kpi-table">
                 <thead>
-                  <tr className="header-row">
-                    <th
-                      colSpan={4}
-                      className="main-header"
-                      dangerouslySetInnerHTML={{
-                        __html: t('goal_table_header_ceo_title')
-                          .replace('{year}', params.year?.toString() ?? newDateTime)
-                          .replace('{room}', rommAndTeam?.data?.room || '')
-                          .replace('{team}', rommAndTeam?.data?.team || ''),
-                      }}
-                    ></th>
-                  </tr>
                   <tr className="column-headers">
                     <th className="category-header">{t('division')}</th>
                     <th className="content-header">{t('goal_content')}</th>
@@ -363,6 +348,7 @@ export function MonthlyTarget() {
                 </tbody>
               </table>
             </div>
+            <br />
             {!!!data?.students ? (
               <Empty />
             ) : (

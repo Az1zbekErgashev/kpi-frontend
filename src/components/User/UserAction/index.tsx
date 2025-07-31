@@ -51,7 +51,7 @@ export function UserAction({
       <StyledUserAction>
         <Form onFinish={onFinish} form={form} layout="vertical">
           <div className="flex">
-           <Input
+            <Input
               label={t('id')}
               rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
@@ -119,7 +119,7 @@ export function UserAction({
         </Form>
         <div className="footer-btn">
           <Button onClick={handleClose} label={t('cancel')} />
-          <Button onClick={() => form.submit()} type="primary" label={type == "EDIT" ? t('submit') : t('submit')} />
+          <Button onClick={() => form.submit()} type="primary" label={type == 'EDIT' ? t('submit') : t('submit')} />
         </div>
       </StyledUserAction>
     </Modal>
