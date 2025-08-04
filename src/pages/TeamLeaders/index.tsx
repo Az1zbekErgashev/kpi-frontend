@@ -86,9 +86,12 @@ export function TeamLeaders() {
     setQueryParams((res: any) => ({ ...res, pageIndex: page, pageSize: pageSize }));
   };
   const handleValueChange = (value: any) => {
+    console.log(value);
+
     setQueryParams((prev: any) => ({
       ...prev,
       ...value,
+      year: dayjs(value.year).format('YYYY-MM-DDTHH:mm:ss'),
     }));
   };
 

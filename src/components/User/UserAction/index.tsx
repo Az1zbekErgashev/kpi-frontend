@@ -87,13 +87,6 @@ export function UserAction({
             </Select>
           </div>
           <div className="flex">
-            <Select label={t('team')} allowClear name="teamId">
-              {teamData?.data?.map((item: { name: string; id: number }, index: number) => (
-                <SelectOption value={item.id} key={index}>
-                  {item.name}
-                </SelectOption>
-              ))}
-            </Select>
             <Select
               label={t('room')}
               allowClear
@@ -101,6 +94,13 @@ export function UserAction({
               rules={[{ required: true, message: t('field_is_required') }]}
             >
               {roomData?.data?.map((item: { name: string; id: number }, index: number) => (
+                <SelectOption value={item.id} key={index}>
+                  {item.name}
+                </SelectOption>
+              ))}
+            </Select>
+            <Select label={t('team')} allowClear name="teamId">
+              {teamData?.data?.map((item: { name: string; id: number }, index: number) => (
                 <SelectOption value={item.id} key={index}>
                   {item.name}
                 </SelectOption>
