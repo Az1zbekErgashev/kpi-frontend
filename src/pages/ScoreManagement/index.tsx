@@ -29,7 +29,7 @@ export function ScoreManagement() {
     open: false,
     type: 'ADD',
   });
-  const currentYear = dayjs().year();
+  const currentYear = parseInt(dayjs(yearForm.getFieldValue('year')).format('YYYY')) ?? dayjs().year();
 
   const {
     data: scoreData,
@@ -87,9 +87,10 @@ export function ScoreManagement() {
           updateScore(values);
           return;
         }
+
         createScore({
           ...values,
-          year: dayjs(values.year).format('YYYY'),
+          year: dayjs(yearForm.getFieldValue('year')).format('YYYY'),
           isFinalScore: isFinalScore,
           isMoreDivisions: isMoreDivision,
         });
@@ -214,6 +215,7 @@ export function ScoreManagement() {
                     rules={[{ required: true, message: t('this_field_required') }]}
                     name="minScore"
                     label={t('minScore')}
+                    type="number"
                   />
                   <Input
                     rules={[{ required: true, message: t('this_field_required') }]}
@@ -238,6 +240,7 @@ export function ScoreManagement() {
                     rules={[{ required: true, message: t('this_field_required') }]}
                     name="minScore"
                     label={t('minScore')}
+                    type="number"
                   />
                   <Input
                     rules={[{ required: true, message: t('this_field_required') }]}
@@ -276,6 +279,7 @@ export function ScoreManagement() {
                     rules={[{ required: true, message: t('this_field_required') }]}
                     name="minScore"
                     label={t('minScore')}
+                    type="number"
                   />
                   <Input
                     rules={[{ required: true, message: t('this_field_required') }]}
