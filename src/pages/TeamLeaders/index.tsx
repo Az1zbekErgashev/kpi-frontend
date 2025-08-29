@@ -85,9 +85,12 @@ export function TeamLeaders() {
     smoothScroll('top', 0);
     setQueryParams((res: any) => ({ ...res, pageIndex: page, pageSize: pageSize }));
   };
-  const handleValueChange = (value: any) => {
-    console.log(value);
 
+  const handlePerformancePaginationChange = (page: number, pageSize: number) => {
+    smoothScroll('top', 0);
+    setQueryParamsForPerformance((res: any) => ({ ...res, pageIndex: page, pageSize: pageSize }));
+  };
+  const handleValueChange = (value: any) => {
     setQueryParams((prev: any) => ({
       ...prev,
       ...value,
@@ -136,7 +139,7 @@ export function TeamLeaders() {
           <Pagination
             total={monthlyData?.data?.totalItems}
             pageSize={monthlyData?.data?.itemsPerPage}
-            onChange={handlePaginationChange}
+            onChange={handlePerformancePaginationChange}
             hideOnSinglePage={true}
             current={monthlyData?.data?.PageIndex}
           />
