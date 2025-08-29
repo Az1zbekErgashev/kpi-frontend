@@ -91,9 +91,6 @@ export function GoalForm({ goal, createGoal, updateGoal, type, setFormStatus }: 
   const handleModalSubmit = async () => {
     try {
       const values = await modalForm.validateFields();
-
-      console.log(values);
-
       const newGoal = {
         goalContent: values.goalContent,
         id: values.id,
