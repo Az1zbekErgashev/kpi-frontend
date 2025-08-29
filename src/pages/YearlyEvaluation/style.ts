@@ -427,4 +427,13 @@ export const StyledGradeForm = styled.div`
     font-weight: bold;
     font-size: 20px;
   }
+
+  .title-text {
+    font-size: 16px;
+    color: rgba(58, 123, 213, 0.95);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
 `;
