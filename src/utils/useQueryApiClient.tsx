@@ -140,6 +140,7 @@ function useQueryApiClient({ request, onSuccess, onError, onFinally, enabled = t
         'Content-Type': multipart ? 'multipart/form-data' : 'application/json',
         'X-FRONTEND-ROUTE': window.location.pathname,
         ...request.headers,
+        TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
     };
 
