@@ -2,7 +2,6 @@ import { notification } from 'antd';
 import { routes } from '../config/config';
 import dayjs from 'dayjs';
 import { NavigateFunction } from 'react-router-dom';
-import { TFunction } from 'i18next';
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const formatDate = (date: string) => (date ? dayjs(date).format('DD.MM.YYYY') : null);
