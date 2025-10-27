@@ -68,6 +68,7 @@ export const StyledLoginMain = styled.main`
     }
   }
 
+  /* Particles */
   .particles {
     position: absolute;
     width: 100%;

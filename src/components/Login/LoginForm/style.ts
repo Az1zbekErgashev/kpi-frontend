@@ -163,7 +163,7 @@ export const StyledLoginForm = styled.div`
   .login-button {
     width: 100%;
     padding: 14px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #764ba2 0%, #764ba2 100%);
     color: white;
     border: none;
     border-radius: 12px;
