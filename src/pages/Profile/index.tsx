@@ -6,6 +6,7 @@ import { Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useQueryApiClient from 'utils/useQueryApiClient';
 import dayjs from 'dayjs';
+import { Notification } from 'ui';
 
 export function Profile() {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ export function Profile() {
     </svg>
   );
 
-  const { data: profile } = useQueryApiClient({
+  const { data: profile, refetch: refetchProfile } = useQueryApiClient({
     request: {
       url: '/api/user/profile',
       method: 'GET',
@@ -46,6 +47,10 @@ export function Profile() {
     request: {
       url: '/api/user',
       method: 'PUT',
+    },
+    onSuccess() {
+      Notification({ text: t('Profile Updated'), type: 'success' });
+      refetchProfile(); 
     },
     onError(error) {
       if (error.error == 'old_password_not_correct') {
@@ -75,6 +80,16 @@ export function Profile() {
     appendData(value);
   };
 
+  const formatDate = (dateString: string) => {
+    let parsedDate = dayjs(dateString, 'DD.MM.YYYY HH:mm:ss');
+    
+    if (!parsedDate.isValid()) {
+      parsedDate = dayjs(dateString);
+    }
+    
+    return parsedDate.isValid() ? parsedDate.format('YYYY.MM.DD') : dateString;
+  };
+
   return (
     <StyledProfile>
       <div className="content-wrapper">
@@ -96,7 +111,6 @@ export function Profile() {
                     rules={[{ required: true, message: t('this_field_required') }]}
                   />
                 </div>
-
                 <div className="form-group">
                   <Select allowClear loading={isLoading} label={t('position')} name="positionId">
                     {position?.data?.map((item: any) => (
@@ -164,7 +178,8 @@ export function Profile() {
 
               <div className="button-actions">
                 <Button onClick={() => navigate(-1)} label={t('cancel')} className="button button-outline" />
-                <Button type="primary" htmlType="submit" label={t('save_changes')} className="button button-primary" />
+                <Button type="primary" htmlType="submit" label={t('save_changes')} className="button button-primary"
+                />
               </div>
             </Form>
           </div>
@@ -175,7 +190,7 @@ export function Profile() {
             <div className="footer-info">
               {profile?.data?.updatedAt && (
                 <p>
-                  {t('last_update')}: {dayjs(profile.data.updatedAt).format('YYYY.MM.DD')}
+                  {t('last_update')}: {formatDate(profile.data.updatedAt)}
                 </p>
               )}
               <p>{t('last_update_description')}</p>

@@ -54,7 +54,7 @@ export function GoalFormModal({
                 initialValue={t('More')}
                 showSearch={false}
                 name="status"
-                label="Условие"
+                label={t('status')}
               >
                 {STATUS_OPTIONS.map(({ value, label }) => (
                   <SelectOption key={value} value={value}>
@@ -112,7 +112,7 @@ export function GoalFormModal({
 
         {selectedTargetType && (
           <div className="target-fields-section">
-            {selectedTargetType !== 'TextType' && <Divider>{t('parametrs')}</Divider>}
+            {selectedTargetType !== 'TextType' && <Divider>{t('parameters')}</Divider>}
             {renderTargetValueFields()}
           </div>
         )}

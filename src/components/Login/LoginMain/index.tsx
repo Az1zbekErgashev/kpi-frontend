@@ -1,16 +1,21 @@
+// LoginMain/index.tsx
+
 import React from 'react';
 import { LoginForm } from '../LoginForm';
 import { LanguageSwitcher } from 'ui';
 import { useLanguage } from 'contexts/LanguageContext';
+import { StyledLoginMain } from './style';
 
 export function LoginMain() {
   const { changeLanguage, language } = useLanguage();
+  
   const handleLanguageChange = async (value: number) => {
     localStorage.setItem('language', value.toString());
     changeLanguage(value.toString());
   };
+  
   return (
-    <main className="login-container">
+    <StyledLoginMain>
       <div className="background-effect">
         <div className="gradient-circle circle-1"></div>
         <div className="gradient-circle circle-2"></div>
@@ -19,7 +24,7 @@ export function LoginMain() {
 
       <div className="particles">
         {Array.from({ length: 20 }).map((_, index) => (
-          <div key={index} className={`particle particle-${index + 1}`}></div>
+          <div key={index} className="particle"></div>
         ))}
       </div>
 
@@ -49,6 +54,6 @@ export function LoginMain() {
           <LoginForm />
         </div>
       </div>
-    </main>
+    </StyledLoginMain>
   );
 }

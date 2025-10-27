@@ -49,6 +49,7 @@ export function useYearlyGoal() {
     },
     onSuccess() {
       getCeoGoal();
+      Notification({ text: t('goal_updated_successfully'), type: 'success' });
     },
     onError(error) {
       Notification({ text: t('please_fill_fields'), type: 'error' });

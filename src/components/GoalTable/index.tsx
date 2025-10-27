@@ -44,7 +44,7 @@ export function GoalTable({ goal, roleType, goalAndTeam }: props) {
                         : `${valueNumber ?? 0}% ${t(status)}`;
                     } else if (type === 'IndividualEvaluation' || type === 'LeaderEvaluation') {
                       const label =
-                        type === 'IndividualEvaluation' ? t('[individual_evaluation]') : t('[leader_evaluation]');
+                        type === 'IndividualEvaluation' ? t('[개인평가]') : t('[리더평가]');
                       displayValue = evaluationText ? `${evaluationText} ${label}` : label;
                     } else if (type === 'TextType') {
                       displayValue = t('text_type');

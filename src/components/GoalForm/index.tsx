@@ -199,8 +199,8 @@ export function GoalForm({ goal, createGoal, updateGoal, type, setFormStatus }: 
                                       RatioType: `📊 ${t('ratio_type')}`,
                                       NumberOfTimesType: `🔢 ${t('number_type')}`,
                                       TextType: `📝 ${t('text_type')}`,
-                                      IndividualEvaluation: `👤 ${t('individual_evaluation')}`,
-                                      LeaderEvaluation: `🧑‍💼 ${t('leader_evaluation')}`,
+                                      IndividualEvaluation: `👤 ${t('개인평가')}`,
+                                      LeaderEvaluation: `🧑‍💼 ${t('리더평가')}`,
                                     } as const;
 
                                     let displayValue: string | null = null;
@@ -216,8 +216,8 @@ export function GoalForm({ goal, createGoal, updateGoal, type, setFormStatus }: 
                                     } else if (type === 'IndividualEvaluation' || type === 'LeaderEvaluation') {
                                       const label =
                                         type === 'IndividualEvaluation'
-                                          ? t('[individual_evaluation]')
-                                          : t('[leader_evaluation]');
+                                          ? t('[개인평가]')
+                                          : t('[리더평가]');
                                       displayValue = evaluationText ? `${evaluationText} ${label}` : label;
                                     } else if (type === 'TextType') {
                                       displayValue = t('text_type');

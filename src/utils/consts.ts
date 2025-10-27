@@ -14,7 +14,7 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
     children: [
       { key: 'yearly_goal', path: '/setting/yearly-goal' },
       { key: 'score_management', path: '/setting/score-management' },
-      { key: 'rooms', path: '/setting/rooms' },
+      { key: 'WSB실_설정', path: '/setting/rooms' },
       { key: 'teams', path: '/setting/teams' },
       { key: 'users', path: '/setting/users' },
       { key: 'translations', path: '/setting/translations' },
@@ -36,14 +36,14 @@ export const TARGET_TYPES = [
   { value: 'RatioType', label: 'radio_type', icon: '📊' },
   { value: 'NumberOfTimesType', label: 'number_type', icon: '🔢' },
   { value: 'TextType', label: 'text_type', icon: '📝' },
-  { value: 'IndividualEvaluation', label: 'individual_evaluation', icon: '⭐' },
-  { value: 'LeaderEvaluation', label: 'leader_evaluation', icon: '👨‍💼' },
+  { value: 'IndividualEvaluation', label: '개인평가', icon: '⭐' },
+  { value: 'LeaderEvaluation', label: '리더평가', icon: '👨‍💼' },
 ];
 
 export const STATUS_OPTIONS = [
   { value: 'More', label: 'More' },
-  { value: 'Agreement', label: 'Agreement' },
-  { value: 'Below', label: 'Below' },
+  { value: 'Aggrements', label: 'Aggrements' },
+  // { value: 'Below', label: 'Below' },
   { value: 'Under', label: 'Under' },
   { value: 'Over', label: 'Over' },
 ];

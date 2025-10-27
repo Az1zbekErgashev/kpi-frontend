@@ -37,7 +37,7 @@ export function TeamLeadersFilter({ rooms, teams, handleValueChange, activeTab }
           disabledDate={(current) => current && current.year() > currentYear}
           name="year"
         />
-        <Select name="roomId" label={t('search_by_room')}>
+        <Select name="roomId" label={t('search_by_office')}>
           {rooms?.map((item, index) => (
             <SelectOption key={index} value={item.id.toString()}>
               {item.name}

@@ -1,3 +1,5 @@
+// LoginForm/index.tsx
+
 import { Form } from 'antd';
 import { useUser } from 'hooks/useUserState';
 import React from 'react';
@@ -6,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from 'ui';
 import useJwt from 'utils/useJwt';
 import useQueryApiClient from 'utils/useQueryApiClient';
+import { StyledLoginForm } from './style';
 
 export function LoginForm() {
   const { t } = useTranslation();
@@ -43,7 +46,7 @@ export function LoginForm() {
   };
 
   return (
-    <div className="form-container">
+    <StyledLoginForm>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <div className="form-group">
           <Input
@@ -92,11 +95,11 @@ export function LoginForm() {
         </div>
 
         <div className="form-actions">
-          <button type="submit" className={`login-button `}>
+          <button type="submit" className="login-button">
             {t('sign_in')}
           </button>
         </div>
       </Form>
-    </div>
+    </StyledLoginForm>
   );
 }

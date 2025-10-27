@@ -32,10 +32,22 @@ export function UsersFilter({ handleValueChange, setActionModalConfig }: props) 
     }
   };
 
+  const onValuesChange = (changedValues: any, allValues: any) => {
+    const trimmedValues = {
+      ...changedValues,
+      text: changedValues.text ? changedValues.text.trim() : changedValues.text,
+    };
+    handleValueChange(trimmedValues);
+  };
+
   return (
     <StyledUsersFilter>
-      <Form form={form} layout="vertical" onValuesChange={handleValueChange}>
-        <Input allowClear placeholder={t('search....')} name="text" label={t('search_by_username_fullname_team')} />
+      <Form form={form} layout="vertical" onValuesChange={onValuesChange}>
+        <Input
+          allowClear
+          name="text"
+          label={t('search_by_username_fullname_team')}
+        />
       </Form>
 
       <div style={{ display: 'flex', gap: 8 }}>

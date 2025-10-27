@@ -44,7 +44,7 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       width: 150,
     },
     {
-      title: t('usernamee'),
+      title: t('name'),
       dataIndex: 'fullName',
       key: 'fullName',
       width: 150,
@@ -87,7 +87,15 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 160,
-      render: (date, _) => dayjs(date).format('YYYY.MM.DD'),
+      render: (date, _) => {
+      let parsedDate = dayjs(date, 'DD.MM.YYYY HH:mm:ss');
+      
+      if (!parsedDate.isValid()) {
+        parsedDate = dayjs(date);
+      }
+      
+      return parsedDate.isValid() ? parsedDate.format('YYYY.MM.DD') : date;
+    }
     },
   ];
 

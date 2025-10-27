@@ -23,7 +23,8 @@ const Pagination = ({ current, pageSize, onChange, total }: IPaginationProps) =>
       navigate({
         pathname: location.pathname,
         search: queryParams.toString(),
-      });
+      }
+    );
     }
   }, [location.pathname, navigate, queryParams, queryPageIndex, queryPageSize]);
 
@@ -34,7 +35,8 @@ const Pagination = ({ current, pageSize, onChange, total }: IPaginationProps) =>
       navigate({
         pathname: location.pathname,
         search: queryParams.toString(),
-      });
+      },
+    );
     }
     onChange && onChange(page, pageSize);
   };

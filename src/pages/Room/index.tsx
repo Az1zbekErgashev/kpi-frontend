@@ -9,7 +9,7 @@ const createModalConfig = (t: TFunction, onConfirm: () => void, onCancel: () => 
   cancelText: t('cancel'),
   confirmText: t('delete'),
   title: t('delete_room_title'),
-  content: t('delete_room_description'),
+  // content: t('delete_room_description'),
   open: true,
   onConfirm,
   onCancel,

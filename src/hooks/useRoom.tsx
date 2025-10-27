@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { smoothScroll } from 'utils/globalFunctions';
 import useQueryApiClient from 'utils/useQueryApiClient';
+import { Notification } from 'ui';
+import { t } from 'i18next';
 
 interface initialQuery {
   name?: string;
@@ -28,6 +30,7 @@ export function useRooms() {
       method: 'DELETE',
     },
     onSuccess() {
+      Notification({ text: t('room_deleted'), type: 'success' });
       refetchRooms();
     },
   });

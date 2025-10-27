@@ -36,7 +36,10 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
       title: t('created_at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (createdAt, _) => dayjs(createdAt).format('YYYY.MM.DD'),
+      render: (createdAt, _) => {
+        const parsedDate = dayjs(createdAt, 'DD.MM.YYYY HH:mm:ss');
+        return parsedDate.isValid() ? parsedDate.format('YYYY.MM.DD') : createdAt;
+      },
     },
     {
       title: t('employees_count'),
