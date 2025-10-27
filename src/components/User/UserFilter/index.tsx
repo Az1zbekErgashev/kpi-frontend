@@ -26,7 +26,7 @@ export function UsersFilter({ handleValueChange, setActionModalConfig }: props) 
   const handleUploadChange = (info: any) => {
     if (info.file.status === 'done') {
       message.success(`${info.file.name} ${t('uploaded_successfully')}`);
-      window.location.reload(); // перезагрузка после успешной загрузки
+      window.location.reload();
     } else if (info.file.status === 'error') {
       message.error(`${info.file.name} ${t('upload_failed')}`);
     }
@@ -56,7 +56,8 @@ export function UsersFilter({ handleValueChange, setActionModalConfig }: props) 
           type="primary"
           onClick={() => setActionModalConfig({ open: true, title: 'add_user', type: 'ADD' })}
         />
-
+        {/* Original code had this part commented out */}
+      {/* 
         <Upload
           name="file"
           accept=".xlsx,.xls"
@@ -68,7 +69,18 @@ export function UsersFilter({ handleValueChange, setActionModalConfig }: props) 
           }}
         >
           <Button icon={<UploadOutlined />} label={t('upload_excel')} />
-        </Upload>
+        </Upload> */}
+        <Upload
+        name="file"
+        showUploadList={false}
+        action={`${routes.api.baseUrl}/api/user`}
+        onChange={handleUploadChange}
+        headers={{
+          Authorization: getHeader(),
+        }}
+      >
+        <Button icon={<UploadOutlined />} label={t('upload_excel')} />
+      </Upload>
       </div>
     </StyledUsersFilter>
   );
