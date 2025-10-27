@@ -22,7 +22,7 @@ export function RoomFilter({ handleValueChange, setActionModalConfig }: props) {
   return (
     <StyledRoomFilter>
       <Form form={form} layout="vertical" onValuesChange={handleValueChange}>
-        <Input allowClear name="name" label={t('search_by_name')} />
+        <Input allowClear name="name" label={t('search_by_name')} autoComplete='off' />
       </Form>
 
       <Button

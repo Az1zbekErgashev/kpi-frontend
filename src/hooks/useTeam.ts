@@ -8,6 +8,7 @@ interface initialQuery {
   pageIndex: number;
   pageSize: number;
 }
+
 export function useTeams() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
   const [teamId, setTeamId] = useState<number | null>(null);
@@ -56,6 +57,7 @@ export function useTeams() {
   };
 
   useEffect(() => {
+    smoothScroll('top', 0);
     refetchTeams();
   }, [queryParams]);
 
@@ -66,7 +68,6 @@ export function useTeams() {
   }, [teamId]);
 
   const handlePaginationChange = (page: number, pageSize: number) => {
-    smoothScroll('top', 0);
     setQueryParams((res) => ({ ...res, pageIndex: page, pageSize: pageSize }));
   };
 

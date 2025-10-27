@@ -3,12 +3,14 @@ import useQueryApiClient from 'utils/useQueryApiClient';
 import { Notification } from 'ui';
 import { useTranslation } from 'react-i18next';
 import { smoothScroll } from 'utils/globalFunctions';
+
 interface initialQuery {
   text?: string;
   IsDeleted?: string | number;
   pageIndex: number;
   pageSize: number;
 }
+
 export function useUsers() {
   const [queryParams, setQueryParams] = useState<initialQuery | null>({ pageIndex: 1, pageSize: 10 });
   const [userId, setUserId] = useState<number | null>(null);
@@ -82,6 +84,7 @@ export function useUsers() {
   };
 
   useEffect(() => {
+    smoothScroll('top', 0);
     refetchUsers();
   }, [queryParams]);
 
@@ -92,7 +95,6 @@ export function useUsers() {
   }, [userId]);
 
   const handlePaginationChange = (page: number, pageSize: number) => {
-    smoothScroll('top', 0);
     setQueryParams((res) => ({ ...res, pageIndex: page, pageSize: pageSize }));
   };
 

@@ -56,14 +56,6 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       width: 150,
     },
     {
-      title: t('rank'),
-      dataIndex: 'rank',
-      key: 'rank',
-      width: 150,
-      render: (rank, _) => rank || t('-'),
-    },
-
-    {
       title: t('position'),
       dataIndex: ['position', 'name'],
       key: 'position',
