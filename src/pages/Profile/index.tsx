@@ -190,7 +190,7 @@ export function Profile() {
             <div className="footer-info">
               {profile?.data?.updatedAt && (
                 <p>
-                  {t('last_update')}: {formatDate(profile.data.updatedAt)}
+                  {t('last_update')}: {profile.data.updatedAt}
                 </p>
               )}
               <p>{t('last_update_description')}</p>
