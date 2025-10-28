@@ -64,7 +64,6 @@ export function CommentHistory({ comment }: props) {
       dataIndex: 'createdAt',
       key: 'createdAt',
       title: t('createdAt'),
-      render: (createdAt, _) => dayjs(createdAt).format('YYYY.MM.DD HH:MM'),
     },
   ];
 
