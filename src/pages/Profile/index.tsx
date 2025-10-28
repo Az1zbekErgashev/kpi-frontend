@@ -49,7 +49,7 @@ export function Profile() {
       method: 'PUT',
     },
     onSuccess() {
-      Notification({ text: t('Profile Updated'), type: 'success' });
+      Notification({ text: t('profile_updated'), type: 'success' });
       refetchProfile(); 
     },
     onError(error) {

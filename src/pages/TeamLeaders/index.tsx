@@ -76,20 +76,27 @@ export function TeamLeaders() {
   });
 
   useEffect(() => {
+    if (queryParams && activeTab == '1') {
+      smoothScroll('top', 0);
+      refetchUsers();
+    }
+  }, [queryParams, activeTab]);
+
+  useEffect(() => {
     if (activeTab == '2') {
+      smoothScroll('top', 0);
       getMonthly();
     }
   }, [queryParamsForPerformance, activeTab]);
 
   const handlePaginationChange = (page: number, pageSize: number) => {
-    smoothScroll('top', 0);
     setQueryParams((res: any) => ({ ...res, pageIndex: page, pageSize: pageSize }));
   };
 
   const handlePerformancePaginationChange = (page: number, pageSize: number) => {
-    smoothScroll('top', 0);
     setQueryParamsForPerformance((res: any) => ({ ...res, pageIndex: page, pageSize: pageSize }));
   };
+
   const handleValueChange = (value: any) => {
     setQueryParams((prev: any) => ({
       ...prev,
@@ -147,12 +154,6 @@ export function TeamLeaders() {
       ),
     },
   ];
-
-  useEffect(() => {
-    if (queryParams && activeTab == '1') {
-      refetchUsers();
-    }
-  }, [queryParams, activeTab]);
 
   const handleTabChange = (key: string) => {
     const newSearchParams = new URLSearchParams();
