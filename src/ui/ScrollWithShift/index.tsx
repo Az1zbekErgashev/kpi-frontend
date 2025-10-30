@@ -11,7 +11,7 @@ export function ScrollWithShift() {
       placement="bottom"
       title={
         <div className="scroll-tooltip__content">
-          <p className="scroll-tooltip__title">{t('how_to_scroll')}</p>
+          <p className="scroll-tooltip__title">{t('Howtoscroll')}</p>
           <ol className="scroll-tooltip__steps">
             <li>{t('hover_your_cursor')}</li>
             <li dangerouslySetInnerHTML={{ __html: t('hold_down_the_shift') }}></li>

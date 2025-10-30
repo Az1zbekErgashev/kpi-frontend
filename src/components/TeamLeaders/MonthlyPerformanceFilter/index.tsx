@@ -1,24 +1,9 @@
 import React, { useEffect } from 'react';
 import { StyledTeamLeadersList } from '../TeamLeadersFilter/style';
-import { Form } from 'antd';
+import { Form, Button } from 'antd';
 import { DatePicker, Select, SelectOption } from 'ui';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-
-const months = [
-  { value: '1', label: 'January' },
-  { value: '2', label: 'February' },
-  { value: '3', label: 'March' },
-  { value: '4', label: 'April' },
-  { value: '5', label: 'May' },
-  { value: '6', label: 'June' },
-  { value: '7', label: 'July' },
-  { value: '8', label: 'August' },
-  { value: '9', label: 'September' },
-  { value: '10', label: 'October' },
-  { value: '11', label: 'November' },
-  { value: '12', label: 'December' },
-];
 
 interface props {
   handleValueChange: (value: any) => void;
@@ -30,14 +15,34 @@ export function MonthlyPerformanceFilter({ handleValueChange, activeTab }: props
   const [form] = Form.useForm();
   const currentYear = dayjs().year();
 
-  useEffect(() => {
-    const initialValues: any = {
-      year: dayjs(`${dayjs().year()}-01-01`),
-    };
-    initialValues.month = (dayjs().month() + 1).toString();
+  const months = [
+    { value: '1', label: t('january') },
+    { value: '2', label: t('february') },
+    { value: '3', label: t('march') },
+    { value: '4', label: t('april') },
+    { value: '5', label: t('may') },
+    { value: '6', label: t('june') },
+    { value: '7', label: t('july') },
+    { value: '8', label: t('august') },
+    { value: '9', label: t('september') },
+    { value: '10', label: t('october') },
+    { value: '11', label: t('november') },
+    { value: '12', label: t('december') },
+  ];
 
+  const initialValues: any = {
+    year: dayjs(`${dayjs().year()}-01-01`),
+    month: (dayjs().month() + 1).toString(),
+  };
+
+  useEffect(() => {
     form.setFieldsValue(initialValues);
   }, [form, activeTab]);
+
+  const handleReset = () => {
+    form.setFieldsValue(initialValues);
+    handleValueChange(initialValues);
+  };
 
   return (
     <StyledTeamLeadersList>
@@ -58,10 +63,15 @@ export function MonthlyPerformanceFilter({ handleValueChange, activeTab }: props
         >
           {months.map((item, index) => (
             <SelectOption key={index} value={item.value}>
-              {t(item.label)}
+              {item.label}
             </SelectOption>
           ))}
         </Select>
+
+     
+          <Button onClick={handleReset}>
+            {t('reset')}
+          </Button>
       </Form>
     </StyledTeamLeadersList>
   );

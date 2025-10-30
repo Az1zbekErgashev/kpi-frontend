@@ -22,7 +22,7 @@ export function TeamFilter({ handleValueChange, setActionModalConfig }: props) {
   return (
     <StyledTeamFilter>
       <Form form={form} layout="vertical" onValuesChange={handleValueChange}>
-        <Input allowClear name="name" label={t('search_by_namee')} />
+        <Input allowClear name="name" label={t('search_by_namee')} autoComplete='off' />
       </Form>
 
       <Button

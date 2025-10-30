@@ -47,6 +47,7 @@ export function UsersFilter({ handleValueChange, setActionModalConfig }: props) 
           allowClear
           name="text"
           label={t('search_by_username_fullname_team')}
+          autoComplete='off'
         />
       </Form>
 

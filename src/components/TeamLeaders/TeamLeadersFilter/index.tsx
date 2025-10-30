@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyledTeamLeadersList } from './style';
-import { Form } from 'antd';
+import { Form, Button } from 'antd';
 import { DatePicker, Input, Select, SelectOption } from 'ui';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
@@ -11,21 +11,27 @@ interface props {
   handleValueChange: (value: any) => void;
   activeTab: string;
 }
+
 export function TeamLeadersFilter({ rooms, teams, handleValueChange, activeTab }: props) {
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const currentYear = dayjs().year();
 
-  useEffect(() => {
-    const initialValues: any = {
-      year: dayjs(`${dayjs().year()}-01-01`),
-      roomId: null,
-      teamId: null,
-      userName: '',
-    };
+  const initialValues: any = {
+    year: dayjs(`${dayjs().year()}-01-01`),
+    roomId: null,
+    teamId: null,
+    userName: '',
+  };
 
+  useEffect(() => {
     form.setFieldsValue(initialValues);
   }, [form, activeTab]);
+
+  const handleReset = () => {
+    form.setFieldsValue(initialValues);
+    handleValueChange(initialValues);
+  };
 
   return (
     <StyledTeamLeadersList>
@@ -43,7 +49,6 @@ export function TeamLeadersFilter({ rooms, teams, handleValueChange, activeTab }
               {item.name}
             </SelectOption>
           ))}
-
           <SelectOption value={null}>{t('all')}</SelectOption>
         </Select>
         <Select name="teamId" label={t('search_by_team')}>
@@ -55,6 +60,13 @@ export function TeamLeadersFilter({ rooms, teams, handleValueChange, activeTab }
           <SelectOption value={null}>{t('all')}</SelectOption>
         </Select>
         <Input name="userName" label={t('search_by_user_name')} />
+        
+        <Button 
+          onClick={handleReset}
+          style={{ marginTop: '16px' }}
+        >
+          {t('reset')}
+        </Button>
       </Form>
     </StyledTeamLeadersList>
   );
