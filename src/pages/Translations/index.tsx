@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { TranslationsList } from './components/TranslationsList';
 import { TranslationsFilter } from './components/TranslationsFilter';
 import { Button, ConfirmModal, Notification } from 'ui';
 import { useTranslation } from 'react-i18next';
 import useQueryApiClient from 'utils/useQueryApiClient';
-import { smoothScroll } from 'utils/globalFunctions';
 import Pagination from 'ui/Pagination/Pagination';
 import { TFunction } from 'i18next';
 import { Form } from 'antd';
@@ -37,7 +36,7 @@ const createModalConfig = (
 
 export function Translations() {
   const { t } = useTranslation();
-  const [searchParams, _] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [queryParams, setQueryParams] = useState<initalQuery>({
     PageIndex: parseInt(searchParams.get('pageIndex') ?? '1'),
     PageSize: parseInt(searchParams.get('pageSize') ?? '10'),
@@ -58,21 +57,51 @@ export function Translations() {
   });
   const [form] = Form.useForm();
 
+  // Ref to track the container (optional: for smoother control)
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Update URL search params when pagination changes
+  const updateSearchParams = useCallback((page: number, pageSize: number) => {
+    setSearchParams(
+      (prev) => {
+        prev.set('pageIndex', page.toString());
+        prev.set('pageSize', pageSize.toString());
+        return prev;
+      },
+      { replace: true }
+    );
+  }, [setSearchParams]);
+
   const handlePaginationChange = (page: number, pageSize: number) => {
-    smoothScroll('top', 0);
-    setQueryParams((res) => ({ ...res, PageIndex: page, PageSize: pageSize }));
+    setQueryParams((prev) => ({ ...prev, PageIndex: page, PageSize: pageSize }));
+    updateSearchParams(page, pageSize);
+
+    // Optional: Smooth scroll to top of the list (not window top)
+    if (containerRef.current) {
+      const headerOffset = 100; // Adjust based on your fixed header height
+      const elementPosition = containerRef.current.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - headerOffset,
+        behavior: 'smooth',
+      });
+    } else {
+      // Fallback: smooth scroll to top of page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleFilterChange = (changedValue: any) => {
     setQueryParams((res) => ({
       ...res,
       ...changedValue,
+      PageIndex: 1, // Reset to first page on filter
     }));
+    updateSearchParams(1, queryParams.PageSize);
   };
 
   useEffect(() => {
     getTranslations();
-  }, [queryParams]);
+  }, [queryParams, getTranslations]);
 
   const handleDelete = (type: 'DELETE' | 'RECOVER', key: string) => {
     setConiformModal(
@@ -110,7 +139,7 @@ export function Translations() {
       setConiformModal(null);
       setKey(null);
     }
-  }, [key]);
+  }, [key, deleteTranslation]);
 
   const handleClose = () => {
     setOpen({ open: false, type: 'ADD', translation: null });
@@ -152,13 +181,11 @@ export function Translations() {
         if (open.type === 'ADD') createTranslation(res);
         else if (open.type === 'EDIT') updateTranslation(res);
       })
-      .catch(() => {
-        return;
-      });
+      .catch(() => {});
   };
 
   return (
-    <StyledTranslation>
+    <StyledTranslation ref={containerRef}>
       <div className="header-line">
         <TranslationsFilter handleFilterChange={handleFilterChange} />
         <Button
@@ -180,6 +207,8 @@ export function Translations() {
         onChange={handlePaginationChange}
         hideOnSinglePage={true}
         current={translations?.data?.PageIndex}
+        // Prevent default anchor behavior if Pagination uses <a> tags
+        // (Some UI libraries do this — ensure onChange is used, not href)
       />
 
       <TranslationActionForm
