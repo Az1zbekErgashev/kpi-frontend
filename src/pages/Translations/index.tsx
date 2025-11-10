@@ -57,7 +57,7 @@ export function Translations() {
   });
   const [form] = Form.useForm();
 
-  // Ref to track the container (optional: for smoother control)
+  // Ref to track the container
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Update URL search params when pagination changes
@@ -72,11 +72,8 @@ export function Translations() {
     );
   }, [setSearchParams]);
 
-  const handlePaginationChange = (page: number, pageSize: number) => {
-    setQueryParams((prev) => ({ ...prev, PageIndex: page, PageSize: pageSize }));
-    updateSearchParams(page, pageSize);
-
-    // Optional: Smooth scroll to top of the list (not window top)
+  // Consistent scroll function
+  const scrollToTop = useCallback(() => {
     if (containerRef.current) {
       const headerOffset = 100; // Adjust based on your fixed header height
       const elementPosition = containerRef.current.getBoundingClientRect().top + window.pageYOffset;
@@ -88,6 +85,16 @@ export function Translations() {
       // Fallback: smooth scroll to top of page
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  }, []);
+
+  const handlePaginationChange = (page: number, pageSize: number) => {
+    setQueryParams((prev) => ({ ...prev, PageIndex: page, PageSize: pageSize }));
+    updateSearchParams(page, pageSize);
+    
+    // Use setTimeout to ensure scroll happens after state updates
+    setTimeout(() => {
+      scrollToTop();
+    }, 0);
   };
 
   const handleFilterChange = (changedValue: any) => {
@@ -101,7 +108,7 @@ export function Translations() {
 
   useEffect(() => {
     getTranslations();
-  }, [queryParams, getTranslations]);
+  }, [queryParams]);
 
   const handleDelete = (type: 'DELETE' | 'RECOVER', key: string) => {
     setConiformModal(
@@ -139,7 +146,7 @@ export function Translations() {
       setConiformModal(null);
       setKey(null);
     }
-  }, [key, deleteTranslation]);
+  }, [key]);
 
   const handleClose = () => {
     setOpen({ open: false, type: 'ADD', translation: null });
@@ -207,8 +214,6 @@ export function Translations() {
         onChange={handlePaginationChange}
         hideOnSinglePage={true}
         current={translations?.data?.PageIndex}
-        // Prevent default anchor behavior if Pagination uses <a> tags
-        // (Some UI libraries do this — ensure onChange is used, not href)
       />
 
       <TranslationActionForm
