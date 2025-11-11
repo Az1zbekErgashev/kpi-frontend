@@ -1,3 +1,4 @@
+
 interface adminNavigate {
   key: string;
   path?: string;
@@ -24,9 +25,9 @@ export const ADMIN_NAVIGATE: adminNavigate[] = [
 
 export const USER_ROLE = [
   { value: 0, key: 'seo' },
-  { value: 1, key: 'director' },
-  { value: 2, key: 'TeamLeader' },
-  { value: 3, key: 'TeamMember' },
+  { value: 1, key: 'director_' },
+  { value: 2, key: 'team_leader' },
+  { value: 3, key: 'team_member_' },
 ];
 
 export const defaultImageUrl =

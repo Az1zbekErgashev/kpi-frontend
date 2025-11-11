@@ -119,7 +119,7 @@ export function UserAction({
         </Form>
         <div className="footer-btn">
           <Button onClick={handleClose} label={t('cancel')} />
-          <Button onClick={() => form.submit()} type="primary" label={type == 'EDIT' ? t('submit') : t('submit')} />
+          <Button onClick={() => form.submit()} type="primary" label={t('submit')} />
         </div>
       </StyledUserAction>
     </Modal>

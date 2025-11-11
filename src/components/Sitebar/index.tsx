@@ -1,5 +1,5 @@
 import { ChevronDown, Zap } from 'lucide-react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { StyledSitebar } from './style';
 import { ADMIN_NAVIGATE } from 'utils/consts';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,8 @@ export function Sitebar() {
         <div className="sidebar-background"></div>
         <div className="sidebar-content">
           {/* Logo Section */}
-          <div className="logo-section">
+          <Link to="/" className="sidebar-logo">
+           <div className="logo-section">
             <div className="logo-container">
               <div className="logo-icon">
                 <Zap className="logo-svg" />
@@ -39,7 +40,7 @@ export function Sitebar() {
             </div>
             <div className="logo-glow"></div>
           </div>
-
+          </Link>
           {/* Navigation */}
           <nav className="navigation">
             <div className="nav-header">
