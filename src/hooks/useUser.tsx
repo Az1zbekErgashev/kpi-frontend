@@ -22,10 +22,17 @@ export function useUsers() {
       method: 'POST',
     },
     onSuccess() {
+      Notification({ text: t('user_created_successfully'), type: 'success' });
       refetchUsers();
     },
     onError(error) {
-      Notification({ type: 'error', text: t(error.error) });
+      if (error.error === 'team_already_has_team_leader') {
+        Notification({ text: t('team_already_has_team_leader'), type: 'error' });
+      } else if (error.error === 'user_already_exists') {
+        Notification({ text: t('this_user_already_exist'), type: 'error' });
+      } else {
+        Notification({ text: t(error.error) || t('error_creating_user'), type: 'error' });
+      }
     },
   });
 
@@ -35,6 +42,7 @@ export function useUsers() {
       method: 'DELETE',
     },
     onSuccess() {
+      Notification({ text: t('user_deleted_successfully'), type: 'success' });
       refetchUsers();
     },
   });
@@ -45,10 +53,15 @@ export function useUsers() {
       method: 'PUT',
     },
     onSuccess() {
+      Notification({ text: t('user_updated_successfully'), type: 'success' });
       refetchUsers();
     },
     onError(error) {
-      Notification({ type: 'error', text: t(error.error) });
+      if (error.error === 'team_already_has_team_leader') {
+        Notification({ text: t('team_already_has_team_leader'), type: 'error' });
+      } else {
+        Notification({ type: 'error', text: t(error.error) || t('error_updating_user') });
+      }
     },
   });
 
