@@ -7,6 +7,7 @@ import Tooltip from 'antd/lib/tooltip';
 import SvgSelector from 'assets/icons/SvgSelector';
 import dayjs from 'dayjs';
 import { TFunction } from 'i18next';
+import { dateFormatByLanguage } from 'utils/helper';
 
 interface props {
   setActionModalConfig: React.Dispatch<
@@ -36,10 +37,7 @@ export function TeamList({ setActionModalConfig, teams, handleOpenConfirmModal }
       title: t('created_at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (createdAt, _) => {
-        const parsedDate = dayjs(createdAt, 'DD.MM.YYYY HH:mm:ss');
-        return parsedDate.isValid() ? parsedDate.format('YYYY.MM.DD') : createdAt;
-      },
+      render: (createdAt) =>dateFormatByLanguage(createdAt),
     },
     {
       title: t('employees_count'),

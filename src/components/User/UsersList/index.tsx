@@ -8,6 +8,8 @@ import SvgSelector from 'assets/icons/SvgSelector';
 import Tooltip from 'antd/lib/tooltip';
 import { useUser } from 'hooks/useUserState';
 import { TFunction } from 'i18next';
+import { parse } from 'path';
+import { dateFormatByLanguage } from 'utils/helper';
 interface props {
   users: {
     id: number;
@@ -35,7 +37,7 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
   const { user } = useUser();
 
   const hasActiveUsers = users?.some((team: any) => team.isDeleted !== 1);
-
+  const language = localStorage.getItem('language') || 'en';
   const columns: ColumnsType = [
     {
       title: t('id'),
@@ -79,15 +81,7 @@ export function UsersList({ users, setActionModalConfig, handleOpenConfirmModal 
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 160,
-      render: (date, _) => {
-      let parsedDate = dayjs(date, 'DD.MM.YYYY HH:mm:ss');
-      
-      if (!parsedDate.isValid()) {
-        parsedDate = dayjs(date);
-      }
-      
-      return parsedDate.isValid() ? parsedDate.format('YYYY.MM.DD') : date;
-    }
+      render: (date) => dateFormatByLanguage(date),
     },
   ];
 

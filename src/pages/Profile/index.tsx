@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyledProfile } from './style';
 import { Button, Checkbox, Input, Select, SelectOption } from 'ui';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useQueryApiClient from 'utils/useQueryApiClient';
-import dayjs from 'dayjs';
 import { Notification } from 'ui';
+import { dateTimeFormatByLanguage } from 'utils/helper'; 
 
 export function Profile() {
   const { t } = useTranslation();
   const [changePassword, setChangePassword] = useState<boolean>(false);
+  const [currentLanguage, setCurrentLanguage] = useState<string>(
+    localStorage.getItem('language') || '1'
+  );
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      const newLang = localStorage.getItem('language') || '1';
+      setCurrentLanguage(newLang);
+    };
+    
+    window.addEventListener('languageChange', handleLanguageChange);
+    window.addEventListener('storage', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChange', handleLanguageChange);
+      window.removeEventListener('storage', handleLanguageChange);
+    };
+  }, []);
+
   const UserIcon = () => (
     <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -78,16 +97,6 @@ export function Profile() {
     }
 
     appendData(value);
-  };
-
-  const formatDate = (dateString: string) => {
-    let parsedDate = dayjs(dateString, 'DD.MM.YYYY HH:mm:ss');
-    
-    if (!parsedDate.isValid()) {
-      parsedDate = dayjs(dateString);
-    }
-    
-    return parsedDate.isValid() ? parsedDate.format('YYYY.MM.DD') : dateString;
   };
 
   return (
@@ -178,8 +187,7 @@ export function Profile() {
 
               <div className="button-actions">
                 <Button onClick={() => navigate(-1)} label={t('cancel')} className="button button-outline" />
-                <Button type="primary" htmlType="submit" label={t('save_changes')} className="button button-primary"
-                />
+                <Button type="primary" htmlType="submit" label={t('save_changes')} className="button button-primary" />
               </div>
             </Form>
           </div>
@@ -190,7 +198,7 @@ export function Profile() {
             <div className="footer-info">
               {profile?.data?.updatedAt && (
                 <p>
-                  {t('last_update')}: {profile.data.updatedAt}
+                  {t('last_update')}: {dateTimeFormatByLanguage(profile.data.updatedAt)}
                 </p>
               )}
               <p>{t('last_update_description')}</p>

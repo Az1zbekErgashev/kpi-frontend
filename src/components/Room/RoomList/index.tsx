@@ -7,6 +7,7 @@ import { ColumnsType } from 'antd/es/table';
 import SvgSelector from 'assets/icons/SvgSelector';
 import { Button, Table } from 'ui';
 import { TFunction } from 'i18next';
+import { dateFormatByLanguage } from 'utils/helper';
 
 interface props {
   rooms: {
@@ -42,7 +43,7 @@ export function RoomList({ rooms, setActionModalConfig, handleOpenConfirmModal }
       title: t('created_at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (createdAt, _) => dayjs(createdAt).format('YYYY.MM.DD'),
+      render: (createdAt) => dateFormatByLanguage(createdAt),
     },
     {
       title: t('teams_count'),

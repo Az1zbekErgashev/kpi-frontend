@@ -1,6 +1,6 @@
 // LoginMain/index.tsx
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LoginForm } from '../LoginForm';
 import { LanguageSwitcher } from 'ui';
 import { useLanguage } from 'contexts/LanguageContext';

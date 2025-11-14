@@ -70,7 +70,7 @@ export function UserAction({
               rules={[{ required: true, message: t('field_is_required') }]}
               allowClear
               name="password"
-              disabled={type == 'EDIT' ? true : false}
+              // disabled={type == 'EDIT' ? true : false}
             />
             <Select
               label={t('role')}
