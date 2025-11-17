@@ -5,9 +5,12 @@ import { LoginForm } from '../LoginForm';
 import { LanguageSwitcher } from 'ui';
 import { useLanguage } from 'contexts/LanguageContext';
 import { StyledLoginMain } from './style';
+import { useTranslation } from 'react-i18next';
 
 export function LoginMain() {
   const { changeLanguage, language } = useLanguage();
+  const { t } = useTranslation();
+  
   
   const handleLanguageChange = async (value: number) => {
     localStorage.setItem('language', value.toString());
@@ -38,17 +41,18 @@ export function LoginMain() {
           <div className="content-overlay">
             <div className="brand-logo">
               <span className="logo-text">KPI</span>
+              <span className="logo-text">{t('admin')}</span>
               <span className="logo-dot"></span>
             </div>
-            <h2>Analytics Dashboard</h2>
-            <p>Powerful insights for your business performance</p>
+            <h2>{t("analytics_dashboard")}</h2>
+            <p>{t('powerful_insights')}</p>
           </div>
         </div>
 
         <div className="login-content">
           <div className="login-header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to your dashboard</p>
+            <h1>{t('welcome_back')}</h1>
+            <p>{t('sign_in_dashboard')}</p>
           </div>
 
           <LoginForm />

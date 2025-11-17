@@ -35,7 +35,7 @@ export function Sitebar() {
               </div>
               <div className="logo-text">
                 <h2>KPI</h2>
-                <span>Dashboard</span>
+                <span>{t('header_dashboard')}</span>
               </div>
             </div>
             <div className="logo-glow"></div>
@@ -146,7 +146,7 @@ export function Sitebar() {
           </nav>
 
           <div className="sidebar-footer">
-            <div className="footer-year">© {dayjs().year()} KPI Dashboard</div>
+            <div className="footer-year">© {dayjs().year()} KPI {t('footer_dashboard')}</div>
           </div>
         </div>
       </div>

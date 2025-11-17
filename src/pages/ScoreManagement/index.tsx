@@ -29,7 +29,9 @@ export function ScoreManagement() {
     open: false,
     type: 'ADD',
   });
-  const currentYear = parseInt(dayjs(yearForm.getFieldValue('year')).format('YYYY')) ?? dayjs().year();
+
+  const currentYear = dayjs().year();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
   const {
     data: scoreData,
@@ -40,7 +42,7 @@ export function ScoreManagement() {
       url: `/api/evaluation/score-management`,
       method: 'GET',
       data: {
-        year: currentYear,
+        year: selectedYear,
       },
     },
   });
@@ -50,7 +52,7 @@ export function ScoreManagement() {
       url: `/api/evaluation/divisions-name`,
       method: 'GET',
       data: {
-        year: currentYear,
+        year: selectedYear,
       },
     },
   });
@@ -66,6 +68,7 @@ export function ScoreManagement() {
       form.resetFields();
     },
   });
+  
   const { appendData: updateScore } = useQueryApiClient({
     request: {
       url: '/api/evaluation/score',
@@ -77,6 +80,11 @@ export function ScoreManagement() {
       form.resetFields();
     },
   });
+
+  // Initialize the year form with current year
+  useEffect(() => {
+    yearForm.setFieldsValue({ year: dayjs(`${currentYear}-01-01`) });
+  }, []);
 
   const onFinish = () => {
     form
@@ -90,7 +98,7 @@ export function ScoreManagement() {
 
         createScore({
           ...values,
-          year: dayjs(yearForm.getFieldValue('year')).format('YYYY'),
+          year: selectedYear,
           isFinalScore: isFinalScore,
           isMoreDivisions: isMoreDivision,
         });
@@ -123,9 +131,13 @@ export function ScoreManagement() {
     }
   }, [actionModa.open]);
 
-  const onValuesChange = (value: any) => {
-    appendScore({ year: dayjs(value.year).format('YYYY') });
-    appendDivision({ year: dayjs(value.year).format('YYYY') });
+  const onValuesChange = (_: any, allValues: any) => {
+    if (allValues.year) {
+      const year = dayjs(allValues.year).year();
+      setSelectedYear(year);
+      appendScore({ year: year });
+      appendDivision({ year: year });
+    }
   };
 
   return (
